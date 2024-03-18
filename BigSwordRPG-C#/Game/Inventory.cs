@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG.Game
 {
-    public class Entity
+    public class Inventory
     {
     }
 }

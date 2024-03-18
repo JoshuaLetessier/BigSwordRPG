@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BigSwordRPG.Utils;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG.Game
 {
-    public class Actions
+    public class Item : GameObject
     {
     }
 }

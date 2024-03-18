@@ -1,12 +1,11 @@
-﻿using Project_RPG;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG.Assets
 {
-    public class Character
+    public class MenuScene : Scene
     {
     }
 }

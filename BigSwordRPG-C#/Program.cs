@@ -1,17 +1,15 @@
-﻿using BigSwordRPG_C_;
-
-namespace Project_RPG
+﻿namespace BigSwordRPG
 {
     internal class Program
     {
         public Program()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         ~Program()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         static void Main(string[] args)
