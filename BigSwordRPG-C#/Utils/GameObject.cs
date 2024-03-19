@@ -5,7 +5,13 @@ using System.Text;
 
 namespace BigSwordRPG.Utils
 {
-    public class GameObject
+    public abstract class GameObject
     {
+        public GameObject() { }
+        ~GameObject() { }
+
+        public abstract void Draw();
+        public abstract void Updtate();
+        public abstract void Destroy();
     }
 }
