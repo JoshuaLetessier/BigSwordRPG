@@ -1,10 +1,15 @@
-﻿namespace BigSwordRPG
+﻿using BigSwordRPG.Assets;
+
+namespace BigSwordRPG
 {
     internal class Program
     {
+        private MapScene testmap;
+
+
         public Program()
         {
-            throw new NotImplementedException();
+            testmap = new MapScene();
         }
 
         ~Program()
@@ -14,7 +19,12 @@
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Program p = new Program();
+
+            p.testmap.Draw();
+
+            //testmap.Draw();
+            
         }
     }
 }
