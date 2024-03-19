@@ -11,6 +11,7 @@ namespace BigSwordRPG.Game
         private int _level;
         private int _damage;
         private string _type;
+        private int _speed;
 
         public Dictionary<string, Abilities> _abilities;
 
@@ -20,6 +21,7 @@ namespace BigSwordRPG.Game
         public int Level { get => _level; set => _level = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public string Type { get => _type; set => _type = value; }
+        public int Speed { get => _speed; set => _speed = value; }
 
 
         //Méthodes
@@ -45,6 +47,6 @@ namespace BigSwordRPG.Game
         public abstract int MakeDammage();
         public abstract void Talk();
 
-        public abstract int UseAbilities(string nameAbilities);
+
     }
 }

@@ -22,7 +22,7 @@ namespace BigSwordRPG.Game
             throw new NotImplementedException();
         }
 
-        public override int UseAbilities(string nameAbilities)
+        public int UseAbilities(string nameAbilities)
         {
             _abilities = new();
             
@@ -40,5 +40,6 @@ namespace BigSwordRPG.Game
             return 0;
            
         }
+
     }
 }
