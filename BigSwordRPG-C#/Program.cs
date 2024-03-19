@@ -1,4 +1,6 @@
-﻿namespace BigSwordRPG
+﻿using BigSwordRPG.Utils;
+
+namespace BigSwordRPG
 {
     internal class Program
     {
@@ -15,6 +17,8 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+            GameManager.Instance.Initialize();
+            GameManager.Instance.Run();
         }
     }
 }

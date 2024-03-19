@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigSwordRPG.Assets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,42 @@ namespace BigSwordRPG.Utils
 {
     public class GameManager
     {
+        private Renderer _renderer;
+        private InputManager _inputManager;
+        private bool _isRunning;
+        private static GameManager _instance;
+        public Renderer Renderer { get => _renderer; private set => _renderer = value; }
+        public InputManager InputManager { get => _inputManager; set => _inputManager = value; }
+        public static GameManager Instance { 
+            get { 
+                if( _instance == null )
+                {
+                    _instance = new GameManager();
+                }
+                return _instance; 
+            }
+        }
+
         private GameManager() { }
         ~GameManager() { }
 
-        public static GameManager Instance { get { return Instance; } }
+        public int Initialize() {
+            Renderer = new Renderer();
+            Renderer.Initialize();
+            InputManager = new InputManager();
+            InputManager.Initialize();
+            return 0;
+        }
+
+        public void Run()
+        {
+            _isRunning = true;
+            while(_isRunning)
+            {
+                InputManager.Update();
+                //Renderer.Update();
+            }
+
+        }
     }
 }
