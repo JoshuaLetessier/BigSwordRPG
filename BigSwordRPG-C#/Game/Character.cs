@@ -12,7 +12,7 @@ namespace BigSwordRPG.Game
         private int _damage;
         private string _type;
 
-        private Dictionary<string, Abilities> _abilities;
+        private List<Abilities> _abilities;
 
         //Property
         public string Name { get => _name; set => _name = value; }
@@ -20,7 +20,7 @@ namespace BigSwordRPG.Game
         public int Level { get => _level; set => _level = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public string Type { get => _type; set => _type = value; }
-        public Dictionary<string, Abilities> Abilities { get => _abilities; set => _abilities = value; }
+        public List<Abilities> Abilities { get => _abilities; set => _abilities = value; }
 
 
         //Méthodes

@@ -1,4 +1,5 @@
 ﻿using BigSwordRPG.Game;
+using BigSwordRPG_C_;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace BigSwordRPG.Assets
     public class FightScene : Scene
     {
         private Dictionary<string, Game.Hero> heroesInCombat;
+        private int indexAbility = 0;
         public FightScene() { }
 
         public bool Initialize(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies)
@@ -34,51 +36,32 @@ namespace BigSwordRPG.Assets
 
         private void Round(Game.Hero actHero)
         {
-            int index = 0;
-            ConsoleKeyInfo keyinfo;
-
             Console.Clear();
-            Console.Write("Au tour de ");
-            Console.WriteLine($"{actHero.Name}\n");
-            foreach (var abilityName in actHero.Abilities.Keys)
-            {
-                string selectOptionSymbol = "  ";
-                if (abilityName == actHero.Abilities[abilityName])
-                {
-                    selectOptionSymbol = "> ";
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                }
+            Console.WriteLine($"Au tour de {actHero.Name} ! \n");
+            // S'il n'a pas d'abilité selectionné, prends la première
+            ConsoleKey pressedKey;
 
-                Console.WriteLine($"{selectOptionSymbol}{actHero.Abilities[abilityName]}");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{abilityName}");
+            foreach (var ability in actHero.Abilities)
+            {
+                bool isSelected = ability == actHero.Abilities[indexAbility];
+                ChangeLineColor(isSelected);
+                Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
             }
 
-            if (keyinfo.Key == ConsoleKey.DownArrow)
-            {
-                if (index + 1 < actHero.Abilities.Count)
-                {
-                    index++;
-                }
-            }
+            pressedKey = Console.ReadKey().Key;
 
-            else if (keyinfo.Key == ConsoleKey.UpArrow)
-            {
-                if (index - 1 >= 0)
-                {
-                    index--;
-                }
-            }
+            if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.Abilities.Count)
+                indexAbility++;
 
-            else if (keyinfo.Key == ConsoleKey.Enter)
-            {
-                // there will be another logic in the future here. For now it is irrelevant.
-                Console.WriteLine($"{actHero.Abilities[index]} was chosen as an option");
-                break;
-            }
+            else if (pressedKey == ConsoleKey.UpArrow && indexAbility - 1 >= 0)
+                indexAbility--;
 
+        }
+
+        private static void ChangeLineColor(bool shouldHighlight)
+        {
+            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
+            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
         }
 
         private void Round(Game.Ennemy actEnnemy)

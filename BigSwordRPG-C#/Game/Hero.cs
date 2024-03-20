@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigSwordRPG_C_;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,17 +25,17 @@ namespace BigSwordRPG.Game
 
         public override int UseAbilities(string nameAbilities)
         {
-            _abilities = new();
+            Abilities = new();
             
-            if(_abilities.ContainsKey(nameAbilities))
+            if(Abilities.ContainsKey(nameAbilities))
             {
-                if (_abilities[nameAbilities].Type == true)
+                if (Abilities[nameAbilities].Type == true)
                 {
-                    return _abilities[nameAbilities].Damage;//ad
+                    return Abilities[nameAbilities].Damage;//ad
                 }
                 else
                 {
-                    return _abilities[nameAbilities].Damage;//ap
+                    return Abilities[nameAbilities].Damage;//ap
                 }
             } 
             return 0;
