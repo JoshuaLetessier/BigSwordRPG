@@ -5,6 +5,13 @@ using System.Text;
 
 namespace BigSwordRPG_C_
 {
+    enum actionType
+    {
+        ATT = 1,
+        HEAL,
+        MAG
+    }
+
     public class Abilities
     {
         public Abilities() { }

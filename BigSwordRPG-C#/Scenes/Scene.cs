@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BigSwordRPG.Assets
 {
-    public class Scene
+    public abstract class Scene
     {
         public Scene() { }
 
-        public virtual void Update() { }
+        public abstract void Update();
     }
 }
