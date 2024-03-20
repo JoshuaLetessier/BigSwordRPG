@@ -65,40 +65,43 @@ namespace BigSwordRPG.Assets
                     if (map[i].ToString() == "/" || map[i].ToString() == "%" || map[i].ToString() == "&" || map[i].ToString() == "@")
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("█");
                     }
                     if (map[i].ToString() == "(")
                     {
                         Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        Console.Write("█");
                     }
                     if (map[i].ToString() == "*")
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("█");
                     }
-                    if (map[i].ToString() == ",")
+                    if (map[i].ToString() == "," || map[i].ToString() == " ")
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write("█");
                     }
                     if (map[i].ToString() == "#")
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.Write("█");
                     }
                     if (map[i].ToString() == ".")
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write("█");
                     }
-                    //Console.Write(map[i]);
+                    Console.Write("█");
                 }
                 i = 0;
             }
             
         }
 
+        public void Draw2()
+        {
+            StreamReader sr = new StreamReader("../../../Asset/Image/map.txt");
+            string s2 = sr.ReadToEnd().Replace("\\e","\x1b");
+            sr.Close();
+
+            Console.Write(s2);
+
+        }
         public override void Update()
         {
             throw new NotImplementedException();

@@ -19,9 +19,11 @@ namespace BigSwordRPG
 
         static void Main(string[] args)
         {
+            Console.SetBufferSize(854, 480);
+            Console.SetWindowSize(Console.LargestWindowWidth - 10, Console.LargestWindowHeight - 10);
             Program p = new Program();
 
-            p.testmap.Draw();
+            p.testmap.Draw2();
 
             //testmap.Draw();
             
