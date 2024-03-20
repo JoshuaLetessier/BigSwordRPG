@@ -7,12 +7,14 @@ namespace BigSwordRPG
     {
         private MapScene testmap;
         private MenuScene testMenu;
+        private SelectMenu test;
 
 
         public Program()
         {
             testmap = new MapScene();
             testMenu = new MenuScene();
+            test = new SelectMenu();
         }
 
         ~Program()
@@ -27,15 +29,19 @@ namespace BigSwordRPG
             
             //faire list pour menu mais a voir si je doit la faire dans le draw du menu ou pas
 
-            p.testMenu.Draw();
+            //p.testMenu.Draw();
 
             List<SelectMenu> menu = new List<SelectMenu>
             {
-
+                new SelectMenu { menuChoix = "startGame", ToDo = p.testmap.Draw },
+                new SelectMenu { menuChoix = "Continue", ToDo = p.testmap.Draw}
             };
 
-            //p.testmap.Draw();
+            p.test.LoadAndDisplayMenu(menu);
 
+
+            //p.testmap.Draw();
+            Console.Read();
 
         }
     }
