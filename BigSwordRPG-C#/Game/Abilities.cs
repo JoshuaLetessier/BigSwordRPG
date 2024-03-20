@@ -12,7 +12,7 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private bool type; // true attack false magic
+        private string type; // true attack false magic
         private int _damage;
         private int _cooldown;
         private int _cost;
@@ -20,7 +20,7 @@ namespace BigSwordRPG_C_
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public bool Type { get => type; set => type = value; }
+        public string Type { get => type; set => type = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
         public int Cost { get => _cost; set => _cost = value; }

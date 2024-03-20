@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigSwordRPG_C_;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,36 +8,26 @@ namespace BigSwordRPG.Game
 {
     public class Hero : Character
     {
-        public override int MakeDammage()
+        public Hero(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities) : base(name, health, level, damage, type, speed, abilities)
         {
-            return Damage;
-        }
-
-        public override void TakeDammage(int attackPoint)
-        {
-            Health -= attackPoint;
-        }
-
-        public override void Talk()
-        {
-            throw new NotImplementedException();
         }
 
         public int UseAbilities(string nameAbilities)
         {
-            _abilities = new();
-            
-            if(_abilities.ContainsKey(nameAbilities))
+            for(int i=0; i<Abilities.Count(); i++)
             {
-                if (_abilities[nameAbilities].Type == true)
+                if (Abilities[i].Name == nameAbilities)
                 {
-                    return _abilities[nameAbilities].Damage;//ad
+                    if (Abilities[i].Type == "attackPhysics")
+                    {
+                        return Abilities[i].Damage;//ad
+                    }
+                    else
+                    {
+                        return Abilities[i].Damage;//ap
+                    }
                 }
-                else
-                {
-                    return _abilities[nameAbilities].Damage;//ap
-                }
-            } 
+            }
             return 0;
            
         }
