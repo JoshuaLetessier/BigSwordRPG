@@ -12,7 +12,9 @@ namespace BigSwordRPG.Assets
     {
         public override void Draw()
         {
-            StreamReader sr = new StreamReader("../../../Asset/Image/map.txt");
+            Console.SetBufferSize(854, 480);
+
+            StreamReader sr = new StreamReader("../../../Asset/Image/map.txt");//Remettre le fichier dans Debug pour le déploiement
             string s2 = sr.ReadToEnd().Replace("\\e","\x1b");
             sr.Close();
 
