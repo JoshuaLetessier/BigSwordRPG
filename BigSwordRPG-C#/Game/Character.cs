@@ -3,7 +3,7 @@ using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Game
 {
-    public abstract class Character : GameObject
+    public class Character : GameObject
     {
         //champ
         private string _name;
@@ -11,6 +11,7 @@ namespace BigSwordRPG.Game
         private int _level;
         private int _damage;
         private string _type;
+        private int _speed;
 
         private List<Abilities> _abilities;
 
@@ -20,11 +21,21 @@ namespace BigSwordRPG.Game
         public int Level { get => _level; set => _level = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public string Type { get => _type; set => _type = value; }
+        public int Speed { get => _speed; set => _speed = value; }
         public List<Abilities> Abilities { get => _abilities; set => _abilities = value; }
 
 
         //Méthodes
-        public Character() { } 
+        public Character(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities)
+        {
+            _name = name;
+            _health = health;
+            _level = level;
+            _damage = damage;
+            _type = type;
+            _speed = speed;
+            _abilities = abilities;
+        }
         ~Character() { }
 
         public override void Draw()
@@ -42,10 +53,20 @@ namespace BigSwordRPG.Game
             throw new NotImplementedException();
         }
 
-        public abstract void TakeDammage(int attackPoint);
-        public abstract int MakeDammage();
-        public abstract void Talk();
+        public void TakeDammage(int attackPoint)
+        {
+            Health -= attackPoint;
+        }
 
-        public abstract int UseAbilities(string nameAbilities);
+        public  int MakeDammage()
+        {
+            return Damage;
+        }
+        public  void Talk()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

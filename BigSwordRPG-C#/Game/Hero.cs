@@ -8,38 +8,29 @@ namespace BigSwordRPG.Game
 {
     public class Hero : Character
     {
-        public override int MakeDammage()
+        public Hero(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities) : base(name, health, level, damage, type, speed, abilities)
         {
-            return Damage;
         }
 
-        public override void TakeDammage(int attackPoint)
+        public int UseAbilities(string nameAbilities)
         {
-            Health -= attackPoint;
-        }
-
-        public override void Talk()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int UseAbilities(string nameAbilities)
-        {
-            Abilities = new();
-            
-            if(Abilities.ContainsKey(nameAbilities))
+            for(int i=0; i<Abilities.Count(); i++)
             {
-                if (Abilities[nameAbilities].Type == true)
+                if (Abilities[i].Name == nameAbilities)
                 {
-                    return Abilities[nameAbilities].Damage;//ad
+                    if (Abilities[i].Type == "attackPhysics")
+                    {
+                        return Abilities[i].Damage;//ad
+                    }
+                    else
+                    {
+                        return Abilities[i].Damage;//ap
+                    }
                 }
-                else
-                {
-                    return Abilities[nameAbilities].Damage;//ap
-                }
-            } 
+            }
             return 0;
            
         }
+
     }
 }

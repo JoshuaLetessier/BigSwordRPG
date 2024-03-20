@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigSwordRPG_C_;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,26 +8,43 @@ namespace BigSwordRPG.Game
 {
     public class Ennemy : Character
     {
-        public override int MakeDammage()
+        private int _difficulty;
+
+
+        public int Difficulty { get => _difficulty; set => _difficulty = value; }
+        public Ennemy(int difficulty, string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities) : base(name, health, level, damage, type, speed, abilities)
         {
-            return Damage;
-            throw new NotImplementedException();
+            _difficulty = difficulty;
         }
 
-        public override void TakeDammage(int attackPoint)
+
+        public int UseAbilities()
         {
-            Health -= attackPoint;
-            throw new NotImplementedException();
+            switch(Difficulty) { 
+                case 0:
+                    UseRandomAbilities();
+                    return 0;
+                case 1:
+                    return 1;
+                case 2:
+                    return 2;
+                case 3:
+                    return 3;
+            }
+            return 0;
         }
 
-        public override void Talk()
+        public int UseRandomAbilities()//attaque ou rate
         {
-            throw new NotImplementedException();
-        }
+            /*Random random = new Random();
+            Abilities abilities = new Abilities();
 
-        public override int UseAbilities(string nameAbilities)
-        {
-            throw new NotImplementedException();
+            int randomAbilities = random.Next(0, _abilities.Count);
+
+            abilities = _abilities.ElementAt(randomAbilities).Value;
+
+            return abilities.Damage; ;*/
+            return 0;
         }
     }
 }

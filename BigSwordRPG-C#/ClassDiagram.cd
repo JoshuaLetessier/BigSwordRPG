@@ -31,7 +31,7 @@
   <Class Name="BigSwordRPG.Game.Item">
     <Position X="5.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAABAAAAIAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAABEAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Game\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -52,21 +52,24 @@
   <Class Name="BigSwordRPG.Game.Hero">
     <Position X="1.25" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAEAAAEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Ennemy">
     <Position X="3.5" Y="12" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAEAAAEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQEAABAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Character">
     <Position X="2.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAKADAAAEAAgQAABAAAYQAAABAAAAJAUAAAEAAAAA=</HashCode>
+      <HashCode>AAAAKQDAAAEAAgQAAAAAAYQBAABAAAAJBUAAAEAAAAA=</HashCode>
       <FileName>Game\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -122,6 +125,8 @@
   <Class Name="BigSwordRPG.Assets.Scene" Collapsed="true">
     <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAIADAACAACAAAAAAAABQAAAABAAAgAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Abilities.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Scene.cs</FileName>
     </TypeIdentifier>
