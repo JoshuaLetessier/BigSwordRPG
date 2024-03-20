@@ -7,10 +7,10 @@
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BigSwordRPG.Utils.InputManager" Collapsed="true">
-    <Position X="12.25" Y="0.5" Width="1.5" />
+  <Class Name="BigSwordRPG.Utils.InputManager">
+    <Position X="12.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAQAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>Utils\InputManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -21,10 +21,10 @@
       <FileName>Utils\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BigSwordRPG.Utils.GameManager" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+  <Class Name="BigSwordRPG.Utils.GameManager">
+    <Position X="10.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAAAAAAAAAQAAAIAAAAAAEgAAAAAAQACAIAQAAAI=</HashCode>
       <FileName>Utils\GameManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,7 +80,7 @@
   <Class Name="BigSwordRPG.Assets.Renderer" Collapsed="true">
     <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAgAAAQAAAEAAAAAAAAIAAAAAAAAAAAQ0AAA=</HashCode>
       <FileName>Assets\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -110,6 +110,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\DialogScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BigSwordRPG_C_.Player">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -33,8 +33,9 @@ namespace BigSwordRPG.Assets
         {
             //Console.WindowWidth = 5;
             Console.WriteLine(Console.LargestWindowWidth);
-            /*IntPtr ConsoleHandle = GetConsoleWindow();
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            IntPtr ConsoleHandle = GetConsoleWindow();
+            ConsoleHandle.Standard
+            /*SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 2000, 1080, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);*/
