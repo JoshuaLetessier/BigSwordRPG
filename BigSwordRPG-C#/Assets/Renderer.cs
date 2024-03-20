@@ -3,14 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 
 namespace BigSwordRPG.Assets
 {
-    public class Renderer
+    struct COORD
+    {
+        short X;
+        short Y;
+    }
+
+    struct SMALL_RECT
+    {
+        short Left;
+        short Top;
+        short Right;
+        short Bottom;
+    }
+
+    struct CHAR_INFO
+    {
+      char Char;
+      short Attributes;
+    }
+
+public class Renderer
     {
         [DllImport("kernel32")]
         static extern IntPtr GetConsoleWindow();
+
+        [DllImport("kernel32")]
+        static extern bool ReadConsoleOutput(IntPtr hWnd, IntPtr copyBuffer, COORD copyBufferSize, COORD copyBufferPosition, SMALL_RECT targetRect); //ReadConsoleOutputCharacter
 
         [DllImport("User32")]
         static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
@@ -24,17 +48,23 @@ namespace BigSwordRPG.Assets
         [DllImport("User32")]
         static extern bool SetWindowLongA(IntPtr hWnd, int longIndex, long newlong);
 
+        private char[][] _consoleBuffer;
+        public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+
         public Renderer()
         {
 
         }
-
+        
         public int Initialize()
         {
             //Console.WindowWidth = 5;
             Console.WriteLine(Console.LargestWindowWidth);
             IntPtr ConsoleHandle = GetConsoleWindow();
-            ConsoleHandle.Standard
+            List<CHAR_INFO> charInfoList = new List<CHAR_INFO>();
+            COORD position = new COORD();
+            COORD size = new COORD();
+            ReadConsoleOutput(ConsoleHandle, charInfoList, )
             /*SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 2000, 1080, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;

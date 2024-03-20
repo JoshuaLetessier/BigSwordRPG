@@ -6,11 +6,13 @@ using System.Text;
 
 namespace BigSwordRPG.Utils
 {
+    using Difficulty = Difficulties;
     public enum Difficulties
     {
         EASY,
         MEDIUM,
-        HARD
+        HARD,
+        DIFFICULTIES_COUNT
     }
     public class GameManager
     {
