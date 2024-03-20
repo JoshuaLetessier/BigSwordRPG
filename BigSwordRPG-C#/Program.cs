@@ -23,7 +23,7 @@ namespace BigSwordRPG
             Console.SetWindowSize(Console.LargestWindowWidth - 10, Console.LargestWindowHeight - 10);
             Program p = new Program();
 
-            p.testmap.Draw2();
+            p.testmap.Draw();
 
             //testmap.Draw();
             
