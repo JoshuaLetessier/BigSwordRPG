@@ -31,7 +31,7 @@ namespace BigSwordRPG
 
             List<SelectMenu> menu = new List<SelectMenu>
             {
-                "Nouvelle Partie"
+
             };
 
             //p.testmap.Draw();

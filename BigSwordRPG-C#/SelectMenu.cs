@@ -1,6 +1,4 @@
-﻿
-
-namespace BigSwordRPG_C_
+﻿namespace BigSwordRPG_C_
 {
     public class SelectMenu
     {
