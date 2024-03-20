@@ -7,5 +7,8 @@ namespace BigSwordRPG.Assets
 {
     public class Scene
     {
+        public Scene() { }
+
+        public virtual void Update() { }
     }
 }
