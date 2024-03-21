@@ -9,6 +9,6 @@ namespace BigSwordRPG.Assets
     {
         public Scene() { }
 
-        public virtual void Update() { }
+        public abstract void Update();
     }
 }
