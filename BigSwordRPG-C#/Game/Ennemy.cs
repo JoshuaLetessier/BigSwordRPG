@@ -12,7 +12,7 @@ namespace BigSwordRPG.Game
 
 
         public int Difficulty { get => _difficulty; set => _difficulty = value; }
-        public Ennemy(int difficulty, string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities) : base(name, health, level, damage, type, speed, abilities)
+        public Ennemy(int difficulty, string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities, bool isDead) : base(name, health, level, damage, type, speed, abilities, isDead)
         {
             _difficulty = difficulty;
         }

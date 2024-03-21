@@ -11,27 +11,119 @@ namespace BigSwordRPG.Assets
     public class FightScene : Scene
     {
         private Dictionary<string, Game.Hero> heroesInCombat;
+        List<Game.Ennemy> _ennemiesList;
         private int indexAbility = 0;
-        public FightScene() { }
 
-        public bool Initialize(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies)
+        private bool startFight = false;
+        private string firstTeamPlay;
+        private int heroPlayable;
+        private int ennemyPlaybale;
+        private int allEnnemyDeath;
+
+        Player player = new Player(); //!!!!!!!!!!A changer !!!!!!!!!
+
+        public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+
+        public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies) 
         {
             int count = 0;
             foreach (var key in heroes.Keys)
             {
                 if (heroes[key].Health == 0) { ++count; }
             }
-            if (count == heroes.Count) { return false; }
+            if (count == heroes.Count) { /*return false;*/ }
 
             heroesInCombat = heroes;
-
-            return true;
-        }
+            firstTeamPlay = orderStartFight();
+        } //exption pour remplacer le bool
 
         public override void Update()
         {
             Console.WriteLine("FIGHT !!!");
+            // boucle de combas
+            while(player.allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            {
+                if (startFight == true)
+                {
+                    startFight = false;
 
+                    if (firstTeamPlay == "h")
+                    {
+                        Round(heroesInCombat.First().Value);
+                        firstTeamPlay = "e";
+                        if (heroesInCombat.Count != 1)
+                        {
+                            heroPlayable = 0;
+                        }
+                        heroPlayable += 1;
+
+                    }
+                    else
+                    {
+                        Round(EnnemiesList[0]);
+                        firstTeamPlay= "h";
+                        if (EnnemiesList.Count == 1)
+                        {
+                            ennemyPlaybale = 0;
+                        }
+                        ennemyPlaybale += 1;
+                    }
+                }
+                else
+                {
+                    if(firstTeamPlay == "h")
+                    {
+                        Round(heroesInCombat.First().Value);
+                        firstTeamPlay = "e";
+                        if (heroesInCombat.Count != 1)
+                        {
+                            heroPlayable = 0;
+                        }
+                        heroPlayable += 1;
+
+                    }
+                    else
+                    {
+                        Round(EnnemiesList[0]);
+                        firstTeamPlay = "h";
+                        if (EnnemiesList.Count == 1)
+                        {
+                            ennemyPlaybale = 0;
+                        }
+                        ennemyPlaybale += 1;
+                    }
+                    //dico toList
+                }
+            }
+        }
+
+        private string orderStartFight()
+        {
+            if (heroesInCombat.Count < EnnemiesList.Count)
+            {
+                return "h";
+            }
+            else if (heroesInCombat.Count > EnnemiesList.Count)
+            {
+                return "e";
+            }
+            else
+            {
+                Random random = new Random();
+                float randomFirstPlay = random.Next(0, 1);
+                if (randomFirstPlay < 0.5f)
+                {
+                    return "h";
+                }
+                else
+                {
+                    return "e";
+                }
+            }
+        }
+
+        public void FightLoop(string firstPlay)
+        {  
         }
 
         private void Round(Game.Hero actHero)
