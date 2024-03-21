@@ -8,25 +8,29 @@ namespace BigSwordRPG.Game
 {
     public class Ennemy : Character
     {
-        private int _difficulty;
-
-
-        public int Difficulty { get => _difficulty; set => _difficulty = value; }
-        public Ennemy(int difficulty, string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities, bool isDead) : base(name, health, level, damage, type, speed, abilities, isDead)
+        public Ennemy(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities, bool isDead) : base(name, health, level, damage, type, speed, abilities, isDead)
         {
-            _difficulty = difficulty;
         }
 
 
-        public int UseAbilities()
+        public Abilities UseAbilities(int difficulty)
         {
-            switch(Difficulty) { 
-                case 0:
-                    UseRandomAbilities();
-                    return 0;
+            switch (difficulty)
+            {
                 case 1:
-                    return 1;
+                    return RandomAbilitiesEasyMod();
                 case 2:
+                    switch (Type)
+                    {
+                        case "bourrin":
+                            return bourinCharactherAbilities();
+                        case "peureux":
+                            return peureuxCharacterAbilities();
+                        case "stratege":
+                            return strategeCharacterAbilities();
+                        case "lache":
+                            return lacheCharacterAbilities();
+                    }
                     return 2;
                 case 3:
                     return 3;
@@ -34,17 +38,63 @@ namespace BigSwordRPG.Game
             return 0;
         }
 
-        public int UseRandomAbilities()//attaque ou rate
+        private Abilities RandomAbilitiesEasyMod()
         {
-            /*Random random = new Random();
-            Abilities abilities = new Abilities();
+            return Abilities.ElementAt(RandomAbilities(Abilities));
+        }
 
-            int randomAbilities = random.Next(0, _abilities.Count);
+        //charactère des ennemis
+        private Abilities bourinCharactherAbilities()//attaque ou rate
+        {
+            return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes("attaquePhysique")));
+        }
 
-            abilities = _abilities.ElementAt(randomAbilities).Value;
+        private Abilities peureuxCharacterAbilities()
+        {
+            // toujours avoir un pourcentage de chance de heal supérieur à l'attaque
+            Random random = new Random();
 
-            return abilities.Damage; ;*/
-            return 0;
+            if(random.Next(0, 1) < 0.75f)
+            {   
+                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes("heal")));
+            }
+            else
+            {
+                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes("attaquePhysique").Concat(GetAbilitiesByTypes("magicAttack")).ToList()));
+            }
+        }
+
+/*        private Abilities strategeCharacterAbilities()
+        {
+            //return Abilities;
+        }*/
+        private Abilities lacheCharacterAbilities()
+        {
+            Random random = new();
+            if(random.Next(0, 1) < 0.75f)
+                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes("attaquePhysique").Concat(GetAbilitiesByTypes("magicAttack")).ToList()));
+            else
+                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes("attques")));
+        }
+
+        private List<Abilities> GetAbilitiesByTypes(string type)
+        {
+            List<Abilities> tempAbilities = new List<Abilities>();
+
+            for (int i = 0; i < Abilities.Count; i++)
+            {
+                if (Abilities[i].Type == "heal")
+                {
+                    tempAbilities.Add(Abilities[i]);
+                }
+            }
+            return tempAbilities;
+        }
+        private int RandomAbilities(List<Abilities> abilities)
+        {
+            Random random = new Random();
+
+            return random.Next(0, abilities.Count);
         }
     }
 }
