@@ -8,7 +8,6 @@
         public void LoadAndDisplayMenu(List<SelectMenu> menu)
         {
             // Affichage du menu
-            Console.WriteLine("Menu :");
             for (int i = 0; i < menu.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {menu[i].menuChoix}");
