@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BigSwordRPG_C_
 {
-    enum actionType
+    public enum actionType
     {
         ATT = 1,
         HEAL,
@@ -19,7 +19,7 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private string type; // true attack false magic
+        private int _type;
         private int _damage;
         private int _cooldown;
         private int _cost;
@@ -27,7 +27,7 @@ namespace BigSwordRPG_C_
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public string Type { get => type; set => type = value; }
+        public int Type { get => _type; set => _type = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
         public int Cost { get => _cost; set => _cost = value; }

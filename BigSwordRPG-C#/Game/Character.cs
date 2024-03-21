@@ -12,7 +12,6 @@ namespace BigSwordRPG.Game
         private int _damage;
         private string _type;
         private int _speed;
-
         private List<Abilities> _abilities;
 
         //Property
