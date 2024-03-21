@@ -1,4 +1,5 @@
 ﻿using BigSwordRPG.Assets;
+using BigSwordRPG_C_;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,8 @@ namespace BigSwordRPG.Utils
             Renderer.Initialize();
             InputManager = new InputManager();
             InputManager.Initialize();
+            Player player = new Player();
+            player.Initialize();
             return 0;
         }
 

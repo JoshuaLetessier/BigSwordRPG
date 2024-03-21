@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 
+using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG_C_;
+
 namespace BigSwordRPG.Assets
 {
     public struct COORD
@@ -83,7 +86,7 @@ namespace BigSwordRPG.Assets
             COORD position = new COORD();
             COORD size = new COORD();
             //ReadConsoleOutput(ConsoleHandle, charInfoList, )
-            //SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 2600, 3000, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
@@ -147,5 +150,77 @@ namespace BigSwordRPG.Assets
                 Console.Write(line);
             }
         }
+
+        public void DrawTexture(int[] position, Texture texture) {
+            Console.SetCursorPosition(0, 0);
+            Console.Write("Draw Texture");
+            string line;
+            int foregroundColor;
+            int backgroundColor;
+            for (int i = 0; i < texture.Size[1]; i++)
+            {
+                line = "";
+                for (int j = 0; j < texture.Size[0]; j++)
+                {
+                    foregroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].backgroundColor;
+                    line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
+                }
+                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.Write(line);
+            }
+        }
+
+        public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write("Draw Texture");
+            string line;
+            int foregroundColor;
+            int backgroundColor;
+            // bufferCoords = pos1 - pos2
+            // 
+            for (int i = 0; i < offset * (int)axis; i++)
+            {
+                line = "";
+                for (int k = 0; k < texture.Size[0]; k++)
+                {
+                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
+                }
+                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.Write(line);
+            }
+            for (int i = 0; i < texture.Size[1]; i++)
+            {
+                line = "";
+                for (int k = 0;  k < offset * (1 - (int)axis); k++)
+                {
+                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
+                }
+                for (int j = 0; j < texture.Size[0]; j++)
+                {
+                    foregroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].backgroundColor;
+                    line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
+                }
+                for (int k = 0; k > offset * (1 - (int)axis); k--)
+                {
+                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
+                }
+                Console.SetCursorPosition(position[0] - offset * (int)axis, position[1] + i - offset * (int)axis);
+                Console.Write(line);
+            }
+            for (int i = 0; i > offset * (int)axis; i--)
+            {
+                line = "";
+                for (int k = 0; k < texture.Size[0]; k++)
+                {
+                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
+                }
+                Console.SetCursorPosition(position[0], position[1] + texture.Size[1] + i);
+                Console.Write(line);
+            }
+        }
+
     }
 }

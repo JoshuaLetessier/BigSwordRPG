@@ -19,13 +19,19 @@ namespace BigSwordRPG.Utils
 
         public int Update() {
             ConsoleKey keyPressed = Console.ReadKey().Key;
-            switch (keyPressed)
+            if(actionsMap.ContainsKey(keyPressed)) { 
+                foreach(var action in actionsMap[keyPressed]) 
+                {
+                    action.Invoke();
+                }
+            }
+            /*switch (keyPressed)
             {
                 case ConsoleKey.Z:
                     Console.Write(keyPressed);
                     break;
 
-            }
+            }*/
 
 
             return 0; 
