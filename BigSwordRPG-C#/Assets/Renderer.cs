@@ -8,27 +8,33 @@ using System.Text;
 
 namespace BigSwordRPG.Assets
 {
-    struct COORD
+    public struct COORD
     {
-        short X;
-        short Y;
+        public short X;
+        public short Y;
     }
 
-    struct SMALL_RECT
+    public struct SMALL_RECT
     {
-        short Left;
-        short Top;
-        short Right;
-        short Bottom;
+        public short Left;
+        public short Top;
+        public short Right;
+        public short Bottom;
     }
 
-    struct CHAR_INFO
+    /*public struct CHAR_INFO
     {
-      char Char;
-      short Attributes;
+      public char Char;
+      public short Attributes;
+    }*/
+
+    public struct CHAR_INFO
+    {
+        public ushort UnicodeChar;
+        public ushort Attributes;
     }
 
-public class Renderer
+    public class Renderer
     {
         [DllImport("kernel32")]
         static extern IntPtr GetConsoleWindow();
@@ -48,6 +54,16 @@ public class Renderer
         [DllImport("User32")]
         static extern bool SetWindowLongA(IntPtr hWnd, int longIndex, long newlong);
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool ReadConsoleOutput(IntPtr hConsoleOutput,
+                                      [Out] CHAR_INFO[] lpBuffer,
+                                      COORD dwBufferSize,
+                                      COORD dwBufferCoord,
+                                      ref SMALL_RECT lpReadRegion);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
         private char[][] _consoleBuffer;
         public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
 
@@ -59,22 +75,50 @@ public class Renderer
         public int Initialize()
         {
             //Console.WindowWidth = 5;
+            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+
             Console.WriteLine(Console.LargestWindowWidth);
             IntPtr ConsoleHandle = GetConsoleWindow();
             List<CHAR_INFO> charInfoList = new List<CHAR_INFO>();
             COORD position = new COORD();
             COORD size = new COORD();
-            ReadConsoleOutput(ConsoleHandle, charInfoList, )
-            /*SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 2000, 1080, 0);
+            //ReadConsoleOutput(ConsoleHandle, charInfoList, )
+            //SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 2600, 3000, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
-            SetWindowLongA(ConsoleHandle, -16, style);*/
+            SetWindowLongA(ConsoleHandle, -16, style);
 
-            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            //Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             DrawObject(new[] { 10, 50 }, new[] { 6, 14 });
             DrawObject(new[] { 2, 3 }, new[] { 6, 14 });
             DrawObject(new[] { 50, 30 }, new[] { 6, 5 });
             DrawObject(new[] { 150, 20 }, new[] { 9, 3 });
+            Console.SetCursorPosition(15, 15);
+            Console.Write("\x1b[48;2;12;4;255mTestCharBG\x1b[48;2;0;0;0m");
+            Console.SetCursorPosition(15, 15);
+            Console.Write("\x1b[38;2;12;255;100mTestCharBG");
+
+            SMALL_RECT readRegion = new SMALL_RECT
+            {
+                Left = 10,
+                Top = 50,
+                Right = 16, // Adjust these coordinates to specify the region you want to read
+                Bottom = 64
+            };
+
+            COORD bufferSize = new COORD
+            {
+                X = (short)(readRegion.Right - readRegion.Left + 1),
+                Y = (short)(readRegion.Bottom - readRegion.Top + 1)
+            };
+
+            CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
+
+            bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
+
+            int errorCode = Marshal.GetLastWin32Error();
+            Console.WriteLine("Error occurred. Error code: " + errorCode);
+
             return 0;
         }
 
