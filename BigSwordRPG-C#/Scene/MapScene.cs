@@ -5,13 +5,20 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Text.Json.Nodes;
+using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Assets
 {
     public class MapScene : Scene
     {
+        private Camera testCam;
+        private Player testPlayer;
+
         public override void Draw()
         {
+            testCam = new Camera();
+            testPlayer = new Player();
+
             Console.SetCursorPosition(0, 0);
 
             Console.SetBufferSize(854, 480);
@@ -23,12 +30,9 @@ namespace BigSwordRPG.Assets
             Console.Write(s2);
             sr.Dispose();
 
-            //Pour le player
-            int playerX = 156;
-            int playerY = 90;
-            
-            Console.SetCursorPosition(playerX, playerY);
-            Console.SetWindowPosition(playerX - 70, playerY - 25);
+            Console.SetCursorPosition(testCam.joueur.Position[0], testCam.joueur.Position[1]);
+
+            testCam.setPositionCamera();
         }
 
         public override void Update()

@@ -33,6 +33,7 @@ namespace BigSwordRPG
             Program p = new Program();
 
             p.testMenu.Draw();
+            
 
             Console.Read();
 

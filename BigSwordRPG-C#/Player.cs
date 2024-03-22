@@ -25,13 +25,13 @@ namespace BigSwordRPG_C_
 
         public int Initialize()
         {
-            Position = new int[2] { 10,10 };
+            Position = new int[2] { 100,90 };
             Texture = new Texture();
             Texture.Size = new int[2] { 2, 3 };
             Texture.PixelsBuffer = new List<Pixel>() { 
                 new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160) 
             };
-            GameManager.Instance.Renderer.DrawTexture(Position, Texture);
+            /*GameManager.Instance.Renderer.DrawTexture(Position, Texture);
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D, 
                 new Action(
@@ -55,7 +55,7 @@ namespace BigSwordRPG_C_
                  new Action(
                      () => Move(1, Axis.VERTICAL)
                  )
-             );
+             );*/
             return 0;
         }
 
