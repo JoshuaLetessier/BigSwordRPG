@@ -16,8 +16,8 @@ namespace BigSwordRPG.Assets
 
             Console.SetBufferSize(854, 480);
 
-          //  StreamReader sr = new StreamReader("../../../Asset/Image/map.txt");//Remettre le fichier dans Debug pour le déploiement
-            StreamReader sr = new StreamReader("map.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader sr = new StreamReader("../../../Asset/Image/map.txt");//Remettre le fichier dans Debug pour le déploiement
+            //StreamReader sr = new StreamReader("map.txt");//Remettre le fichier dans Debug pour le déploiement
             string s2 = sr.ReadToEnd().Replace("\\e","\x1b");
 
             Console.Write(s2);
