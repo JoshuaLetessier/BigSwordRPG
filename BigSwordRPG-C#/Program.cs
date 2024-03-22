@@ -1,6 +1,8 @@
 ﻿using BigSwordRPG.Assets;
 using BigSwordRPG_C_;
 
+using BigSwordRPG.Utils;
+
 namespace BigSwordRPG
 {
     internal class Program
