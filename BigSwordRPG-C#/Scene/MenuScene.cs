@@ -11,11 +11,14 @@ namespace BigSwordRPG.Assets
     {
         private SelectMenu test;
         private MapScene testmap;
+        private OptionScene option;
+        public string nameGame;
 
         public MenuScene() 
         {
             test = new SelectMenu();
             testmap = new MapScene();
+            option = new OptionScene();
         }
 
 
@@ -24,19 +27,21 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(0, 0);
 
             StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
-            string Name = srName.ReadToEnd().Replace("\\e", "\x1b");
+            string Name = srName.ReadToEnd();
 
             StreamReader srNouvellePartie = new StreamReader("../../../Asset/Image/nouvelle.txt");//Remettre le fichier dans Debug pour le déploiement
-            string NouvellePartie = srNouvellePartie.ReadToEnd().Replace("\\e", "\x1b");
+            string NouvellePartie = srNouvellePartie.ReadToEnd();
 
             StreamReader srContinuerPartie = new StreamReader("../../../Asset/Image/continuer.txt");//Remettre le fichier dans Debug pour le déploiement
-            string ContinuerPartie = srContinuerPartie.ReadToEnd().Replace("\\e", "\x1b");
+            string ContinuerPartie = srContinuerPartie.ReadToEnd();
 
             StreamReader srOption = new StreamReader("../../../Asset/Image/option.txt");//Remettre le fichier dans Debug pour le déploiement
-            string Option = srOption.ReadToEnd().Replace("\\e", "\x1b");
+            string Option = srOption.ReadToEnd();
 
             StreamReader srQuitter = new StreamReader("../../../Asset/Image/quitter.txt");//Remettre le fichier dans Debug pour le déploiement
-            string Quitter = srQuitter.ReadToEnd().Replace("\\e", "\x1b");
+            string Quitter = srQuitter.ReadToEnd();
+
+            nameGame = Name;
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(Name);
@@ -72,7 +77,7 @@ namespace BigSwordRPG.Assets
 
         public void OptionGame()
         {
-            throw new NotImplementedException();
+            option.Draw();
         }
 
         public void ContinueGame()
