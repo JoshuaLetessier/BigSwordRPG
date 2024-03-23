@@ -12,10 +12,12 @@ namespace BigSwordRPG.Assets
     public class OptionScene : Scene
     {
         private SelectMenu test;
+        private MenuScene testMenu;
 
         public OptionScene() 
         {
             test = new SelectMenu();
+            testMenu = new MenuScene();
         }
 
         public override void Draw()
@@ -32,6 +34,9 @@ namespace BigSwordRPG.Assets
             StreamReader srLangues = new StreamReader("../../../Asset/Image/langues.txt");
             string Langues = srLangues.ReadToEnd();
 
+            StreamReader srReturn = new StreamReader("../../../Asset/Image/Return.txt");
+            string Return = srReturn.ReadToEnd();
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(Name);
             Console.ForegroundColor = ConsoleColor.White;
@@ -39,7 +44,8 @@ namespace BigSwordRPG.Assets
             List<SelectMenu> optionMenu = new List<SelectMenu>()
             {
                 new SelectMenu { menuChoix = Resolution, ToDo = AllResolution },
-                new SelectMenu { menuChoix = Langues, ToDo = SetLangues }
+                new SelectMenu { menuChoix = Langues, ToDo = SetLangues },
+                new SelectMenu { menuChoix = Return, ToDo = ReturnMenu }
             };
                         
             HandleUserInput(optionMenu);
@@ -90,6 +96,11 @@ namespace BigSwordRPG.Assets
         public void SetLangues()
         {
             throw new NotImplementedException();
+        }
+
+        public void ReturnMenu()
+        {
+            testMenu.Draw();
         }
     }
 }

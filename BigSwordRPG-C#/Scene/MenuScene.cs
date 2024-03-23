@@ -13,19 +13,18 @@ namespace BigSwordRPG.Assets
         private SelectMenu test;
         private MapScene testmap;
         private OptionScene option;
-        public string nameGame;
         public List<SelectMenu> menu;
 
         public MenuScene() 
         {
             test = new SelectMenu();
             testmap = new MapScene();
-            option = new OptionScene();
         }
 
 
         public override void Draw()
         {
+            Console.Clear();
             Console.SetCursorPosition(0, 0);
 
             StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
@@ -42,8 +41,6 @@ namespace BigSwordRPG.Assets
 
             StreamReader srQuitter = new StreamReader("../../../Asset/Image/quitter.txt");//Remettre le fichier dans Debug pour le déploiement
             string Quitter = srQuitter.ReadToEnd();
-
-            nameGame = Name;
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(Name);
@@ -105,6 +102,8 @@ namespace BigSwordRPG.Assets
 
         public void OptionGame()
         {
+
+            option = new OptionScene();
             option.Draw();
         }
 

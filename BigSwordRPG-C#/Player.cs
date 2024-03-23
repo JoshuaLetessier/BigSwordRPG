@@ -25,7 +25,7 @@ namespace BigSwordRPG_C_
 
         public int Initialize()
         {
-            Position = new int[2] { 100,90 };
+            Position = new int[2] { 150,90 };
             Texture = new Texture();
             Texture.Size = new int[2] { 2, 3 };
             Texture.PixelsBuffer = new List<Pixel>() { 
