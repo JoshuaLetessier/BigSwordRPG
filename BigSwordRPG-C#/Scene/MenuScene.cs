@@ -14,6 +14,7 @@ namespace BigSwordRPG.Assets
         private MapScene testmap;
         private OptionScene option;
         public string nameGame;
+        public List<SelectMenu> menu;
 
         public MenuScene() 
         {
@@ -48,7 +49,7 @@ namespace BigSwordRPG.Assets
             Console.WriteLine(Name);
             Console.ForegroundColor = ConsoleColor.White;
 
-            List<SelectMenu> menu = new List<SelectMenu>
+            menu = new List<SelectMenu>
             {
                 new SelectMenu { menuChoix = NouvellePartie, ToDo = testmap.Draw },
                 new SelectMenu { menuChoix = ContinuerPartie, ToDo = ContinueGame},

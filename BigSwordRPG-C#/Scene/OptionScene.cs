@@ -38,10 +38,10 @@ namespace BigSwordRPG.Assets
 
             List<SelectMenu> optionMenu = new List<SelectMenu>()
             {
-                new SelectMenu { menuChoix = Resolution, ToDo = allResolution },
-                new SelectMenu { menuChoix = Langues, ToDo = setLangues }
+                new SelectMenu { menuChoix = Resolution, ToDo = AllResolution },
+                new SelectMenu { menuChoix = Langues, ToDo = SetLangues }
             };
-
+                        
             HandleUserInput(optionMenu);
 
             srName.Dispose();
@@ -82,12 +82,12 @@ namespace BigSwordRPG.Assets
             throw new NotImplementedException();
         }
 
-        public void allResolution()
+        public void AllResolution()
         {
             throw new NotSupportedException();
         }
 
-        public void setLangues()
+        public void SetLangues()
         {
             throw new NotImplementedException();
         }
