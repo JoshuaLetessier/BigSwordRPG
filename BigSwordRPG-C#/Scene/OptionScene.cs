@@ -17,6 +17,7 @@ namespace BigSwordRPG.Assets
         {
             test = new SelectMenu();
         }
+
         public override void Draw()
         {
             Console.Clear();
@@ -28,22 +29,67 @@ namespace BigSwordRPG.Assets
             StreamReader srResolution = new StreamReader("../../../Asset/Image/resolution.txt");
             string Resolution = srResolution.ReadToEnd();
 
+            StreamReader srLangues = new StreamReader("../../../Asset/Image/langues.txt");
+            string Langues = srLangues.ReadToEnd();
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(Name);
             Console.ForegroundColor = ConsoleColor.White;
 
             List<SelectMenu> optionMenu = new List<SelectMenu>()
             {
-                new SelectMenu { menuChoix = Resolution, ToDo = Update }
+                new SelectMenu { menuChoix = Resolution, ToDo = allResolution },
+                new SelectMenu { menuChoix = Langues, ToDo = setLangues }
             };
 
-            test.LoadAndDisplayMenu(optionMenu);
+            HandleUserInput(optionMenu);
 
             srName.Dispose();
             srResolution.Dispose();
+            srLangues.Dispose();
+        }
+
+        public void HandleUserInput(List<SelectMenu> options)
+        {
+            int selectedIndex = 0;
+            bool Boucle = true;
+
+            while (Boucle)
+            {
+                // Redessine le menu avec la nouvelle sélection
+                test.LoadAndDisplayMenu(options, selectedIndex);
+
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.UpArrow)
+                {
+                    selectedIndex = (selectedIndex - 1 + options.Count) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    selectedIndex = (selectedIndex + 1) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    options[selectedIndex].ToDo();
+                    Boucle = false;
+                }
+
+                
+            }
         }
 
         public override void Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void allResolution()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void setLangues()
         {
             throw new NotImplementedException();
         }

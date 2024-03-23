@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -55,13 +56,41 @@ namespace BigSwordRPG.Assets
                 new SelectMenu { menuChoix = Quitter, ToDo = RetrunDesktop}
             };
 
-            test.LoadAndDisplayMenu(menu);
+            HandleUserInput(menu);
 
             srName.Dispose();
             srNouvellePartie.Dispose();
             srContinuerPartie.Dispose();
             srOption.Dispose();
             srQuitter.Dispose();
+        }
+
+        public void HandleUserInput(List<SelectMenu> options)
+        {
+            int selectedIndex = 0;
+            bool Boucle = true;
+            while (Boucle)
+            {
+                test.LoadAndDisplayMenu(options, selectedIndex);
+
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.UpArrow)
+                {
+                    selectedIndex = (selectedIndex - 1 + options.Count) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    selectedIndex = (selectedIndex + 1) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    options[selectedIndex].ToDo();
+                    Boucle = false;
+                }
+
+
+            }
         }
 
         public override void Update()

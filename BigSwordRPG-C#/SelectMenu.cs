@@ -5,26 +5,28 @@
         public string menuChoix;
         public Action ToDo;
 
-        public void LoadAndDisplayMenu(List<SelectMenu> menu)
+        public void LoadAndDisplayMenu(List<SelectMenu> options, int selectedIndex = 0)
         {
-            // Affichage du menu
-            for (int i = 0; i < menu.Count; i++)
+            Console.SetCursorPosition(0, 8);
+
+            for (int i = 0; i < options.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {menu[i].menuChoix}");
+                if (i == selectedIndex)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
+                Console.WriteLine(options[i].menuChoix);
             }
 
-            // Demande à l'utilisateur de choisir une option
-            Console.WriteLine("Choisissez une option :");
-            int choice;
-            if (int.TryParse(Console.ReadLine(), out choice) && choice >= 1 && choice <= menu.Count)
-            {
-                // Appel de l'action associée à l'option choisie
-                menu[choice - 1].ToDo();
-            }
-            else
-            {
-                Console.WriteLine("Choix invalide !");
-            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
