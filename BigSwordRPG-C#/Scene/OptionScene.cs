@@ -74,8 +74,6 @@ namespace BigSwordRPG.Assets
                     options[selectedIndex].ToDo();
                     Boucle = false;
                 }
-
-                
             }
         }
 
