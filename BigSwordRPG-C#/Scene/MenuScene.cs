@@ -54,7 +54,7 @@ namespace BigSwordRPG.Assets
                 new SelectMenu { menuChoix = Quitter, ToDo = RetrunDesktop}
             };
 
-            HandleUserInput(menu);
+            test.HandleUserInput(menu);
 
             srName.Dispose();
             srNouvellePartie.Dispose();
@@ -63,31 +63,7 @@ namespace BigSwordRPG.Assets
             srQuitter.Dispose();
         }
 
-        public void HandleUserInput(List<SelectMenu> options)
-        {
-            int selectedIndex = 0;
-            bool Boucle = true;
-            while (Boucle)
-            {
-                test.LoadAndDisplayMenu(options, selectedIndex);
-
-                ConsoleKeyInfo key = Console.ReadKey(true);
-
-                if (key.Key == ConsoleKey.UpArrow)
-                {
-                    selectedIndex = (selectedIndex - 1 + options.Count) % options.Count;
-                }
-                else if (key.Key == ConsoleKey.DownArrow)
-                {
-                    selectedIndex = (selectedIndex + 1) % options.Count;
-                }
-                else if (key.Key == ConsoleKey.Enter)
-                {
-                    options[selectedIndex].ToDo();
-                    Boucle = false;
-                }
-            }
-        }
+        
 
         public override void Update()
         {

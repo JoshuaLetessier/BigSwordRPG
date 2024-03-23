@@ -1,4 +1,6 @@
-﻿namespace BigSwordRPG_C_
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace BigSwordRPG_C_
 {
     public class SelectMenu
     {
@@ -27,6 +29,32 @@
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void HandleUserInput(List<SelectMenu> options)
+        {
+            int selectedIndex = 0;
+            bool Boucle = true;
+            while (Boucle)
+            {
+                LoadAndDisplayMenu(options, selectedIndex);
+
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.UpArrow)
+                {
+                    selectedIndex = (selectedIndex - 1 + options.Count) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    selectedIndex = (selectedIndex + 1) % options.Count;
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    options[selectedIndex].ToDo();
+                    Boucle = false;
+                }
+            }
         }
     }
 }
