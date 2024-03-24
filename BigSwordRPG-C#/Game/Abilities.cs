@@ -9,7 +9,15 @@ namespace BigSwordRPG_C_
     {
         ATT = 1,
         HEAL,
-        MAG
+        CAPA,
+        ESCAPED
+    }
+
+    enum Zone
+    {
+        Unique = 1,
+        Near,
+        All
     }
 
     public class Abilities
@@ -19,19 +27,23 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private string type; // true attack false magic
+        private int _type; 
         private int _damage;
+        private int _heal;
+        private float _speedUp;
         private int _cooldown;
         private int _cost;
+        private int _zone;
 
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public string Type { get => type; set => type = value; }
+        public int Type { get => _type; set => _type = value; }
         public int Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
         public int Cost { get => _cost; set => _cost = value; }
-
-        //Méthodes
+        public int Heal { get => _heal; set => _heal = value; }
+        public int Zone { get => _zone; set => _zone = value; }
+        public float SpeedUp { get => _speedUp; set => _speedUp = value; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
+using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Assets
 {
@@ -131,16 +132,16 @@ namespace BigSwordRPG.Assets
 
             do
             {
-                foreach (var ability in actHero.Abilities)
+                foreach (var ability in actHero.CAbilities)
                 {
-                    bool isSelected = ability == actHero.Abilities[indexAbility];
+                    bool isSelected = ability == actHero.CAbilities[indexAbility];
                     ChangeLineColor(isSelected);
                     Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
                 }
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.Abilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.CAbilities.Count)
                     indexAbility++;
 
                 else if (pressedKey == ConsoleKey.UpArrow && indexAbility - 1 >= 0)
@@ -178,7 +179,7 @@ namespace BigSwordRPG.Assets
         {
             var rand = new Random();
 
-            actEnnemy.UseRandomAbilities();
+           // actEnnemy.RandomAbilitiesEasyMod();
 
             List<string> _heroesNames = new List<string>();
             foreach (var heroes in heroesInCombat.Values) { _heroesNames.Add(heroes.Name); }
@@ -187,7 +188,7 @@ namespace BigSwordRPG.Assets
             
             if(heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
 
-            heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
+            //heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
         }
 
 

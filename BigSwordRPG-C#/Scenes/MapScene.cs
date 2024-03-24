@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BigSwordRPG.Assets
 {
-    public class MapScene : Scene
+/*    public class MapScene : Scene
     {
-    }
+    }*/
 }

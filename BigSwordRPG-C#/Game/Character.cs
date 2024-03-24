@@ -8,13 +8,19 @@ namespace BigSwordRPG.Game
         //champ
         private string _name;
         private int _health;
+        private int _maxHealth;
         private int _level;
-        private int _damage;
-        private string _type;
+        private float _healthMultiplier;
+        private float _attMultiplier;
+        private float _healMultiplier;
         private int _speed;
         private bool _isDead;
 
         private List<Abilities> _abilities;
+
+
+
+        //private List<Equipement> _equipement;
 
         //Property
         public string Name { get => _name; set => _name = value; }
@@ -25,26 +31,33 @@ namespace BigSwordRPG.Game
             }
         }
         public int Level { get => _level; set => _level = value; }
-        public int Damage { get => _damage; set => _damage = value; }
-        public string Type { get => _type; set => _type = value; }
+
         public int Speed { get => _speed; set => _speed = value; }
         public bool IsDead { get => _isDead; set => _isDead = value; }
-        public List<Abilities> Abilities { get => _abilities; set => _abilities = value; }
+        public List<Abilities> CAbilities { get => _abilities; set => _abilities = value; }
+        public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+        public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
+        public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
+        public float HealMultiplier { get => _healMultiplier; set => _healMultiplier = value; }
 
 
 
         //Méthodes
-        public Character(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities, bool isDead)
+        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, List<Abilities> abilities,bool isDead)
         {
             _name = name;
             _health = health;
+            _maxHealth = maxHealth;
             _level = level;
-            _damage = damage;
-            _type = type;
+            _healthMultiplier = healthMultiplier;
+            _attMultiplier = attMultiplier;
+            _healMultiplier = healMultiplier;
             _speed = speed;
             _abilities = abilities;
             _isDead = isDead;
         }
+
+
         ~Character() { }
 
         public override void Draw()
@@ -67,10 +80,10 @@ namespace BigSwordRPG.Game
             Health -= attackPoint;
         }
 
-        public int MakeDammage()
+       /* public int MakeDammage()
         {
             return Damage;
-        }
+        }*/
         public  void Talk()
         {
             throw new NotImplementedException();
