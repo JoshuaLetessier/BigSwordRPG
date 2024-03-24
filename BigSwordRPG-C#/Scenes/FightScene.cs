@@ -1,5 +1,6 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
+using System.Linq;
 using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Assets
@@ -130,9 +131,9 @@ namespace BigSwordRPG.Assets
             int indexAbility = 0;
             ConsoleKey pressedKey;
 
-            do
+            do // Bug d'affichage ???
             {
-                foreach (var ability in actHero.CAbilities)
+                foreach (BigSwordRPG_C_.Abilities ability in actHero.Abilities)
                 {
                     bool isSelected = ability == actHero.CAbilities[indexAbility];
                     ChangeLineColor(isSelected);
@@ -141,14 +142,17 @@ namespace BigSwordRPG.Assets
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.CAbilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.Abilities.Count)
+                {
                     indexAbility++;
-
+                }
                 else if (pressedKey == ConsoleKey.UpArrow && indexAbility - 1 >= 0)
+                {
                     indexAbility--;
-
+                }
             } while (pressedKey != ConsoleKey.Enter);
 
+            actHero.UseAbilities(indexAbility);
 
         }
 
@@ -167,10 +171,12 @@ namespace BigSwordRPG.Assets
                     RandomAction(actEnnemy);
                     break;
                 case Difficulties.MIDDLE:
-                    Console.WriteLine();
+                    RandomAction(actEnnemy);
                     break;
                 case Difficulties.HARD:
-                    Console.WriteLine();
+                    Action(actEnnemy);
+                    break;
+                default:
                     break;
             }
         }
@@ -183,14 +189,27 @@ namespace BigSwordRPG.Assets
 
             List<string> _heroesNames = new List<string>();
             foreach (var heroes in heroesInCombat.Values) { _heroesNames.Add(heroes.Name); }
+            actEnnemy.UseRandomAbilities(); // Savoir si c'est une att ou du soins
 
+            List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
             int nameIndex = 0;
-            
-            if(heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
+
+            if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
 
             //heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
         }
 
+        private void Action(Ennemy actEnnemy)
+        {
+            List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
+            List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
+            List<int> _healthCompare = heroesInCombat.Values.Select(heroes => heroes.Health).ToList();
+            
+            for (int i = 0; i < heroesInCombat.Count; i++)
+            {
+                //heroesInCombat[_heroesNames[i]];
+            }
 
+        }
     }
 }

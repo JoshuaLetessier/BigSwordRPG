@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BigSwordRPG_C_
 {
-    enum actionType
+    public enum actionType
     {
         ATT = 1,
         HEAL,

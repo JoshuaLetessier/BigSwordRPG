@@ -24,7 +24,7 @@
   <Class Name="BigSwordRPG.Utils.GameManager" Collapsed="true">
     <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAQAAAA=</HashCode>
       <FileName>Utils\GameManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -52,7 +52,7 @@
   <Class Name="BigSwordRPG.Game.Hero">
     <Position X="1.25" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,18 +80,11 @@
       <FileName>Scenes\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BigSwordRPG_C_.MenuLancement" Collapsed="true">
-    <Position X="14" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MenuLancement.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BigSwordRPG_C_.Abilities" Collapsed="true">
     <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIADAACAACAAAAAAAABQAAAABAAAgAQAAAAAAAAA=</HashCode>
-      <FileName>Abilities.cs</FileName>
+      <HashCode>AAAAIADAACAACAQAAAAAABQAAAAAAAAgAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Abilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.DialogScene" Collapsed="true">
@@ -104,7 +97,7 @@
   <Class Name="BigSwordRPG.Assets.FightScene" Collapsed="true">
     <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAUAAAAAAAAAAAAAAAAAACAAAAAAAACABAAAAAIAAAQ=</HashCode>
       <FileName>Scenes\FightScene.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -125,9 +118,7 @@
   <Class Name="BigSwordRPG.Assets.Scene" Collapsed="true">
     <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIADAACAACAAAAAAAABQAAAABAAAgAQAAAAAAAAA=</HashCode>
-      <FileName>Game\Abilities.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Scene.cs</FileName>
     </TypeIdentifier>
   </Class>

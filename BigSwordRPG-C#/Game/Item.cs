@@ -8,6 +8,16 @@ namespace BigSwordRPG.Game
 {
     public class Item : GameObject
     {
+        // Champs
+        private string _name;
+        private int _value;
+
+        public Item(string name, int value)
+        {
+            _name = name;
+            _value = value;
+        }
+
         public override void Destroy()
         {
             throw new NotImplementedException();
@@ -27,5 +37,10 @@ namespace BigSwordRPG.Game
         {
             throw new NotImplementedException();
         }
+
+        // Getter
+        public string Name { get => _name; set => _name = value; }
+        public int Value { get => _value; set => _value = value; }
+
     }
 }
