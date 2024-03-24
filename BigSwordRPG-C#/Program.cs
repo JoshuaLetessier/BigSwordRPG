@@ -9,14 +9,11 @@ namespace BigSwordRPG
     {
         
         private MenuScene testMenu;
-        
-
 
         public Program()
         {
             
             testMenu = new MenuScene();
-            
         }
 
         ~Program()
@@ -32,8 +29,7 @@ namespace BigSwordRPG
 
             Program p = new Program();
 
-            p.testMenu.Draw();
-            
+            p.testMenu.Draw();            
 
             Console.Read();
 

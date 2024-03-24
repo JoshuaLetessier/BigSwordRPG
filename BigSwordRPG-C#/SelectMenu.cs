@@ -6,6 +6,12 @@ namespace BigSwordRPG_C_
     {
         public string menuChoix;
         public Action ToDo;
+        private Music testMusic;
+
+        public SelectMenu()
+        {
+            testMusic = new Music();
+        }
 
         public void LoadAndDisplayMenu(List<SelectMenu> options, int selectedIndex = 0)
         {
@@ -44,13 +50,16 @@ namespace BigSwordRPG_C_
                 if (key.Key == ConsoleKey.UpArrow)
                 {
                     selectedIndex = (selectedIndex - 1 + options.Count) % options.Count;
+                    testMusic.PlayBeepSelectMenu();
                 }
                 else if (key.Key == ConsoleKey.DownArrow)
                 {
                     selectedIndex = (selectedIndex + 1) % options.Count;
+                    testMusic.PlayBeepSelectMenu();
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
+                    testMusic.PlayEnterMenu();
                     options[selectedIndex].ToDo();
                     Boucle = false;
                 }
