@@ -27,7 +27,7 @@ namespace BigSwordRPG.Game
 
 
 
-      /*  public Abilities UseAbilities(int difficulty)
+        public Abilities UseAbilities(int difficulty)
         {
             switch (difficulty)
             {
@@ -54,13 +54,13 @@ namespace BigSwordRPG.Game
 
         public Abilities RandomAbilitiesEasyMod()
         {
-            return Abilities.ElementAt(RandomAbilities(Abilities));
+            return CAbilities.ElementAt(RandomAbilities(CAbilities));
         }
 
         //charactère des ennemis
         private Abilities bourinCharactherAbilities()//attaque ou rate
         {
-            return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1)));
+            return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1)));
         }
 
         private Abilities peureuxCharacterAbilities()
@@ -68,13 +68,13 @@ namespace BigSwordRPG.Game
             // toujours avoir un pourcentage de chance de heal supérieur à l'attaque
             Random random = new Random();
 
-            if(random.Next(0, 1) < 0.75f)
-            {   
-                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(2)));
+            if (random.Next(0, 1) < 0.75f)
+            {
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(2)));
             }
             else
             {
-                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
             }
         }
 
@@ -92,7 +92,7 @@ namespace BigSwordRPG.Game
                 oldValueHeal = healtLost;
                 for (int i = 0; i < abilitiesTempt.Count; i++)
                 {
-                   
+
                     if (Math.Abs(healtLost - abilitiesTempt[i].Damage) < oldValueHeal)
                     {
                         oldValueHeal = Math.Abs(healtLost - (abilitiesTempt[i].Damage));
@@ -102,7 +102,7 @@ namespace BigSwordRPG.Game
             }
             else
             {
-                
+
             }
 
             return null;
@@ -110,21 +110,21 @@ namespace BigSwordRPG.Game
         private Abilities lacheCharacterAbilities()
         {
             Random random = new();
-            if(random.Next(0, 1) < 0.75f)
-                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
+            if (random.Next(0, 1) < 0.75f)
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
             else
-                return Abilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(4)));
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(4)));
         }
 
         private List<Abilities> GetAbilitiesByTypes(int type)
         {
             List<Abilities> tempAbilities = new List<Abilities>();
 
-            for (int i = 0; i < Abilities.Count; i++)
+            for (int i = 0; i < CAbilities.Count; i++)
             {
-                if (Abilities[i].Type == type)
+                if (CAbilities[i].Type == type)
                 {
-                    tempAbilities.Add(Abilities[i]);
+                    tempAbilities.Add(CAbilities[i]);
                 }
             }
             return tempAbilities;
@@ -134,6 +134,6 @@ namespace BigSwordRPG.Game
             Random random = new Random();
 
             return random.Next(0, abilities.Count);
-        }*/
+        }
     }
 }

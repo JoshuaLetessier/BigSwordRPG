@@ -133,7 +133,7 @@ namespace BigSwordRPG.Assets
 
             do // Bug d'affichage ???
             {
-                foreach (BigSwordRPG_C_.Abilities ability in actHero.Abilities)
+                foreach (BigSwordRPG_C_.Abilities ability in actHero.CAbilities)
                 {
                     bool isSelected = ability == actHero.CAbilities[indexAbility];
                     ChangeLineColor(isSelected);
@@ -142,7 +142,7 @@ namespace BigSwordRPG.Assets
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.Abilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.CAbilities.Count)
                 {
                     indexAbility++;
                 }
@@ -189,9 +189,9 @@ namespace BigSwordRPG.Assets
 
             List<string> _heroesNames = new List<string>();
             foreach (var heroes in heroesInCombat.Values) { _heroesNames.Add(heroes.Name); }
-            actEnnemy.UseRandomAbilities(); // Savoir si c'est une att ou du soins
+            actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
 
-            List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
+            _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
             int nameIndex = 0;
 
             if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
@@ -202,7 +202,7 @@ namespace BigSwordRPG.Assets
         private void Action(Ennemy actEnnemy)
         {
             List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
-            List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
+            //List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
             List<int> _healthCompare = heroesInCombat.Values.Select(heroes => heroes.Health).ToList();
             
             for (int i = 0; i < heroesInCombat.Count; i++)
