@@ -10,10 +10,11 @@ namespace BigSwordRPG_C_
         ATT = 1,
         HEAL,
         CAPA,
+        BUFF,
         ESCAPED
     }
 
-    enum Zone
+    enum ZoneAction
     {
         Unique = 1,
         Near,
@@ -27,23 +28,23 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private int _type; 
-        private int _damage;
-        private int _heal;
+        private Enum _type; 
+        private float _damage;
+        private float _heal;
         private float _speedUp;
         private int _cooldown;
-        private int _cost;
-        private int _zone;
+        private float _cost;
+        private Enum _zone;
 
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public int Type { get => _type; set => _type = value; }
-        public int Damage { get => _damage; set => _damage = value; }
+        public Enum Type { get => _type; set => _type = value; }
+        public float Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
-        public int Cost { get => _cost; set => _cost = value; }
-        public int Heal { get => _heal; set => _heal = value; }
-        public int Zone { get => _zone; set => _zone = value; }
+        public float Cost { get => _cost; set => _cost = value; }
+        public float Heal { get => _heal; set => _heal = value; }
+        public Enum Zone { get => _zone; set => _zone = value; }
         public float SpeedUp { get => _speedUp; set => _speedUp = value; }
     }
 }

@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BigSwordRPG_C_
+{
+    public class Camera
+    {
+        public Player joueur;
+
+        public Camera() 
+        { 
+            joueur = new Player();
+            joueur.Initialize();
+        }
+
+        public void setPositionCamera()
+        {
+            int[] posJoueur = joueur.Position;
+            Console.SetWindowPosition(posJoueur[0] - 70, posJoueur[1] - 25);
+        }
+    }
+}

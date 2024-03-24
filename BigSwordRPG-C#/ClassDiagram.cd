@@ -7,10 +7,15 @@
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
+<<<<<<< HEAD
   <Class Name="BigSwordRPG.Utils.InputManager" Collapsed="true">
     <Position X="14" Y="0.5" Width="1.5" />
+=======
+  <Class Name="BigSwordRPG.Utils.InputManager">
+    <Position X="12.75" Y="3.75" Width="1.5" />
+>>>>>>> origin/camera
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAQAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>Utils\InputManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -21,10 +26,17 @@
       <FileName>Utils\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
+<<<<<<< HEAD
   <Class Name="BigSwordRPG.Utils.GameManager" Collapsed="true">
     <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAQAAAA=</HashCode>
+=======
+  <Class Name="BigSwordRPG.Utils.GameManager">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAQAAAIAAAAAAEgAAAAAAQACAIAQAAAI=</HashCode>
+>>>>>>> origin/camera
       <FileName>Utils\GameManager.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -76,8 +88,13 @@
   <Class Name="BigSwordRPG.Assets.Renderer" Collapsed="true">
     <Position X="12.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
+<<<<<<< HEAD
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Renderer.cs</FileName>
+=======
+      <HashCode>AAAAAAAAAgAAAQAAAEAAAAAAAAIAAAAAAAAAAAQ0AAA=</HashCode>
+      <FileName>Assets\Renderer.cs</FileName>
+>>>>>>> origin/camera
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Abilities" Collapsed="true">
@@ -120,6 +137,13 @@
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Scene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BigSwordRPG_C_.Player">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -38,7 +38,7 @@ namespace BigSwordRPG.Assets
         {
             Console.WriteLine("FIGHT !!!");
             // boucle de combas
-            while(player.allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
                 if (startFight == true)
                 {
@@ -170,7 +170,7 @@ namespace BigSwordRPG.Assets
                 case Difficulties.EASY:
                     RandomAction(actEnnemy);
                     break;
-                case Difficulties.MIDDLE:
+                case Difficulties.MEDIUM:
                     RandomAction(actEnnemy);
                     break;
                 case Difficulties.HARD:
@@ -210,6 +210,11 @@ namespace BigSwordRPG.Assets
                 //heroesInCombat[_heroesNames[i]];
             }
 
+        }
+
+        public override void Draw()
+        {
+            throw new NotImplementedException();
         }
     }
 }

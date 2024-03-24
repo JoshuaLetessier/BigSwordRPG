@@ -88,17 +88,7 @@ namespace BigSwordRPG.Game
 
             if ((float)Health / MaxHealth * 100 < 0.75f)
             {
-                int healtLost = MaxHealth - Health;
-                oldValueHeal = healtLost;
-                for (int i = 0; i < abilitiesTempt.Count; i++)
-                {
 
-                    if (Math.Abs(healtLost - abilitiesTempt[i].Damage) < oldValueHeal)
-                    {
-                        oldValueHeal = Math.Abs(healtLost - (abilitiesTempt[i].Damage));
-                        value = i;
-                    }
-                }
             }
             else
             {
@@ -122,10 +112,10 @@ namespace BigSwordRPG.Game
 
             for (int i = 0; i < CAbilities.Count; i++)
             {
-                if (CAbilities[i].Type == type)
+               /* if (CAbilities[i].Type == type)
                 {
                     tempAbilities.Add(CAbilities[i]);
-                }
+                }*/
             }
             return tempAbilities;
         }

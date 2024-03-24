@@ -28,12 +28,12 @@ namespace BigSwordRPG.Game
         {
             switch (actAbilities[indexAbilities].Type)
             {
-                case (int)actionType.ATT:
+               /* case (int)actionType.ATT:
                     return actAbilities[indexAbilities].Damage;//ad
                 case (int)actionType.HEAL:
                     break;
                 case (int)actionType.CAPA:
-                    break;
+                    break;*/
                 default:
                     break;
             }

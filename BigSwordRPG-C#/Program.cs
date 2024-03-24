@@ -1,17 +1,20 @@
-﻿using BigSwordRPG.Game;
-using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Assets;
 using BigSwordRPG_C_;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
+
+using BigSwordRPG.Utils;
+using BigSwordRPG.Game;
 
 namespace BigSwordRPG
 {
     internal class Program
     {
+        
+        private MenuScene testMenu;
+
         public Program()
         {
-            //throw new NotImplementedException();
+            
+            testMenu = new MenuScene();
         }
 
         ~Program()
@@ -21,10 +24,17 @@ namespace BigSwordRPG
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.SetWindowSize(Console.LargestWindowWidth - 100, Console.LargestWindowHeight - 10);
+            //LargestWindowWidth = 240
+            //LargestWindowHeight = 63
+
+            Program p = new Program();
+
+            //p.testMenu.Draw();            
+
+            //Console.Read();
 
             List<Hero> heroes = new List<Hero>();
-            Program p = new Program();
 
             heroes = p.CreateHero();
 
@@ -82,13 +92,13 @@ namespace BigSwordRPG
                             Health = int.Parse(heroData[1]),
                             MaxHealth = int.Parse(heroData[2]),
                             Level = int.Parse(heroData[3]),
-
-                            HealthMultiplier = float.Parse(stringHealthMultiplier),
-                           // AttMultiplier = float.Parse(stringAttMultiplier),
-/*                            HealMultiplier = float.Parse(stringHealMultiplier),
+                            HealthMultiplier = Single.Parse(stringHealthMultiplier.Replace(".", ",")),
+                           
+                            AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
+                            HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
                             Speed = int.Parse(heroData[7]),
-                            CAbilities = CreateAbilities(),*/
-                            IsDead = false,
+                            CAbilities = CreateAbilities(),
+                            IsDead = false
                         };
                         heroes.Add(hero);
                     }
@@ -102,10 +112,12 @@ namespace BigSwordRPG
                 return null;//excption
             }
         }
+
+        //a mettre dans abilitis
         private List<Abilities> CreateAbilities()
         {
 
-            string filePath = "Game/Stat/AbilitiesStat.csv";
+            string filePath = "../../../Game/Stat/AbilitiesStat.csv";
             List<Abilities> abilities = new List<Abilities>();
             if (File.Exists(filePath))
             {
@@ -118,13 +130,14 @@ namespace BigSwordRPG
                         Abilities ability = new Abilities
                         {
                             Name = abilitiesData[0],
-                            Type = int.Parse(abilitiesData[1]),
-                            Damage = int.Parse(abilitiesData[2]),
-                            Cooldown = int.Parse(abilitiesData[3]),
-                            Cost = int.Parse(abilitiesData[4]),
-                            Heal = int.Parse(abilitiesData[5]),
-                            Zone = int.Parse(abilitiesData[6]),
-                            SpeedUp = float.Parse(abilitiesData[7]),
+                            Type = (actionType) Enum.Parse(typeof(actionType), abilitiesData[1]),
+                            Damage = float.Parse(abilitiesData[2].Replace(".", ",")),
+                            Heal = float.Parse(abilitiesData[3].Replace(".", ",")),
+                            SpeedUp = float.Parse(abilitiesData[4].Replace(".", ",")),
+                            Cooldown = int.Parse(abilitiesData[5]),
+                            Cost = float.Parse(abilitiesData[6].Replace(".", ",")),
+                            Zone = (ZoneAction) Enum.Parse(typeof(ZoneAction), abilitiesData[7]),
+                            
 
                         };
                         abilities.Add(ability);
