@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using BigSwordRPG_C_;
+using BigSwordRPG_C_.Utils;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace BigSwordRPG.Assets

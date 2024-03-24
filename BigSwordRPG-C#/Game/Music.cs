@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG_C_.Game
 {
     public class Music
     {
@@ -14,7 +14,7 @@ namespace BigSwordRPG_C_
 
         public Music()
         {
-            
+
         }
 
         public void PlayBeepSelectMenu()

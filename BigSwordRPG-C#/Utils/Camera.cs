@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG_C_.Utils
 {
     public class Camera
     {
         public Player joueur;
 
-        public Camera() 
-        { 
+        public Camera()
+        {
             joueur = new Player();
             joueur.Initialize();
         }
