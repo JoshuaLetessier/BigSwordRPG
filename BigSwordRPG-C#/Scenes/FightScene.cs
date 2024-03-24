@@ -1,23 +1,126 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using System.Linq;
+using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Assets
 {
     public class FightScene : Scene
     {
-        private Dictionary<string, Hero> heroesInCombat;
-        List<Ennemy> ennemiesInCombat;
-        public FightScene(Dictionary<string, Hero> heroes, List<Ennemy> ennemies) 
+        private Dictionary<string, Game.Hero> heroesInCombat;
+        List<Game.Ennemy> _ennemiesList;
+        private int indexAbility = 0;
+
+        private bool startFight = false;
+        private string firstTeamPlay;
+        private int heroPlayable;
+        private int ennemyPlaybale;
+        private int allEnnemyDeath;
+
+        Player player = new Player(); //!!!!!!!!!!A changer !!!!!!!!!
+
+        public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+
+        public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies) 
         {
+            int count = 0;
+            foreach (var key in heroes.Keys)
+            {
+                if (heroes[key].Health == 0) { ++count; }
+            }
+            if (count == heroes.Count) { /*return false;*/ }
+
             heroesInCombat = heroes;
-            ennemiesInCombat = ennemies;
-        }
+            firstTeamPlay = orderStartFight();
+        } //exption pour remplacer le bool
 
         public override void Update()
         {
             Console.WriteLine("FIGHT !!!");
+            // boucle de combas
+            while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            {
+                if (startFight == true)
+                {
+                    startFight = false;
 
+                    if (firstTeamPlay == "h")
+                    {
+                        Round(heroesInCombat.First().Value);
+                        firstTeamPlay = "e";
+                        if (heroesInCombat.Count != 1)
+                        {
+                            heroPlayable = 0;
+                        }
+                        heroPlayable += 1;
+
+                    }
+                    else
+                    {
+                        Round(EnnemiesList[0]);
+                        firstTeamPlay= "h";
+                        if (EnnemiesList.Count == 1)
+                        {
+                            ennemyPlaybale = 0;
+                        }
+                        ennemyPlaybale += 1;
+                    }
+                }
+                else
+                {
+                    if(firstTeamPlay == "h")
+                    {
+                        Round(heroesInCombat.First().Value);
+                        firstTeamPlay = "e";
+                        if (heroesInCombat.Count != 1)
+                        {
+                            heroPlayable = 0;
+                        }
+                        heroPlayable += 1;
+
+                    }
+                    else
+                    {
+                        Round(EnnemiesList[0]);
+                        firstTeamPlay = "h";
+                        if (EnnemiesList.Count == 1)
+                        {
+                            ennemyPlaybale = 0;
+                        }
+                        ennemyPlaybale += 1;
+                    }
+                    //dico toList
+                }
+            }
+        }
+
+        private string orderStartFight()
+        {
+            if (heroesInCombat.Count < EnnemiesList.Count)
+            {
+                return "h";
+            }
+            else if (heroesInCombat.Count > EnnemiesList.Count)
+            {
+                return "e";
+            }
+            else
+            {
+                Random random = new Random();
+                float randomFirstPlay = random.Next(0, 1);
+                if (randomFirstPlay < 0.5f)
+                {
+                    return "h";
+                }
+                else
+                {
+                    return "e";
+                }
+            }
+        }
+
+        public void FightLoop(string firstPlay)
+        {  
         }
 
         private void Round(Hero actHero)
@@ -30,16 +133,16 @@ namespace BigSwordRPG.Assets
 
             do // Bug d'affichage ???
             {
-                foreach (BigSwordRPG_C_.Abilities ability in actHero.Abilities)
+                foreach (BigSwordRPG_C_.Abilities ability in actHero.CAbilities)
                 {
-                    bool isSelected = ability == actHero.Abilities[indexAbility];
+                    bool isSelected = ability == actHero.CAbilities[indexAbility];
                     ChangeLineColor(isSelected);
                     Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
                 }
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.Abilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.CAbilities.Count)
                 {
                     indexAbility++;
                 }
@@ -67,7 +170,7 @@ namespace BigSwordRPG.Assets
                 case Difficulties.EASY:
                     RandomAction(actEnnemy);
                     break;
-                case Difficulties.MIDDLE:
+                case Difficulties.MEDIUM:
                     RandomAction(actEnnemy);
                     break;
                 case Difficulties.HARD:
@@ -82,20 +185,24 @@ namespace BigSwordRPG.Assets
         {
             var rand = new Random();
 
-            actEnnemy.UseRandomAbilities(); // Savoir si c'est une att ou du soins
+           // actEnnemy.RandomAbilitiesEasyMod();
 
-            List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
+            List<string> _heroesNames = new List<string>();
+            foreach (var heroes in heroesInCombat.Values) { _heroesNames.Add(heroes.Name); }
+            actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
+
+            _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
             int nameIndex = 0;
 
             if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
 
-            heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
+            //heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
         }
 
         private void Action(Ennemy actEnnemy)
         {
             List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
-            List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
+            //List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
             List<int> _healthCompare = heroesInCombat.Values.Select(heroes => heroes.Health).ToList();
             
             for (int i = 0; i < heroesInCombat.Count; i++)
@@ -103,6 +210,11 @@ namespace BigSwordRPG.Assets
                 //heroesInCombat[_heroesNames[i]];
             }
 
+        }
+
+        public override void Draw()
+        {
+            throw new NotImplementedException();
         }
     }
 }

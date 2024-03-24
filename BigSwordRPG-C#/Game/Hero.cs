@@ -9,21 +9,31 @@ namespace BigSwordRPG.Game
     public class Hero : Character
     {
         List<Abilities> actAbilities;
-        public Hero(string name, int health, int level, int damage, string type, int speed, List<Abilities> abilities) : base(name, health, level, damage, type, speed, abilities)
+
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, List<Abilities> abilities, bool isDead) :base(name, health,maxHealth,level,healthMultiplier,attMultiplier,healMultiplier,speed, abilities,isDead)
         {
-            actAbilities = abilities;
+            Name = name;
+            Health = health;
+            MaxHealth = maxHealth;
+            Level = level;
+            HealthMultiplier = healthMultiplier;
+            AttMultiplier = attMultiplier;
+            HealMultiplier = healMultiplier;
+            Speed = speed;
+            CAbilities = abilities;
+            IsDead = isDead;
         }
 
         public int UseAbilities(int indexAbilities)
         {
             switch (actAbilities[indexAbilities].Type)
             {
-                case (int)actionType.ATT:
+               /* case (int)actionType.ATT:
                     return actAbilities[indexAbilities].Damage;//ad
                 case (int)actionType.HEAL:
                     break;
-                case (int)actionType.MAG:
-                    break;
+                case (int)actionType.CAPA:
+                    break;*/
                 default:
                     break;
             }

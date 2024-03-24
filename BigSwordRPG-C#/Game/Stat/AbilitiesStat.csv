@@ -1,0 +1,21 @@
+Siphonage,ATT,20,20,0,2,1.35,Unique
+Faucheuse énergétique,ATT,20,20,0,2,1.45,Near
+Coup multiple,ATT,10,0,0,0,0,Near
+Frappe chirurgicale,ATT,15,5,0,0,0,Unique
+Coup défensif,ATT,10,0,1.15,0,0,Unique
+Frappe moyenne,ATT,20,0,0,0,0,Unique
+Choc virtuel,ATT,25,0,0,0,0,Unique
+Déflagration,ATT,15,0,0,0,1.30,All
+Brise sol,ATT,25,0,0,0,1.35,Near
+Attaque sautée,ATT,35,0,0,0,1.30,Unique
+Découpe brutale,ATT,45,0,0,0,1.40,Unique
+Vitalité accrue,BUFF,0,1.10,0,1,0,Unique
+Surcharge moteur,BUFF,0,0,1.35,1,0,Unique
+Surcharge énergétique,BUFF,1.30,0,0,2,0,Unique
+Renforcement énergétique,BUFF,0,1.25,0,2,0,Unique
+Lexus BIGBANG,CAPA,30,0,0,0,0,All
+Seraph Aery,CAPA,0,50,0,0,0,All
+Nova Cataclysme,CAPA,60,0,0,0,0,Unique
+Replie,ESCAPED,0,0,0,0,0,Unique
+Régénération des tissus,HEAL,0,20,0,0,1.25,Unique
+Réparation Nanite,HEAL,0,45,0,0,1.50,Unique
