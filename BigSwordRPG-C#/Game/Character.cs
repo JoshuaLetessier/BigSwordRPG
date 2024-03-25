@@ -1,5 +1,7 @@
 ﻿using BigSwordRPG.Utils;
 using BigSwordRPG_C_;
+using BigSwordRPG_C_.Game;
+using System.Linq.Expressions;
 
 namespace BigSwordRPG.Game
 {
@@ -14,9 +16,11 @@ namespace BigSwordRPG.Game
         private float _attMultiplier;
         private float _healMultiplier;
         private int _speed;
+        private int _PM;
         private bool _isDead;
 
         private Dictionary<string, Abilities> _abilities;
+        private Dictionary<string, Equipement> _equipements;
 
 
 
@@ -39,11 +43,13 @@ namespace BigSwordRPG.Game
         public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
         public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
         public float HealMultiplier { get => _healMultiplier; set => _healMultiplier = value; }
+        public int PM { get => _PM; set => _PM = value; }
+        public Dictionary<string, Equipement> Equipements { get => _equipements; set => _equipements = value; }
 
 
 
         //Méthodes
-        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string,Abilities> abilities,bool isDead)
+        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead, int pM, Dictionary<string, Equipement> equipements)
         {
             _name = name;
             _health = health;
@@ -55,7 +61,9 @@ namespace BigSwordRPG.Game
             _speed = speed;
             _abilities = abilities;
             _isDead = isDead;
-            CAbilities = new Dictionary<string,Abilities>();
+            CAbilities = new Dictionary<string, Abilities>();
+            _PM = pM;
+            _equipements = equipements;
         }
 
 
