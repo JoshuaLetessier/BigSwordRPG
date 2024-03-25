@@ -16,7 +16,7 @@ namespace BigSwordRPG.Game
         private int _speed;
         private bool _isDead;
 
-        private List<Abilities> _abilities;
+        private Dictionary<string, Abilities> _abilities;
 
 
 
@@ -34,7 +34,7 @@ namespace BigSwordRPG.Game
 
         public int Speed { get => _speed; set => _speed = value; }
         public bool IsDead { get => _isDead; set => _isDead = value; }
-        public List<Abilities> CAbilities { get => _abilities; set => _abilities = value; }
+        public Dictionary<string,Abilities> CAbilities { get => _abilities; set => _abilities = value; }
         public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
         public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
@@ -43,7 +43,7 @@ namespace BigSwordRPG.Game
 
 
         //Méthodes
-        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, List<Abilities> abilities,bool isDead)
+        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string,Abilities> abilities,bool isDead)
         {
             _name = name;
             _health = health;
@@ -55,6 +55,7 @@ namespace BigSwordRPG.Game
             _speed = speed;
             _abilities = abilities;
             _isDead = isDead;
+            CAbilities = new Dictionary<string,Abilities>();
         }
 
 
