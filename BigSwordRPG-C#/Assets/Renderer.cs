@@ -152,8 +152,8 @@ namespace BigSwordRPG.Assets
         }
 
         public void DrawTexture(int[] position, Texture texture) {
-            Console.SetCursorPosition(0, 0);
-            Console.Write("Draw Texture");
+            //Console.SetCursorPosition(0, 0);
+            //Console.Write("Draw Texture");
             string line;
             int foregroundColor;
             int backgroundColor;
@@ -187,14 +187,16 @@ namespace BigSwordRPG.Assets
                 {
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
-                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.SetCursorPosition(position[0], position[1] + i - offset * (int)axis);
                 Console.Write(line);
             }
             for (int i = 0; i < texture.Size[1]; i++)
             {
                 line = "";
+                Console.SetCursorPosition(position[0], position[1] + i);
                 for (int k = 0;  k < offset * (1 - (int)axis); k++)
                 {
+                    Console.CursorLeft -= offset * (1 - (int)axis);
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
                 for (int j = 0; j < texture.Size[0]; j++)
@@ -207,7 +209,6 @@ namespace BigSwordRPG.Assets
                 {
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
-                Console.SetCursorPosition(position[0] - offset * (int)axis, position[1] + i - offset * (int)axis);
                 Console.Write(line);
             }
             for (int i = 0; i > offset * (int)axis; i--)
@@ -220,6 +221,7 @@ namespace BigSwordRPG.Assets
                 Console.SetCursorPosition(position[0], position[1] + texture.Size[1] + i);
                 Console.Write(line);
             }
+            Console.SetCursorPosition(0, 0);
         }
 
     }
