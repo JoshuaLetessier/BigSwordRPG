@@ -30,11 +30,11 @@ namespace BigSwordRPG
 
             Program p = new Program();
 
-            //p.testMenu.Draw();            
+            p.testMenu.Draw();            
 
-            //Console.Read();
+            Console.Read();
 
-            List<Hero> heroes = new List<Hero>();
+            /*List<Hero> heroes = new List<Hero>();
 
             heroes = p.CreateHero();
 
@@ -47,7 +47,7 @@ namespace BigSwordRPG
                     Console.WriteLine($"- {ability.Name}");
                 }
                 Console.WriteLine();
-            }
+            }*/
         }
 
 
