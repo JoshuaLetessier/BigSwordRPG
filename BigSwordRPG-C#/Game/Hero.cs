@@ -6,6 +6,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using System.Reflection.Metadata;
 
 namespace BigSwordRPG.Game
 {
@@ -27,20 +28,60 @@ namespace BigSwordRPG.Game
             IsDead = isDead;
         }
 
-        public int UseAbilities(int indexAbilities)
+        public List<Abilities> ActAbilities { get => actAbilities; set => actAbilities = value; }
+
+        public void UseAbilities(int index)
         {
-            switch (actAbilities[indexAbilities].Type)
+            int healthDiff = MaxHealth - Health;
+            if (healthDiff < (int)actAbilities[index].Heal)
+                Health += healthDiff;
+            else
+                Health += (int)actAbilities[index].Heal;
+        }
+
+        public void UseAbilities(int index, List<Ennemy> ennemies)
+        {
+            int ennemyIndex;
+            switch ((ZoneAction)actAbilities[index].Zone)
             {
-               /* case (int)actionType.ATT:
-                    return actAbilities[indexAbilities].Damage;//ad
-                case (int)actionType.HEAL:
+                case ZoneAction.All:
+                    foreach (var enemy in ennemies)
+                    { enemy.TakeDammage((int)actAbilities[index].Damage); }
                     break;
-                case (int)actionType.CAPA:
-                    break;*/
+                case ZoneAction.Near:
+                    ennemyIndex = SelectEnnemy(ennemies);
+                    int finalIndex = ennemies.Count - 1;
+                    if (ennemyIndex == 0)
+                    {
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    else if (ennemyIndex == finalIndex)
+                    {
+                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    else
+                    {
+                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    break;
                 default:
+                    ennemyIndex = SelectEnnemy(ennemies);
+                    ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
                     break;
             }
-            return 0;
+        }
+
+        private int SelectEnnemy(List<Ennemy> ennemies)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UseAbilities(int indexAbilities, Dictionary<string, Game.Hero> heroes)
+        {
 
         }
 
