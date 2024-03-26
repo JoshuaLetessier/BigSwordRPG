@@ -9,7 +9,7 @@ namespace BigSwordRPG.Game
     public class Hero : Character
     {
         List<Abilities> actAbilities;
-
+        
         public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, List<Abilities> abilities, bool isDead) :base(name, health,maxHealth,level,healthMultiplier,attMultiplier,healMultiplier,speed, abilities,isDead)
         {
             Name = name;
@@ -42,4 +42,5 @@ namespace BigSwordRPG.Game
         }
 
     }
+
 }

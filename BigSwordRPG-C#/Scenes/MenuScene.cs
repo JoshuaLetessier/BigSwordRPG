@@ -63,11 +63,15 @@ namespace BigSwordRPG.Assets
             srQuitter.Dispose();
         }
 
-        
 
         public override void Update()
         {
             throw new NotImplementedException();
+        }
+
+        public void NouvelleGame()
+        {
+
         }
 
         public void RetrunDesktop()

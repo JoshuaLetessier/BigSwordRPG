@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BigSwordRPG.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,18 +12,29 @@ namespace BigSwordRPG_C_
     {
         /* a mettre dans le csv pour la save
          
-          name;
+        //hero
+        name;
         health;
-        maxHealth;
         level;
-        healthMultiplier;
-        attMultiplier;
-        _healMultiplier;
-        _speed;
         _isDead;
 
+        //player
+        position
+        texture
 
-         
+        //inventory
+        list inventory
+
         */
+        Player player;
+        Inventory inventory;
+
+
+
+        public Save() 
+        {
+            player = new Player();
+            inventory = new Inventory();
+        }
     }
 }
