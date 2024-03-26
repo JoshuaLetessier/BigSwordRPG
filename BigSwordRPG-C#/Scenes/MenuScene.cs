@@ -11,19 +11,20 @@ namespace BigSwordRPG.Assets
     public class MenuScene : Scene
     {
         private SelectMenu test;
-        private MapScene testmap;
         private OptionScene option;
         public List<SelectMenu> menu;
+        private Difficulty difficulty;
 
         public MenuScene() 
         {
             test = new SelectMenu();
-            testmap = new MapScene();
+            
         }
 
 
         public override void Draw()
         {
+            difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
@@ -48,7 +49,7 @@ namespace BigSwordRPG.Assets
 
             menu = new List<SelectMenu>
             {
-                new SelectMenu { menuChoix = NouvellePartie, ToDo = testmap.Draw },
+                new SelectMenu { menuChoix = NouvellePartie, ToDo = difficulty.Draw },
                 new SelectMenu { menuChoix = ContinuerPartie, ToDo = ContinueGame},
                 new SelectMenu { menuChoix = Option, ToDo = OptionGame},
                 new SelectMenu { menuChoix = Quitter, ToDo = RetrunDesktop}
