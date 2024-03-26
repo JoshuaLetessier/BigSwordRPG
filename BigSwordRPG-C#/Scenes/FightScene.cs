@@ -133,12 +133,12 @@ namespace BigSwordRPG.Assets
 
             do // Bug d'affichage ???
             {
-                foreach (BigSwordRPG_C_.Abilities ability in actHero.CAbilities)
+              /*  foreach (BigSwordRPG_C_.Abilities ability in actHero.CAbilities)
                 {
                     bool isSelected = ability == actHero.CAbilities[indexAbility];
                     ChangeLineColor(isSelected);
                     Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
-                }
+                }*/
 
                 pressedKey = Console.ReadKey().Key;
 

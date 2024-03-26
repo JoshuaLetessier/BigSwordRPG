@@ -1,7 +1,9 @@
 ﻿using BigSwordRPG_C_;
+using BigSwordRPG_C_.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace BigSwordRPG.Game
@@ -18,7 +20,7 @@ namespace BigSwordRPG.Game
     {
         private int _type;
 
-        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, List<Abilities> abilities, bool isDead) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
+        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, equipements)
         {
         }
 
@@ -54,13 +56,13 @@ namespace BigSwordRPG.Game
 
         public Abilities RandomAbilitiesEasyMod()
         {
-            return CAbilities.ElementAt(RandomAbilities(CAbilities));
+            return CAbilities.ElementAt(RandomAbilities(CAbilities)).Value;
         }
 
         //charactère des ennemis
         private Abilities bourinCharactherAbilities()//attaque ou rate
         {
-            return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1)));
+            return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(actionType.ATT))).Value;
         }
 
         private Abilities peureuxCharacterAbilities()
@@ -70,18 +72,18 @@ namespace BigSwordRPG.Game
 
             if (random.Next(0, 1) < 0.75f)
             {
-                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(2)));
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(actionType.HEAL))).Value;
             }
             else
             {
-                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
+                return CAbilities.ElementAt(RandomAbilities((Dictionary<string, Abilities>)GetAbilitiesByTypes(actionType.ATT).Concat(GetAbilitiesByTypes(actionType.BUFF)))).Value;
             }
         }
 
         private Abilities strategeCharacterAbilities() // chanher ça 
         {
 
-            List<Abilities> abilitiesTempt = GetAbilitiesByTypes(2);
+            /*List<Abilities> abilitiesTempt = GetAbilitiesByTypes(actionType.HEAL).Value;
             int newValueHeal;
             int oldValueHeal = 0;
             int value;
@@ -93,37 +95,105 @@ namespace BigSwordRPG.Game
             else
             {
 
-            }
+            }*/
 
             return null;
         }
         private Abilities lacheCharacterAbilities()
         {
             Random random = new();
+
             if (random.Next(0, 1) < 0.75f)
-                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(1).Concat(GetAbilitiesByTypes(3)).ToList()));
+                return CAbilities.ElementAt(RandomAbilities((Dictionary<string, Abilities>)GetAbilitiesByTypes(actionType.ATT).Concat(GetAbilitiesByTypes(actionType.HEAL)))).Value;
             else
-                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(4)));
+                return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(actionType.ESCAPED))).Value;
         }
 
-        private List<Abilities> GetAbilitiesByTypes(int type)
+        private Dictionary<string, Abilities> GetAbilitiesByTypes(Enum type)
         {
-            List<Abilities> tempAbilities = new List<Abilities>();
+            Dictionary<string, Abilities> tempAbilities = new Dictionary<string, Abilities>();
 
-            for (int i = 0; i < CAbilities.Count; i++)
+            foreach (var abilities in CAbilities.Values)
             {
-               /* if (CAbilities[i].Type == type)
+                if (abilities.Type == type)
                 {
-                    tempAbilities.Add(CAbilities[i]);
-                }*/
+                    tempAbilities.TryAdd(abilities.Name, abilities);
+                }
             }
             return tempAbilities;
         }
-        private int RandomAbilities(List<Abilities> abilities)
+        private int RandomAbilities(Dictionary<string, Abilities> abilities)
         {
             Random random = new Random();
 
             return random.Next(0, abilities.Count);
+        }
+    }
+
+    public class CreateEnnemy
+    {
+
+        private string name;
+        private int health;
+        private int maxHealth;
+        private int level;
+        private float healthMultiplier;
+        private float attMultiplier;
+        private float healMultiplier;
+        private int speed;
+        private Dictionary<string, Abilities> abilities;
+        private bool isDead;
+        private int PM;
+        private Dictionary<string , Equipement> equipements;
+
+        public Dictionary<string, Ennemy> CreateDictionaryEnnemies()
+        {
+            Dictionary<string, Ennemy> ennemies = new Dictionary<string, Ennemy>();
+
+            CreateListAbilities createListAbilities = new CreateListAbilities();
+
+            string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+
+            if (File.Exists(filePath))
+            {
+                using (StreamReader streamReader = new StreamReader(filePath, Encoding.UTF8))
+                {
+                    while(!streamReader.EndOfStream)
+                    {
+                        string[] ennemiesData = streamReader.ReadLine().Split(',');
+
+                        string stringHealthMultiplier = ennemiesData[4].Replace("\"", "");
+                        string stringAttMultiplier = ennemiesData[5].Replace("\"", "");
+                        string stringHealMultiplier = ennemiesData[6].Replace("\"", "");
+
+                        Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, equipements)
+                        {
+                            Name = ennemiesData[0],
+                            Health = int.Parse(ennemiesData[1]),
+                            MaxHealth = int.Parse(ennemiesData[2]),
+                            Level = int.Parse(ennemiesData[3]),
+                            HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
+                            AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
+                            HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
+                            Speed = int.Parse(ennemiesData[7]),
+                            IsDead = false,
+                            PM = int.Parse(ennemiesData[8]),
+                        };
+
+                        for (int i = 9; i < ennemiesData.Length-1; i++)
+                        {
+                            ennemy.CAbilities.Add(ennemiesData[i], createListAbilities.AbilitiesList[ennemiesData[i]]);
+                        }
+                        ennemies.Add(ennemy.Name, ennemy);
+                    }
+                    return ennemies;
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException("Fichier " + filePath + " entrouvable");
+            }
+                
         }
     }
 }
