@@ -22,6 +22,8 @@ namespace BigSwordRPG_C_.Game
         private int efficciencyMin;
         private int efficciencyMax;
 
+        private int efficciencyFinal;
+
 
 
 
@@ -31,6 +33,8 @@ namespace BigSwordRPG_C_.Game
             Type = type;
             this.EfficciencyMin = efficciencyMin;
             this.EfficciencyMax = efficciencyMax;
+
+            efficciencyFinal = RandomBonusEquipement(EfficciencyMin, EfficciencyMax);
         }
 
         public string Name { get => _name; set => _name = value; }
@@ -46,19 +50,19 @@ namespace BigSwordRPG_C_.Game
             }
             else if(characheterPlay.Type == EquipementType.Plasma && charachaterVise.Type == EquipementType.Antimatiere)
             {
-               return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+               return efficciencyFinal;
             }
             else if(characheterPlay.Type == EquipementType.Antimatiere && charachaterVise.Type == EquipementType.Nucleaire)
             {
-                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+                return efficciencyFinal;
             }
             else if (characheterPlay.Type == EquipementType.Nucleaire && charachaterVise.Type == EquipementType.Plasma)
             {
-                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+                return efficciencyFinal;
             }
             else if(characheterPlay.Type == EquipementType.Bioelectrique)
             {
-                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+                return efficciencyFinal;
             }
             else
             {

@@ -19,6 +19,8 @@ namespace BigSwordRPG.Assets
 
         Player _player;
 
+        
+
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
