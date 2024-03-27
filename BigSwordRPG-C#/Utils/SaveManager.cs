@@ -21,6 +21,7 @@ namespace BigSwordRPG_C_.Utils
         public void Save(Dictionary<string, Hero> _heroes, List<Item> _items)
         {
             
+
             if(File.Exists(filePath))
             {
                 File.Delete(filePath);
