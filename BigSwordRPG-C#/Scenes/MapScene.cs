@@ -15,11 +15,17 @@ namespace BigSwordRPG.Assets
         private Camera testCam;
         private Player testPlayer;
 
+        public MapScene(Camera testCam, Player testPlayer)
+        {
+            this.testCam = testCam;
+            this.testPlayer = testPlayer;
+
+
+        }
+
         public override void Draw()
         {
-            testCam = new Camera();
-            testPlayer = new Player();
-
+           
             Console.SetCursorPosition(0, 0);
 
             Console.SetBufferSize(854, 480);

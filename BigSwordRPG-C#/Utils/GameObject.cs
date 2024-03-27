@@ -12,13 +12,10 @@ namespace BigSwordRPG.Utils
         public GameObject() { }
         ~GameObject() { }
 
-        public abstract void Draw();
+       
         public abstract void Updtate();
-        public abstract void Destroy();
-    }
+       
 
-    public class Transform
-    {
         private int[] _position = { 0, 0 };
         private Texture _texture;
         private int _spriteIndex = 0;
@@ -27,17 +24,18 @@ namespace BigSwordRPG.Utils
         public Texture Texture { get => _texture; set => _texture = value; }
         public int SpriteIndex { get => _spriteIndex; set => _spriteIndex = value; }
 
-        public GameObject(int[] position, Texture texture) {
+        public GameObject(int[] position, Texture texture)
+        {
+            Texture = texture;
             Position = position;
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             GameManager.Instance.Renderer.DrawTexture(Position, Texture);
         }
         /*public int Move(int[] newPosition) { 
             Renderer->Move()
         }*/
-
-
+    }
 }

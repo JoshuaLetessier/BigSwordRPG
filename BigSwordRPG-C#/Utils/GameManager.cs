@@ -39,19 +39,13 @@ namespace BigSwordRPG.Utils
         }
 
 
-        private GameManager() { }
-        ~GameManager() { }
-
-        public int Initialize()
-        {
-           /* Renderer = new Renderer();
+        private GameManager() {
+            Renderer = new Renderer();
             Renderer.Initialize();
             InputManager = new InputManager();
             InputManager.Initialize();
-            Player player = new Player();
-            player.Initialize();*/
-            return 0;
         }
+        ~GameManager() { }
 
         public void Run()
         {

@@ -1,4 +1,5 @@
-﻿using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG_C_;
+using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace BigSwordRPG.Assets
         {
             test = new SelectMenu();
             testMenu = new MenuScene();
-            testMap = new MapScene();
+            testMap = new MapScene(new Camera(), new Player(new int[2] {150,60}));
         }
 
         public override void Draw()

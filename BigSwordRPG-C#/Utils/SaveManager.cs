@@ -11,13 +11,11 @@ namespace BigSwordRPG_C_.Utils
     internal class SaveManager
     {
         private int[] position;
-        private Texture texture;
-
+     
         private string filePath = "../../../Save/Save.csv";
 
         public int[] Position { get => position; set => position = value; }
-        public Texture _Texture { get => texture; set => texture = value; }
-
+      
         public void Save(Dictionary<string, Hero> _heroes, List<Item> _items)
         {
             
@@ -31,7 +29,7 @@ namespace BigSwordRPG_C_.Utils
             using (StreamWriter streamWriter = fileInfo.CreateText())
             {
                 streamWriter.WriteLine(Position + ",");
-                streamWriter.WriteLine(_Texture + ",");
+              
                 for (int i = 0; i < _heroes.Count; i++)
                 {
                     streamWriter.WriteLine(_heroes.ElementAt(i).Value.Name +","+ _heroes.ElementAt(i).Value.Health + "," + _heroes.ElementAt(i).Value.Level + "," + _heroes.ElementAt(i).Value.PM + "," + _heroes.ElementAt(i).Value.IsDead + ",");
@@ -58,8 +56,6 @@ namespace BigSwordRPG_C_.Utils
                         {
                             Position[i] = int.Parse(data[i]); 
                         }
-
-                      //  _Texture = (Texture) data[1];
 
                         for (int i = 0;i < _heroes.Count;i++) 
                         { 

@@ -91,10 +91,6 @@ namespace BigSwordRPG.Game
             throw new NotImplementedException();
         }
 
-        public override void Destroy()
-        {
-            throw new NotImplementedException();
-        }
 
         public void TakeDammage(int attackPoint)
         {

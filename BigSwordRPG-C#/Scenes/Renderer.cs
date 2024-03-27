@@ -90,7 +90,7 @@ namespace BigSwordRPG.Assets
         public int Initialize()
         {
             //Console.WindowWidth = 5;
-            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+            /*IntPtr hConsole = GetStdHandle(-11); // Standard output handle
 
             Console.WriteLine(Console.LargestWindowWidth);
             IntPtr ConsoleHandle = GetConsoleWindow();
@@ -111,7 +111,7 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(15, 15);
             Console.Write("\x1b[48;2;12;4;255mTestCharBG\x1b[48;2;0;0;0m");
             Console.SetCursorPosition(15, 15);
-            Console.Write("\x1b[38;2;12;255;100mTestCharBG");
+            Console.Write("\x1b[38;2;12;255;100mTestCharBG");*/
 
             /*SMALL_RECT readRegion = new SMALL_RECT
             {
@@ -131,8 +131,8 @@ namespace BigSwordRPG.Assets
 
             //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
 
-            int errorCode = Marshal.GetLastWin32Error();
-            Console.WriteLine("Error occurred. Error code: " + errorCode);
+         /*   int errorCode = Marshal.GetLastWin32Error();
+            Console.WriteLine("Error occurred. Error code: " + errorCode);*/
 
             return 0;
         }
@@ -263,7 +263,7 @@ namespace BigSwordRPG.Assets
             tex2.PixelsBuffer = new List<Pixel>() {
                 new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160)
             };
-            GameObject gameObject = new GameObject(new int[2] { 10, 10 }, tex2);
+           /* GameObject gameObject = new GameObject(new int[2] { 10, 10 }, tex2);
             TextureRegion textureRegion = new TextureRegion();
             if(axis == Axis.HORIZONTAL)
             {
@@ -278,7 +278,7 @@ namespace BigSwordRPG.Assets
                 textureRegion.sizeX = texture.Size[0];
                 textureRegion.sizeY = offset;
             }
-            DrawTextureRegion(position, gameObject.Texture, textureRegion);
+            DrawTextureRegion(position, gameObject.Texture, textureRegion);*/
         }
 
         public bool IsInBuffer(int[] position, int[] size)

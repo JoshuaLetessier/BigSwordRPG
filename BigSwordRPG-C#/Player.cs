@@ -22,8 +22,6 @@ namespace BigSwordRPG_C_
         private Dictionary<string, Hero> _heroes;
 
         public bool _allHeroDead = false;
-        public int[] Position { get => _position; set => _position = value; }
-        public Texture Texture { get => _texture; set => _texture = value; }
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
         public Player(int[] position) : 
@@ -42,7 +40,7 @@ namespace BigSwordRPG_C_
                 }
             )
         {
-            Draw();
+           // Draw();
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D,
                 new Action(
@@ -81,6 +79,11 @@ namespace BigSwordRPG_C_
                 Position[1] = newPosition[1];
                 GameManager.Instance.Renderer.MoveTextureBlackBackground(Position, Texture, distance, axis);
             }
+        }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

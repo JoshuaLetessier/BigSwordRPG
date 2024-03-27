@@ -17,11 +17,12 @@ namespace BigSwordRPG.Assets
         private int ennemyPlaybale;
         private int allEnnemyDeath;
 
-        Player player = new Player(); //!!!!!!!!!!A changer !!!!!!!!!
+        Player _player;
 
         public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+        public Player player { get => _player; set => _player = value; }
 
-        public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies) 
+        public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies, Player player) 
         {
             int count = 0;
             foreach (var key in heroes.Keys)
@@ -32,6 +33,8 @@ namespace BigSwordRPG.Assets
 
             heroesInCombat = heroes;
             firstTeamPlay = orderStartFight();
+            _player = player;
+
         } //exption pour remplacer le bool
 
         public override void Update()
@@ -52,7 +55,8 @@ namespace BigSwordRPG.Assets
                         {
                             heroPlayable = 0;
                         }
-                        heroPlayable += 1;
+                        else
+                            heroPlayable += 1;
 
                     }
                     else
@@ -63,7 +67,8 @@ namespace BigSwordRPG.Assets
                         {
                             ennemyPlaybale = 0;
                         }
-                        ennemyPlaybale += 1;
+                        else
+                            ennemyPlaybale += 1;
                     }
                 }
                 else
@@ -76,7 +81,8 @@ namespace BigSwordRPG.Assets
                         {
                             heroPlayable = 0;
                         }
-                        heroPlayable += 1;
+                        else
+                            heroPlayable += 1;
 
                     }
                     else
@@ -87,7 +93,8 @@ namespace BigSwordRPG.Assets
                         {
                             ennemyPlaybale = 0;
                         }
-                        ennemyPlaybale += 1;
+                        else
+                            ennemyPlaybale += 1;
                     }
                     //dico toList
                 }

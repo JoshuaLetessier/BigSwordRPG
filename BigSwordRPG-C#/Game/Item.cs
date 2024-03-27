@@ -18,10 +18,9 @@ namespace BigSwordRPG.Game
             _value = value;
         }
 
-        public override void Destroy()
-        {
-            throw new NotImplementedException();
-        }
+        ~Item() { }
+
+
 
         public override void Draw()
         {
