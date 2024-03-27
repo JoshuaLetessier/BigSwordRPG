@@ -20,7 +20,7 @@ namespace BigSwordRPG.Game
     {
         private int _type;
 
-        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, equipements)
+        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMAX,Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
         {
         }
 
@@ -144,6 +144,7 @@ namespace BigSwordRPG.Game
         private Dictionary<string, Abilities> abilities;
         private bool isDead;
         private int PM;
+        private int PMMAX;
         private Dictionary<string , Equipement> equipements;
 
         public Dictionary<string, Ennemy> CreateDictionaryEnnemies()
@@ -166,7 +167,7 @@ namespace BigSwordRPG.Game
                         string stringAttMultiplier = ennemiesData[5].Replace("\"", "");
                         string stringHealMultiplier = ennemiesData[6].Replace("\"", "");
 
-                        Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, equipements)
+                        Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
                         {
                             Name = ennemiesData[0],
                             Health = int.Parse(ennemiesData[1]),
@@ -178,6 +179,7 @@ namespace BigSwordRPG.Game
                             Speed = int.Parse(ennemiesData[7]),
                             IsDead = false,
                             PM = int.Parse(ennemiesData[8]),
+                            PMMax = int.Parse(ennemiesData[8]),
                         };
 
                         for (int i = 9; i < ennemiesData.Length-1; i++)

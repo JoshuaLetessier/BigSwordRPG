@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 
-enum EquipementType
+public enum EquipementType
 {
     Plasma = 1,
     Antimatiere,
@@ -17,14 +18,14 @@ namespace BigSwordRPG_C_.Game
     public class Equipement
     {
         private string _name;
-        private Enum _type;
+        private EquipementType _type;
         private int efficciencyMin;
         private int efficciencyMax;
 
 
 
 
-        public Equipement(string name, Enum type, int efficciencyMin, int efficciencyMax)
+        public Equipement(string name, EquipementType type, int efficciencyMin, int efficciencyMax)
         {
             Name = name;
             Type = type;
@@ -33,17 +34,53 @@ namespace BigSwordRPG_C_.Game
         }
 
         public string Name { get => _name; set => _name = value; }
-        public Enum Type { get => _type; set => _type = value; }
+        public EquipementType Type { get => _type; set => _type = value; }
         public int EfficciencyMin { get => efficciencyMin; set => efficciencyMin = value; }
         public int EfficciencyMax { get => efficciencyMax; set => efficciencyMax = value; }
 
+        public int typeHiarachy(Equipement charachaterVise, Equipement characheterPlay )
+        {
+            if(characheterPlay.Type == charachaterVise.Type)
+            {
+                return 0;
+            }
+            else if(characheterPlay.Type == EquipementType.Plasma && charachaterVise.Type == EquipementType.Antimatiere)
+            {
+               return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+            }
+            else if(characheterPlay.Type == EquipementType.Antimatiere && charachaterVise.Type == EquipementType.Nucleaire)
+            {
+                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+            }
+            else if (characheterPlay.Type == EquipementType.Nucleaire && charachaterVise.Type == EquipementType.Plasma)
+            {
+                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+            }
+            else if(characheterPlay.Type == EquipementType.Bioelectrique)
+            {
+                return RandomBonusEquipement(characheterPlay.EfficciencyMin, characheterPlay.EfficciencyMax);
+            }
+            else
+            {
+                throw new Exception("Aucun type d'Equipement reconnue");
+            }
+
+        }
+
+        private int RandomBonusEquipement(int efficciencyMin, int efficciencyMax)
+        {
+            Random random = new Random();
+            return random.Next(efficciencyMin, efficciencyMax); ;
+        }
     }
+
+   
 
     public class CreateEquipement
     {
 
         private string _name;
-        private Enum _type;
+        private EquipementType _type;
         private int efficciencyMin;
         private int efficciencyMax;
 

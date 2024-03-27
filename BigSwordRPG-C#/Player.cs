@@ -1,3 +1,4 @@
+using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using System;
@@ -20,9 +21,12 @@ namespace BigSwordRPG_C_
         private int[] _position;
         private Texture _texture;
 
+        private Dictionary<string, Hero> _heroes;
+
         public bool _allHeroDead = false;
         public int[] Position { get => _position; set => _position = value; }
         public Texture Texture { get => _texture; set => _texture = value; }
+        public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
         public int Initialize()
         {
