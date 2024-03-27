@@ -19,7 +19,7 @@ namespace BigSwordRPG.Game
     {
         private int _type;
 
-        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
+        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
         {
         }
 
@@ -139,7 +139,7 @@ namespace BigSwordRPG.Game
         private float healthMultiplier;
         private float attMultiplier;
         private float healMultiplier;
-        private int speed;
+        private float speed;
         private Dictionary<string, Abilities> abilities;
         private bool isDead;
 
@@ -162,6 +162,7 @@ namespace BigSwordRPG.Game
                         string stringHealthMultiplier = ennemiesData[4].Replace("\"", "");
                         string stringAttMultiplier = ennemiesData[5].Replace("\"", "");
                         string stringHealMultiplier = ennemiesData[6].Replace("\"", "");
+                        string stringSpeed = ennemiesData[7].Replace("\"", "");
 
                         Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
                         {
@@ -172,7 +173,7 @@ namespace BigSwordRPG.Game
                             HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
                             AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
-                            Speed = int.Parse(ennemiesData[7]),
+                            Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false
                         };
 

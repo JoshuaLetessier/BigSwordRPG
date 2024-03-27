@@ -134,12 +134,12 @@ namespace BigSwordRPG.Assets
 
             do // Bug d'affichage ???
             {
-                /*foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
+                foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
                 {
                     bool isSelected = ability == actHero.ActAbilities[indexAbility];
                     ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
-                }*/
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name}");
+                }
 
                 pressedKey = Console.ReadKey().Key;
 
@@ -160,7 +160,14 @@ namespace BigSwordRPG.Assets
             }
             else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF /*&& actHero.ActAbilities[indexAbility].Cost > Pm*/)
             {
-                actHero.UseAbilities(indexAbility, heroesInCombat);
+                string buffType;
+                if (actHero.ActAbilities[indexAbility].Damage != 0)
+                    buffType = "dammage";
+                else if (actHero.ActAbilities[indexAbility].Heal != 0)
+                    buffType = "heal";
+                else
+                    buffType = "speed";
+                actHero.UseAbilities(indexAbility, heroesInCombat, buffType);
             }
             else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.CAPA /*&& actHero.MagicPoints == 4*/)
             {
@@ -174,7 +181,6 @@ namespace BigSwordRPG.Assets
             {
                 //Escape();
             }
-
         }
 
         private static void ChangeLineColor(bool shouldHighlight)

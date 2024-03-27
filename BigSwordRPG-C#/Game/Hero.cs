@@ -14,7 +14,7 @@ namespace BigSwordRPG.Game
     {
         List<Abilities> actAbilities;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead) :base(name, health,maxHealth,level,healthMultiplier,attMultiplier,healMultiplier,speed, abilities,isDead)
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead) :base(name, health,maxHealth,level,healthMultiplier,attMultiplier,healMultiplier,speed, abilities,isDead)
         {
             Name = name;
             Health = health;
@@ -77,12 +77,80 @@ namespace BigSwordRPG.Game
 
         private int SelectEnnemy(List<Ennemy> ennemies)
         {
-            throw new NotImplementedException();
+            ConsoleKey pressedKey;
+            int index = 0;
+
+            // Selection de la clé du héro
+            do
+            {
+                foreach (Ennemy ennemy in ennemies)
+                {
+                    bool isSelected = ennemy == ennemies[index];
+                    ChangeLineColor(isSelected);
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ennemy.Name}");
+                }
+                pressedKey = Console.ReadKey().Key;
+
+                if (pressedKey == ConsoleKey.DownArrow && index + 1 < ennemies.Count)
+                {
+                    index++;
+                }
+                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
+                {
+                    index--;
+                }
+            } while(index < ennemies.Count);
+
+            // Retoune la clé séléctionnée
+            return index;
         }
 
-        public void UseAbilities(int indexAbilities, Dictionary<string, Game.Hero> heroes)
+        public void UseAbilities(int indexAbilities, Dictionary<string, Game.Hero> heroes, string buffType)
         {
+            List<string> heroesName = heroes.Values.Select(h => h.Name).ToList();
+            string heroIndex = SelectHero(heroesName);
+            if (buffType == "dammage")
+                heroes[heroIndex].AttMultiplier *= actAbilities[indexAbilities].Damage;
+            else if (buffType == "heal")
+                heroes[heroIndex].HealMultiplier *= actAbilities[indexAbilities].Heal;
+            else
+                heroes[heroIndex].Speed *= actAbilities[indexAbilities].SpeedUp;
 
+        }
+
+        private string SelectHero(List<string> heroesName)
+        {
+            ConsoleKey pressedKey;
+            int index = 0;
+
+            // Selection de la clé du héro
+            do
+            {
+                foreach (string name in heroesName)
+                {
+                    bool isSelected = name == heroesName[index];
+                    ChangeLineColor(isSelected);
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{name}");
+                }
+                pressedKey = Console.ReadKey().Key;
+
+                if (pressedKey == ConsoleKey.DownArrow && index + 1 < heroesName.Count)
+                {
+                    index++;
+                }
+                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
+                {
+                    index--;
+                }
+            } while(index < heroesName.Count);
+
+            // Retoune la clé séléctionnée
+            return heroesName[index];
+        }
+        private static void ChangeLineColor(bool shouldHighlight)
+        {
+            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
+            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
         }
 
     }
@@ -97,7 +165,7 @@ namespace BigSwordRPG.Game
         private float healthMultiplier;
         private float attMultiplier;
         private float healMultiplier;
-        private int speed;
+        private float speed;
         private Dictionary<string, Abilities> abilities;
         private bool isDead;
 
@@ -121,6 +189,8 @@ namespace BigSwordRPG.Game
                         string stringHealthMultiplier = heroData[4].Replace("\"", "");
                         string stringAttMultiplier = heroData[5].Replace("\"", "");
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
+                        string stringSpeed = heroData[7].Replace("\"", "");
+
 
                         Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
                         {
@@ -132,7 +202,7 @@ namespace BigSwordRPG.Game
 
                             AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
-                            Speed = int.Parse(heroData[7]),
+                            Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false
                         };
 
