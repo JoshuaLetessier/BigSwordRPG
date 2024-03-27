@@ -25,12 +25,15 @@ namespace BigSwordRPG.Game
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public int Health { get => _health; set
+        public int Health {
+            get => _health; set
             {
-                if(_health - value < 0 )
+                if (value < 0)
                     _health = 0;
-                if(_health + value > MaxHealth)
-                        _health = MaxHealth;
+                else if (value > MaxHealth)
+                    _health = MaxHealth;
+                else
+                    _health = value;
             }
         }
         public int Level { get => _level; set => _level = value; }
@@ -42,12 +45,15 @@ namespace BigSwordRPG.Game
         public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
         public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
         public float HealMultiplier { get => _healMultiplier; set => _healMultiplier = value; }
-        public int PM { get => _PM; set
+        public int PM { 
+            get => _PM; set
             {
-                if(_PM - value < 0)
+                if (value < 0)
                     _PM = 0;
-                if (_PM + value > _PMMax)
+                else if (value > _PMMax)
                     _PM = _PMMax;
+                else
+                    _PM = value;
             }
         }
         public int PMMax { get => _PMMax; set => _PMMax = value; }

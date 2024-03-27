@@ -18,8 +18,8 @@ namespace BigSwordRPG.Game
         public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM,int PMMax, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
         {
             Name = name;
-            Health = health;
             MaxHealth = maxHealth;
+            Health = health;
             Level = level;
             HealthMultiplier = healthMultiplier;
             AttMultiplier = attMultiplier;
@@ -200,8 +200,8 @@ namespace BigSwordRPG.Game
                         Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements)
                         {
                             Name = heroData[0],
-                            Health = int.Parse(heroData[1]),
                             MaxHealth = int.Parse(heroData[2]),
+                            Health = int.Parse(heroData[1]),
                             Level = int.Parse(heroData[3]),
                             HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
 
@@ -209,8 +209,8 @@ namespace BigSwordRPG.Game
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
                             Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false,
-                            PM = int.Parse(heroData[8]),
                             PMMax = int.Parse(heroData[8]),
+                            PM = int.Parse(heroData[8]),
                         };
 
                         hero.CAbilities = new Dictionary<string, Abilities>();

@@ -97,21 +97,22 @@ namespace BigSwordRPG.Assets
 
         private void Round(Hero actHero)
         {
-            Console.Clear();
-            Console.WriteLine($"Au tour de {actHero.Name} ! \n");
             actHero.ActAbilities = actHero.CAbilities.Values.ToList();
             // S'il n'a pas d'abilité selectionné, prends la première
             int indexAbility = 0;
             ConsoleKey pressedKey;
 
-            do // Bug d'affichage ???
+            do
             {
                 Console.Clear();
+                Console.WriteLine($"Au tour de {actHero.Name} !");
+                Console.WriteLine($"HP: {actHero.Health} | PM: {actHero.PM} \n");
                 foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
                 {
                     bool isSelected = ability == actHero.ActAbilities[indexAbility];
                     ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name}");
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name} type -> {ability.Type} zone -> {ability.Zone}");
+                    Console.WriteLine($"ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp}");
                 }
 
                 pressedKey = Console.ReadKey().Key;
@@ -127,7 +128,7 @@ namespace BigSwordRPG.Assets
             } while (pressedKey != ConsoleKey.Enter);
 
             // Vérifie le type de l'action et l'effectue
-            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
+            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost < actHero.PM)
             {
                 actHero.UseAbilities(indexAbility, EnnemiesList.Values.ToList());
             }
@@ -165,7 +166,8 @@ namespace BigSwordRPG.Assets
         private void Round(Ennemy actEnnemy)
         {
             Console.WriteLine($"{actEnnemy.Name} utilise :");
-            switch (GameManager.Instance.Difficulty)
+            RandomAction(actEnnemy);
+            /*switch (GameManager.Instance.Difficulty)
             {
                 case Difficulties.EASY:
                     RandomAction(actEnnemy);
@@ -178,25 +180,42 @@ namespace BigSwordRPG.Assets
                     break;
                 default:
                     break;
-            }
+            }*/
         }
 
         private void RandomAction(Ennemy actEnnemy)
         {
+            Console.Clear();
+            Console.WriteLine($"Au tour de {actEnnemy.Name} !");
+            Console.WriteLine($"HP: {actEnnemy.Health} \n");
+            Thread.Sleep(1000);
             var rand = new Random();
+            Abilities useAbility = actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
 
-           // actEnnemy.RandomAbilitiesEasyMod();
+            switch ((actionType)useAbility.Type)
+            {
+                case actionType.ATT:
+                    int nameIndex = 0;
+                    if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
+                    Console.WriteLine($"{actEnnemy.Name} utilise {useAbility.Name} sur {heroesInCombat.ElementAt(nameIndex).Value.Name} !");
+                    Thread.Sleep(3000);
+                    heroesInCombat.ElementAt(nameIndex).Value.TakeDammage((int)useAbility.Damage);
+                    break;
+                case actionType.HEAL:
+                    actEnnemy.Heal((int)useAbility.Heal);
+                    Console.WriteLine($"{actEnnemy.Name} se soigne de {(int)useAbility.Heal}");
+                    Thread.Sleep(3000);
+                    break;
+                case actionType.BUFF:
+                    Console.WriteLine($"{actEnnemy.Name} buff quelqu'un");
+                    Thread.Sleep(3000);
+                    break;
+                case actionType.ESCAPED:
+                    Console.WriteLine($"{actEnnemy.Name} n'arrive pas à s'échappper ಥ﹏ಥ");
+                    Thread.Sleep(3000);
+                    break;
+            }
 
-            List<string> _heroesNames = new List<string>();
-            foreach (var heroes in heroesInCombat.Values) { _heroesNames.Add(heroes.Name); }
-            actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
-
-            _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
-            int nameIndex = 0;
-
-            if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
-
-            //heroesInCombat[_heroesNames[nameIndex]].TakeDammage(actEnnemy.Damage);
         }
 
         private void Action(Ennemy actEnnemy)
