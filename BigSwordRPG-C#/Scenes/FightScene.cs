@@ -8,18 +8,18 @@ namespace BigSwordRPG.Assets
     public class FightScene : Scene
     {
         private Dictionary<string, Game.Hero> heroesInCombat;
-        List<Game.Ennemy> _ennemiesList;
+        Dictionary<string, Game.Ennemy> _ennemiesList;
         private int indexAbility = 0;
 
         private bool startFight = false;
         private string firstTeamPlay;
-        private int heroPlayable;
-        private int ennemyPlaybale;
+        private int countHeros;
+        private int countEnnemy;
         private int allEnnemyDeath;
 
         Player _player;
 
-        public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+        public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
         public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies, Player player) 
@@ -34,44 +34,45 @@ namespace BigSwordRPG.Assets
             heroesInCombat = heroes;
             firstTeamPlay = orderStartFight();
             _player = player;
+            countHeros = 0;
+            countEnnemy = 0;
 
         } //exption pour remplacer le bool
 
         public override void Update()
         {
             Console.WriteLine("FIGHT !!!");
-            // boucle de combas
+            // boucle de combas 
+            //version 1 simplifié
             while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
-                if (startFight == true)
+                /*if (startFight == true)
                 {
-                    startFight = false;
+                    startFight = false;*/
 
                     if (firstTeamPlay == "h")
                     {
-                        Round(heroesInCombat.First().Value);
+                        //random
+                        Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
                         firstTeamPlay = "e";
-                        if (heroesInCombat.Count != 1)
-                        {
-                            heroPlayable = 0;
-                        }
-                        else
-                            heroPlayable += 1;
-
+                       /* if (heroesInCombat.Count != 1)
+                            countHeros = 0;
+                        else if(heroesInCombat.Count == countHeros)
+                            countHeros += 1;*/
                     }
                     else
                     {
-                        Round(EnnemiesList[0]);
-                        firstTeamPlay= "h";
-                        if (EnnemiesList.Count == 1)
+                        Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                        firstTeamPlay = "h";
+                        /*                        if (EnnemiesList.Count == 1)
                         {
-                            ennemyPlaybale = 0;
+                            countEnnemy = 0;
                         }
                         else
-                            ennemyPlaybale += 1;
+                            countEnnemy += 1;*/
                     }
-                }
-                else
+                //}
+  /*              else
                 {
                     if(firstTeamPlay == "h")
                     {
@@ -79,10 +80,10 @@ namespace BigSwordRPG.Assets
                         firstTeamPlay = "e";
                         if (heroesInCombat.Count != 1)
                         {
-                            heroPlayable = 0;
+                            countHeros = 0;
                         }
                         else
-                            heroPlayable += 1;
+                            countHeros += 1;
 
                     }
                     else
@@ -91,13 +92,13 @@ namespace BigSwordRPG.Assets
                         firstTeamPlay = "h";
                         if (EnnemiesList.Count == 1)
                         {
-                            ennemyPlaybale = 0;
+                            countEnnemy = 0;
                         }
                         else
-                            ennemyPlaybale += 1;
+                            countEnnemy += 1;
                     }
                     //dico toList
-                }
+                }*/
             }
         }
 
@@ -126,8 +127,11 @@ namespace BigSwordRPG.Assets
             }
         }
 
-        public void FightLoop(string firstPlay)
-        {  
+        private int RandomFonction(int value)
+        {
+            Random random = new Random();
+
+            return random.Next(0, value);
         }
 
         private void Round(Hero actHero)
