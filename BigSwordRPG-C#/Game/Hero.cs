@@ -7,6 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.IO;
 using BigSwordRPG_C_.Game;
+using System.Reflection.Metadata;
 
 namespace BigSwordRPG.Game
 {
@@ -28,21 +29,129 @@ namespace BigSwordRPG.Game
             IsDead = isDead;
         }
 
-        public int UseAbilities(int indexAbilities)
+        public List<Abilities> ActAbilities { get => actAbilities; set => actAbilities = value; }
+
+        public void UseAbilities(int index)
         {
-            switch (actAbilities[indexAbilities].Type)
+            int healthDiff = MaxHealth - Health;
+            if (healthDiff < (int)actAbilities[index].Heal)
+                Health += healthDiff;
+            else
+                Health += (int)actAbilities[index].Heal;
+        }
+
+        public void UseAbilities(int index, List<Ennemy> ennemies)
+        {
+            int ennemyIndex;
+            switch ((ZoneAction)actAbilities[index].Zone)
             {
-               /* case (int)actionType.ATT:
-                    return actAbilities[indexAbilities].Damage;//ad
-                case (int)actionType.HEAL:
+                case ZoneAction.All:
+                    foreach (var enemy in ennemies)
+                    { enemy.TakeDammage((int)actAbilities[index].Damage); }
                     break;
-                case (int)actionType.CAPA:
-                    break;*/
+                case ZoneAction.Near:
+                    ennemyIndex = SelectEnnemy(ennemies);
+                    int finalIndex = ennemies.Count - 1;
+                    if (ennemyIndex == 0)
+                    {
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    else if (ennemyIndex == finalIndex)
+                    {
+                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    else
+                    {
+                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                    }
+                    break;
                 default:
+                    ennemyIndex = SelectEnnemy(ennemies);
+                    ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
                     break;
             }
-            return 0;
+        }
 
+        private int SelectEnnemy(List<Ennemy> ennemies)
+        {
+            ConsoleKey pressedKey;
+            int index = 0;
+
+            // Selection de la clé du héro
+            do
+            {
+                foreach (Ennemy ennemy in ennemies)
+                {
+                    bool isSelected = ennemy == ennemies[index];
+                    ChangeLineColor(isSelected);
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ennemy.Name}");
+                }
+                pressedKey = Console.ReadKey().Key;
+
+                if (pressedKey == ConsoleKey.DownArrow && index + 1 < ennemies.Count)
+                {
+                    index++;
+                }
+                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
+                {
+                    index--;
+                }
+            } while(index < ennemies.Count);
+
+            // Retoune la clé séléctionnée
+            return index;
+        }
+
+        public void UseAbilities(int indexAbilities, Dictionary<string, Game.Hero> heroes, string buffType)
+        {
+            List<string> heroesName = heroes.Values.Select(h => h.Name).ToList();
+            string heroIndex = SelectHero(heroesName);
+            if (buffType == "dammage")
+                heroes[heroIndex].AttMultiplier *= actAbilities[indexAbilities].Damage;
+            else if (buffType == "heal")
+                heroes[heroIndex].HealMultiplier *= actAbilities[indexAbilities].Heal;
+            else
+                heroes[heroIndex].Speed *= actAbilities[indexAbilities].SpeedUp;
+
+        }
+
+        private string SelectHero(List<string> heroesName)
+        {
+            ConsoleKey pressedKey;
+            int index = 0;
+
+            // Selection de la clé du héro
+            do
+            {
+                foreach (string name in heroesName)
+                {
+                    bool isSelected = name == heroesName[index];
+                    ChangeLineColor(isSelected);
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{name}");
+                }
+                pressedKey = Console.ReadKey().Key;
+
+                if (pressedKey == ConsoleKey.DownArrow && index + 1 < heroesName.Count)
+                {
+                    index++;
+                }
+                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
+                {
+                    index--;
+                }
+            } while(index < heroesName.Count);
+
+            // Retoune la clé séléctionnée
+            return heroesName[index];
+        }
+        private static void ChangeLineColor(bool shouldHighlight)
+        {
+            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
+            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
         }
 
     }

@@ -98,22 +98,23 @@ namespace BigSwordRPG.Assets
         {
             Console.Clear();
             Console.WriteLine($"Au tour de {actHero.Name} ! \n");
+            actHero.ActAbilities = actHero.CAbilities.Values.ToList();
             // S'il n'a pas d'abilité selectionné, prends la première
             int indexAbility = 0;
             ConsoleKey pressedKey;
 
             do // Bug d'affichage ???
             {
-              /*  foreach (BigSwordRPG_C_.Abilities ability in actHero.CAbilities)
+                foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
                 {
-                    bool isSelected = ability == actHero.CAbilities[indexAbility];
+                    bool isSelected = ability == actHero.ActAbilities[indexAbility];
                     ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability}");
-                }*/
+                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name}");
+                }
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.CAbilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.ActAbilities.Count)
                 {
                     indexAbility++;
                 }
@@ -123,8 +124,34 @@ namespace BigSwordRPG.Assets
                 }
             } while (pressedKey != ConsoleKey.Enter);
 
-            actHero.UseAbilities(indexAbility);
-
+            // Vérifie le type de l'action et l'effectue
+            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT /*&& actHero.ActAbilities[indexAbility].Cost > Pm*/)
+            {
+                actHero.UseAbilities(indexAbility, EnnemiesList);
+            }
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF /*&& actHero.ActAbilities[indexAbility].Cost > Pm*/)
+            {
+                string buffType;
+                if (actHero.ActAbilities[indexAbility].Damage != 0)
+                    buffType = "dammage";
+                else if (actHero.ActAbilities[indexAbility].Heal != 0)
+                    buffType = "heal";
+                else
+                    buffType = "speed";
+                actHero.UseAbilities(indexAbility, heroesInCombat, buffType);
+            }
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.CAPA /*&& actHero.MagicPoints == 4*/)
+            {
+                //actHero.UseSpecialAbility();
+            }
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth /*&& actHero.ActAbilities[indexAbility].Cost > actHero.Pm*/)
+            {
+                actHero.UseAbilities(indexAbility);
+            }
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ESCAPED)
+            {
+                //Escape();
+            }
         }
 
         private static void ChangeLineColor(bool shouldHighlight)
