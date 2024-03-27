@@ -84,6 +84,7 @@ namespace BigSwordRPG.Game
             // Selection de la clé du héro
             do
             {
+                Console.Clear();
                 foreach (Ennemy ennemy in ennemies)
                 {
                     bool isSelected = ennemy == ennemies[index];
@@ -127,6 +128,7 @@ namespace BigSwordRPG.Game
             // Selection de la clé du héro
             do
             {
+                Console.Clear();
                 foreach (string name in heroesName)
                 {
                     bool isSelected = name == heroesName[index];

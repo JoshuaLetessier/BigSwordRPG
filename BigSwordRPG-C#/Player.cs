@@ -20,9 +20,16 @@ namespace BigSwordRPG_C_
     {
 
         private Dictionary<string, Hero> _heroes;
+        private CreateHero _DicoHeros;
 
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
+
+        public Player() 
+        {
+            _DicoHeros = new CreateHero();
+            _heroes = _DicoHeros.CreateDictionaryHero();
+        }
 
         public Player(int[] position) : 
             base(
