@@ -17,8 +17,7 @@ namespace BigSwordRPG_C_.Utils
 
         public void setPositionCamera()
         {
-            int[] posJoueur = joueur.Position;
-            Console.SetWindowPosition(posJoueur[0] - 70, posJoueur[1] - 25);
+            Console.SetWindowPosition(joueur.Position[0] - 70, joueur.Position[1] - 25);
         }
     }
 }

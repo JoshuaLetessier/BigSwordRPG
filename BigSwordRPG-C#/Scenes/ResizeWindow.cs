@@ -61,7 +61,7 @@ namespace BigSwordRPG.Assets
             srReturn.Dispose();
         }
 
-        public override void Update()
+        public override void Run()
         {
             throw new NotImplementedException();
         }
