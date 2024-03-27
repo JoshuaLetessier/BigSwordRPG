@@ -65,7 +65,7 @@ namespace BigSwordRPG_C_
             Position[1] += distance * (int)axis;
             Console.SetCursorPosition(0, 0);
             Console.Write("Moving Char");
-            GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
+            GameManager.Instance.Renderer.MoveTextureBlackBackground(Position, Texture, distance, axis);
 
         }
     }

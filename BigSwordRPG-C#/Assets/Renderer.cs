@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text;
-
+using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
 
@@ -23,6 +23,14 @@ namespace BigSwordRPG.Assets
         public short Top;
         public short Right;
         public short Bottom;
+    }
+
+    public struct TextureRegion
+    {
+        public int offsetX;
+        public int offsetY;
+        public int sizeX;
+        public int sizeY;
     }
 
     /*public struct CHAR_INFO
@@ -70,6 +78,8 @@ namespace BigSwordRPG.Assets
         private char[][] _consoleBuffer;
         public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
 
+        public Texture _backgroundTexture;
+
         public Renderer()
         {
 
@@ -101,23 +111,23 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(15, 15);
             Console.Write("\x1b[38;2;12;255;100mTestCharBG");
 
-            SMALL_RECT readRegion = new SMALL_RECT
+            /*SMALL_RECT readRegion = new SMALL_RECT
             {
                 Left = 10,
                 Top = 50,
                 Right = 16, // Adjust these coordinates to specify the region you want to read
                 Bottom = 64
-            };
+            };*/
 
-            COORD bufferSize = new COORD
+            /*COORD bufferSize = new COORD
             {
                 X = (short)(readRegion.Right - readRegion.Left + 1),
                 Y = (short)(readRegion.Bottom - readRegion.Top + 1)
-            };
+            };*/
 
             CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
 
-            bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
+            //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
 
             int errorCode = Marshal.GetLastWin32Error();
             Console.WriteLine("Error occurred. Error code: " + errorCode);
@@ -171,7 +181,26 @@ namespace BigSwordRPG.Assets
             }
         }
 
-        public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
+        public void DrawTextureRegion(int[] position, Texture texture, TextureRegion textureRegion)
+        {
+            string line;
+            int foregroundColor;
+            int backgroundColor;
+            for (int i = textureRegion.offsetY; i < textureRegion.offsetY + textureRegion.sizeY; i++)
+            {
+                line = "";
+                for (int j = textureRegion.offsetX; j < textureRegion.offsetX + textureRegion.sizeX; j++)
+                {
+                    foregroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].backgroundColor;
+                    line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
+                }
+                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.Write(line);
+            }
+        }   
+
+        public void MoveTextureBlackBackground(int[] position, Texture texture, int offset, Axis axis)
         {
             Console.SetCursorPosition(0, 0);
             Console.Write("Draw Texture");
@@ -222,6 +251,28 @@ namespace BigSwordRPG.Assets
                 Console.Write(line);
             }
             Console.SetCursorPosition(0, 0);
+        }
+
+        public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
+        {
+            DrawTexture(position, texture);
+            GameObject gameObject = new GameObject();
+            TextureRegion textureRegion = new TextureRegion();
+            if(axis == Axis.HORIZONTAL)
+            {
+                textureRegion.offsetX = offset > 0 ? position[0] - gameObject.Position[0] : position[0] - gameObject.Position[0] + texture.Size[0];
+                textureRegion.offsetY = position[1] - gameObject.Position[1];
+                textureRegion.sizeX = offset;
+                textureRegion.sizeY = texture.Size[1];
+            } else
+            {
+                textureRegion.offsetX = position[0] - gameObject.Position[0];
+                textureRegion.offsetY = offset > 0 ? position[1] - gameObject.Position[1] : position[1] - gameObject.Position[1] + texture.Size[1];
+                textureRegion.sizeX = texture.Size[0];
+                textureRegion.sizeY = offset;
+            }
+            
+            DrawTextureRegion(position, gameObject.Texture, textureRegion);
         }
 
     }
