@@ -48,59 +48,17 @@ namespace BigSwordRPG.Assets
             //version 1 simplifié
             while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
-                /*if (startFight == true)
+                if (firstTeamPlay == "h")
                 {
-                    startFight = false;*/
-
-                    if (firstTeamPlay == "h")
-                    {
-                        //random
-                        Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                        firstTeamPlay = "e";
-                       /* if (heroesInCombat.Count != 1)
-                            countHeros = 0;
-                        else if(heroesInCombat.Count == countHeros)
-                            countHeros += 1;*/
-                    }
-                    else
-                    {
-                        Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                        firstTeamPlay = "h";
-                        /*                        if (EnnemiesList.Count == 1)
-                        {
-                            countEnnemy = 0;
-                        }
-                        else
-                            countEnnemy += 1;*/
-                    }
-                //}
-  /*              else
+                    //random
+                    Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                    firstTeamPlay = "e";  
+                }
+                else
                 {
-                    if(firstTeamPlay == "h")
-                    {
-                        Round(heroesInCombat.First().Value);
-                        firstTeamPlay = "e";
-                        if (heroesInCombat.Count != 1)
-                        {
-                            countHeros = 0;
-                        }
-                        else
-                            countHeros += 1;
-
-                    }
-                    else
-                    {
-                        Round(EnnemiesList[0]);
-                        firstTeamPlay = "h";
-                        if (EnnemiesList.Count == 1)
-                        {
-                            countEnnemy = 0;
-                        }
-                        else
-                            countEnnemy += 1;
-                    }
-                    //dico toList
-                }*/
+                    Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                    firstTeamPlay = "h";
+                }
             }
         }
 

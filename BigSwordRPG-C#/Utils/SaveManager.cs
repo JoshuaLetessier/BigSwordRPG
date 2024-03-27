@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BigSwordRPG_C_.Utils
 {
-    internal class SaveManager
+    public class SaveManager
     {
         private int[] position;
      
