@@ -19,8 +19,6 @@ namespace BigSwordRPG.Assets
         {
             this.testCam = testCam;
             this.testPlayer = testPlayer;
-
-
         }
 
         public override void Draw()
@@ -39,7 +37,7 @@ namespace BigSwordRPG.Assets
 
             Console.SetCursorPosition(testCam.joueur.Position[0], testCam.joueur.Position[1]);
 
-            testCam.setPositionCamera();
+            testCam.setPositionCamera(testCam.Size);
         }
 
         public override void Update()

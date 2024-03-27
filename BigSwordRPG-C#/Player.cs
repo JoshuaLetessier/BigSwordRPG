@@ -40,7 +40,7 @@ namespace BigSwordRPG_C_
                 }
             )
         {
-           // Draw();
+            //Draw();
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D,
                 new Action(

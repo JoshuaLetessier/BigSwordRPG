@@ -1,7 +1,10 @@
-﻿using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG.Game;
+using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,20 @@ namespace BigSwordRPG.Assets
     {
         private SelectMenu test;
         private MenuScene testMenu;
+        private string sizeWindow;
+
+        private string filePath = "../../../Config/Config.csv";
+
+        [DllImport("kernel32")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("User32")]
+        static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
+
+        IntPtr ConsoleHandle = GetConsoleWindow();
+
+
+        public string SizeWindow { get => sizeWindow; set => sizeWindow = value; }
 
         public ResizeWindow()
         {
@@ -73,21 +90,46 @@ namespace BigSwordRPG.Assets
 
         public void MakeFullscreen()
         {
-            Console.SetWindowPosition(Console.WindowLeft, Console.WindowTop);
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
+            SizeWindow = "Fullscreen";
+            LoadResolution();
             Draw();
         }
 
         public void MakeQuatreTier()
         {
             Console.SetWindowSize(100, 35);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 800, 600, 0);
+            SizeWindow = "QuatreTier";
+            LoadResolution();
             Draw();
         }
 
         public void MakeTroisDemi()
         {
             Console.SetWindowSize(90, 28);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 720, 480, 0);
+            SizeWindow = "TroisDemi";
+            LoadResolution();
             Draw();
+        }
+
+        public void LoadResolution()
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            FileInfo fileInfo = new FileInfo(filePath);
+            using (StreamWriter streamWriter = fileInfo.CreateText())
+            {
+                streamWriter.WriteLine(SizeWindow);
+            }
         }
     }
 }

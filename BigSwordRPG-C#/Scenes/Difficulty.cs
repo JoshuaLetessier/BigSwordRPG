@@ -24,9 +24,10 @@ namespace BigSwordRPG.Assets
 
         public Difficulty()
         {
+            string SizeReturn = ReturnSize();
             test = new SelectMenu();
             testMenu = new MenuScene();
-            testMap = new MapScene(new Camera(), new Player(new int[2] {150,60}));
+            testMap = new MapScene(new Camera(SizeReturn), new Player(new int[2] {150,60}));
         }
 
         public override void Draw()
@@ -95,6 +96,15 @@ namespace BigSwordRPG.Assets
         public void ReturnMenu()
         {
             testMenu.Draw();
+        }
+
+        public string ReturnSize()
+        {
+            StreamReader srSize = new StreamReader("../../../Config/Config.csv");
+            string Size = srSize.ReadToEnd().Replace("\r\n", "");
+            srSize.Dispose();
+
+            return Size;
         }
     }
 }
