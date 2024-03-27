@@ -16,7 +16,6 @@ namespace BigSwordRPG_C_.Utils
         public Camera(string size)
         {
             joueur = new Player(new int[2] {150,60});
-            //resize = new ResizeWindow();
             _size = size;
         }
 
