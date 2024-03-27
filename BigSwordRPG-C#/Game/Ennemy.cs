@@ -179,8 +179,9 @@ namespace BigSwordRPG.Game
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
                             Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false,
-                            PM = int.Parse(ennemiesData[8]),
                             PMMax = int.Parse(ennemiesData[8]),
+                            PM = int.Parse(ennemiesData[8]),
+                           
                         };
 
                         for (int i = 9; i < ennemiesData.Length-1; i++)
