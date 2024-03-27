@@ -75,6 +75,9 @@ namespace BigSwordRPG.Game
             _equipements = equipements;
         }
 
+        public Character()
+        {
+        }
 
         ~Character() { }
 
