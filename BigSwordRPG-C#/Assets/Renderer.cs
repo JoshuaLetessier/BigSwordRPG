@@ -76,7 +76,9 @@ namespace BigSwordRPG.Assets
         static extern IntPtr GetStdHandle(int nStdHandle);
 
         private char[][] _consoleBuffer;
+        private int[] _bufferSize;
         public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+        public int[] BufferSize { get => _bufferSize; set => _bufferSize = value; }
 
         public Texture _backgroundTexture;
 
@@ -125,7 +127,7 @@ namespace BigSwordRPG.Assets
                 Y = (short)(readRegion.Bottom - readRegion.Top + 1)
             };*/
 
-            CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
+            //CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
 
             //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
 
@@ -256,7 +258,12 @@ namespace BigSwordRPG.Assets
         public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
         {
             DrawTexture(position, texture);
-            GameObject gameObject = new GameObject();
+            Texture tex2 = new Texture();
+            tex2.Size = new int[2] { 2, 3 };
+            tex2.PixelsBuffer = new List<Pixel>() {
+                new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160)
+            };
+            GameObject gameObject = new GameObject(new int[2] { 10, 10 }, tex2);
             TextureRegion textureRegion = new TextureRegion();
             if(axis == Axis.HORIZONTAL)
             {
@@ -271,9 +278,12 @@ namespace BigSwordRPG.Assets
                 textureRegion.sizeX = texture.Size[0];
                 textureRegion.sizeY = offset;
             }
-            
             DrawTextureRegion(position, gameObject.Texture, textureRegion);
         }
 
+        public bool IsInBuffer(int[] position, int[] size)
+        {
+            return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < BufferSize[0] && position[1] + size[0] < BufferSize[1];
+        }   
     }
 }

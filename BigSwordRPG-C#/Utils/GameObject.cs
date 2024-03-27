@@ -17,9 +17,14 @@ namespace BigSwordRPG.Utils
         public Texture Texture { get => _texture; set => _texture = value; }
         public int SpriteIndex { get => _spriteIndex; set => _spriteIndex = value; }
 
-        public GameObject() { }
-        public int Initialize() { return 0; }
+        public GameObject(int[] position, Texture texture) {
+            Position = position;
+        }
 
+        public void Draw()
+        {
+            GameManager.Instance.Renderer.DrawTexture(Position, Texture);
+        }
         /*public int Move(int[] newPosition) { 
             Renderer->Move()
         }*/
