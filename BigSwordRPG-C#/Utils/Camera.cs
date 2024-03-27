@@ -12,8 +12,7 @@ namespace BigSwordRPG_C_.Utils
 
         public Camera()
         {
-            joueur = new Player();
-            joueur.Initialize();
+            joueur = new Player(new int[2] {150,60});
         }
 
         public void setPositionCamera()

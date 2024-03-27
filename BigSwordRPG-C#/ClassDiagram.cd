@@ -1,280 +1,301 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BigSwordRPG_C_.Abilities" Collapsed="true">
-    <Position X="12" Y="0.5" Width="1.5" />
+    <Position X="30" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIADAACIACESAABAAABQAAAAAAAAgAQAAAAAAAAE=</HashCode>
       <FileName>Game\Abilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.CreateListAbilities" Collapsed="true">
-    <Position X="12" Y="1.5" Width="1.5" />
+    <Position X="31.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Abilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Character" Collapsed="true">
-    <Position X="1.5" Y="4.75" Width="1.5" />
+    <Position X="14.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IACAKAAAAAEACgABQAAIE4QBIABAAAALBEAAAEAAAAA=</HashCode>
+      <HashCode>YACAKAAAAAEgCgCBQAAYM4QBIAAIgAALFEQAAUAAAAA=</HashCode>
       <FileName>Game\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Ennemy" Collapsed="true">
-    <Position X="0.5" Y="6.25" Width="1.5" />
+    <Position X="13.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQEAAAAQQABECAAAAAAAAAAAAAQABAAAAIAA=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.CreateEnnemy" Collapsed="true">
-    <Position X="15.5" Y="0.5" Width="1.5" />
+    <Position X="33.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAIgAAACAAAAAAAAAAAABEEBQAAAAAAAAAAAAk=</HashCode>
+      <HashCode>AAAAACAIgAAQCAAAAAAAIAAAABEEBQAAAAAAAAAEAAk=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Hero" Collapsed="true">
-    <Position X="2.75" Y="6.25" Width="1.5" />
+    <Position X="16" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.CreateHero" Collapsed="true">
-    <Position X="19" Y="0.5" Width="1.5" />
+    <Position X="30" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAIgAAACAAAAAAgAAAAABEEAQAAAAAAAAAAAAk=</HashCode>
+      <HashCode>AAAAACAIgAAACAAAAAAgIAAAABEEAQAAEAAAAAAEAAk=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.InterestPoint" Collapsed="true">
-    <Position X="19" Y="1.5" Width="1.5" />
+    <Position X="31.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\InterestPoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Inventory" Collapsed="true">
-    <Position X="12" Y="2.5" Width="1.5" />
+    <Position X="33.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAgIAAAAAAAAAAAAAAAAACAAAAAAQAAAAA=</HashCode>
       <FileName>Game\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Item" Collapsed="true">
-    <Position X="5" Y="4.75" Width="1.5" />
+    <Position X="18.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAIAAAAAAAAgAAAAAAAAQAAABEAAAIAAAgAAAAAAA=</HashCode>
+      <HashCode>ABAAIAAAAAAAAgAAAAAAAAQAAAAEAAAIAAAgAAAAAAA=</HashCode>
       <FileName>Game\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Game.Equipement" Collapsed="true">
-    <Position X="13.75" Y="1.5" Width="1.5" />
+    <Position X="33.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAABAAAAQQAAAAAAQAAAAAAAAAAQQAAAAEAAA=</HashCode>
+      <HashCode>AAAAIAAAABAAAAQQAAAAAAQAAAAAAAAQASQAAAAEAAA=</HashCode>
       <FileName>Game\Equipement.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Game.CreateEquipement" Collapsed="true">
-    <Position X="17.25" Y="0.5" Width="1.5" />
+    <Position X="35.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
       <FileName>Game\Equipement.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Game.Music" Collapsed="true">
-    <Position X="13.75" Y="2.5" Width="1.5" />
+    <Position X="35.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAACAAACAAAAAAAAAAAAAIEAAAAAAAAAA=</HashCode>
       <FileName>Game\Music.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.DialogScene" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Position X="14" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\DialogScene.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BigSwordRPG.Assets.FightScene" Collapsed="true">
-    <Position X="5" Y="1.75" Width="1.5" />
+  <Class Name="BigSwordRPG.Assets.Difficulty" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAUEIAAAgABAAwAAggIAAEAAAAAgAACBBAAAAAIAAAQ=</HashCode>
+      <HashCode>AAQAAAAAACAAAgAAAAQIAAAAAAAAAACIAAAUAEAgACQ=</HashCode>
+      <FileName>Scenes\Difficulty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BigSwordRPG.Assets.FightScene" Collapsed="true">
+    <Position X="23" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUEIAAAgABAAwAAggIACEAAAAAgAACBBAAAAAIAAAQ=</HashCode>
       <FileName>Scenes\FightScene.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.MapScene" Collapsed="true">
-    <Position X="7.25" Y="1.75" Width="1.5" />
+    <Position X="25.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAYAAAAAAAAAAgAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\MapScene.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.MenuScene" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="1.5" />
+    <Position X="16.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAABAAAAgAIAAAAIAgAQAAAAAAJAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAABBAAAAgAIAAAIIAgAAAAAAAAJAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\MenuScene.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.OptionScene" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="20.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAJAAAABAAAAAAIAAAAAAAAACA=</HashCode>
       <FileName>Scenes\OptionScene.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Assets.Renderer" Collapsed="true">
-    <Position X="19" Y="2.5" Width="1.5" />
+    <Position X="31.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QACAAAAABhAAAQAAAEAAAAAEAAIAAAAAQAAAAAQ0AAA=</HashCode>
+      <HashCode>QACAAAAARhAAAQAACEABKAAEAAKAAAAAQAAAAAQ0AAA=</HashCode>
       <FileName>Scenes\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BigSwordRPG.Assets.ResizeWindow" Collapsed="true">
+    <Position X="27.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAIAAAAAAgAIAAAIAAAAAAAAAAAIAAAAAAAAACA=</HashCode>
+      <FileName>Scenes\ResizeWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BigSwordRPG.Assets.Scene" Collapsed="true">
-    <Position X="5" Y="0.5" Width="1.5" />
+    <Position X="20.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Scene.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Scene.MenuAccueil" Collapsed="true">
-    <Position X="9.5" Y="3.25" Width="1.5" />
+    <Position X="16.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\MenuAccueil.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Utils.Camera" Collapsed="true">
-    <Position X="13.75" Y="0.5" Width="1.5" />
+    <Position X="31.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Utils\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BigSwordRPG_C_.Utils.SaveManager" Collapsed="true">
+    <Position X="33.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAgAAAAIAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\SaveManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="BigSwordRPG_C_.Utils.SelectMenu" Collapsed="true">
-    <Position X="12" Y="3.5" Width="1.5" />
+    <Position X="35.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIEAQAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Utils\SelectMenu.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Utils.GameManager" Collapsed="true">
-    <Position X="15.5" Y="1.5" Width="1.5" />
+    <Position X="35.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAQAAAIAAAAAAEgAAAAAAQACAIAQAAAI=</HashCode>
       <FileName>Utils\GameManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Utils.GameObject" Collapsed="true">
-    <Position X="2.75" Y="3.5" Width="1.5" />
+    <Position X="17" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAABAAAAIAAAAAAAAAAA=</HashCode>
-      <FileName>Utils\GameObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BigSwordRPG.Utils.Transform" Collapsed="true">
-    <Position X="15.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAgAAAAAAAAAAAAAAAAAAAAgAIAAAA=</HashCode>
+      <HashCode>AAAAAEAAAQAAAgAgAAAAAAAAAAAAAAAIAAMAgAAAAAA=</HashCode>
       <FileName>Utils\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Utils.InputManager" Collapsed="true">
-    <Position X="17.25" Y="1.5" Width="1.5" />
+    <Position X="30" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAQAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>Utils\InputManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BigSwordRPG.Utils.Graphics.Texture" Collapsed="true">
-    <Position X="13.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAgBAAAAAAAAAAAAIAAAA=</HashCode>
-      <FileName>Utils\Graphics.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BigSwordRPG_C_.Player" Collapsed="true">
-    <Position X="15.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAYAAAQAgAAAAAAAAAAAAAAAAAAIAgAAIAAA=</HashCode>
-      <FileName>Player.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BigSwordRPG.Program" Collapsed="true">
-    <Position X="17.25" Y="2.5" Width="1.5" />
+    <Position X="30" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBgAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABBgAAACA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BigSwordRPG_C_.Player" Collapsed="true">
+    <Position X="20.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAIAAAAAAAIAAg=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="BigSwordRPG.Assets.COORD" Collapsed="true">
-    <Position X="13.75" Y="4.75" Width="1.5" />
+    <Position X="31.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
       <FileName>Scenes\Renderer.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="BigSwordRPG.Assets.SMALL_RECT" Collapsed="true">
-    <Position X="17.25" Y="4.75" Width="1.5" />
+    <Position X="35.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAACACAAAAAAAA=</HashCode>
       <FileName>Scenes\Renderer.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="BigSwordRPG.Assets.TextureRegion" Collapsed="true">
+    <Position X="31.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAEACAAAAAAAA=</HashCode>
+      <FileName>Scenes\Renderer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Struct Name="BigSwordRPG.Assets.CHAR_INFO" Collapsed="true">
-    <Position X="12" Y="4.75" Width="1.5" />
+    <Position X="30" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scenes\Renderer.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="BigSwordRPG.Utils.Graphics.Pixel" Collapsed="true">
-    <Position X="15.5" Y="4.75" Width="1.5" />
+    <Position X="33.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>Utils\Graphics.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="BigSwordRPG.Utils.Graphics.Texture" Collapsed="true">
+    <Position X="30" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Graphics.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Enum Name="BigSwordRPG_C_.actionType" Collapsed="true">
-    <Position X="12" Y="6" Width="1.5" />
+    <Position X="30" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAACIAAgAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Abilities.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BigSwordRPG_C_.ZoneAction" Collapsed="true">
-    <Position X="12" Y="6.75" Width="1.5" />
+    <Position X="31.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Game\Abilities.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BigSwordRPG.Game.ennemyType" Collapsed="true">
-    <Position X="17.25" Y="6" Width="1.5" />
+    <Position X="35.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EquipementType" Collapsed="true">
-    <Position X="19" Y="6" Width="1.5" />
+    <Position X="30" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
       <FileName>Game\Equipement.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BigSwordRPG.Utils.Difficulties" Collapsed="true">
-    <Position X="15.5" Y="6" Width="1.5" />
+    <Position X="33.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAgAAAAAAAAEAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Utils\GameManager.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BigSwordRPG_C_.Axis" Collapsed="true">
-    <Position X="13.75" Y="6" Width="1.5" />
+    <Position X="31.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Player.cs</FileName>
