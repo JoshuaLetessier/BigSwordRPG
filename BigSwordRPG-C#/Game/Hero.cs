@@ -14,7 +14,7 @@ namespace BigSwordRPG.Game
     {
         List<Abilities> actAbilities;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, int speed, Dictionary<string, Abilities> abilities, bool isDead, int PM,int PMMax, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM,int PMMax, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
         {
             Name = name;
             Health = health;
@@ -57,7 +57,7 @@ namespace BigSwordRPG.Game
         private float healthMultiplier;
         private float attMultiplier;
         private float healMultiplier;
-        private int speed;
+        private float speed;
         private Dictionary<string, Abilities> abilities;
         private bool isDead;
         private int PM;
@@ -84,6 +84,7 @@ namespace BigSwordRPG.Game
                         string stringHealthMultiplier = heroData[4].Replace("\"", "");
                         string stringAttMultiplier = heroData[5].Replace("\"", "");
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
+                        string stringSpeed = heroData[6].Replace("\"", "");
 
                         Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements)
                         {
@@ -95,7 +96,7 @@ namespace BigSwordRPG.Game
 
                             AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
-                            Speed = int.Parse(heroData[7]),
+                            Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false,
                             PM = int.Parse(heroData[8]),
                             PMMax = int.Parse(heroData[8]),
