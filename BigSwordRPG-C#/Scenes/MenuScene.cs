@@ -1,4 +1,5 @@
-﻿using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG.Utils;
+using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,9 +66,9 @@ namespace BigSwordRPG.Assets
         }
 
 
-        public override void Update()
+        public override void Run()
         {
-            throw new NotImplementedException();
+            Draw();
         }
 
         public void NouvelleGame()
