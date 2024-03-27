@@ -13,11 +13,13 @@ namespace BigSwordRPG.Assets
     {
         private SelectMenu test;
         private MenuScene testMenu;
+        private ResizeWindow window;
 
         public OptionScene() 
         {
             test = new SelectMenu();
             testMenu = new MenuScene();
+            window = new ResizeWindow();
         }
 
         public override void Draw()
@@ -53,6 +55,7 @@ namespace BigSwordRPG.Assets
             srName.Dispose();
             srResolution.Dispose();
             srLangues.Dispose();
+            srReturn.Dispose();
         }
         
         public override void Update()
@@ -62,7 +65,7 @@ namespace BigSwordRPG.Assets
 
         public void AllResolution()
         {
-            throw new NotSupportedException();
+            window.Draw();
         }
 
         public void SetLangues()
