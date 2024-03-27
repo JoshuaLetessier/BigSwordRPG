@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text;
-
+using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
 
@@ -23,6 +23,14 @@ namespace BigSwordRPG.Assets
         public short Top;
         public short Right;
         public short Bottom;
+    }
+
+    public struct TextureRegion
+    {
+        public int offsetX;
+        public int offsetY;
+        public int sizeX;
+        public int sizeY;
     }
 
     /*public struct CHAR_INFO
@@ -68,7 +76,11 @@ namespace BigSwordRPG.Assets
         static extern IntPtr GetStdHandle(int nStdHandle);
 
         private char[][] _consoleBuffer;
+        private int[] _bufferSize;
         public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+        public int[] BufferSize { get => _bufferSize; set => _bufferSize = value; }
+
+        public Texture _backgroundTexture;
 
         public Renderer()
         {
@@ -78,7 +90,7 @@ namespace BigSwordRPG.Assets
         public int Initialize()
         {
             //Console.WindowWidth = 5;
-            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+            /*IntPtr hConsole = GetStdHandle(-11); // Standard output handle
 
             Console.WriteLine(Console.LargestWindowWidth);
             IntPtr ConsoleHandle = GetConsoleWindow();
@@ -99,28 +111,28 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(15, 15);
             Console.Write("\x1b[48;2;12;4;255mTestCharBG\x1b[48;2;0;0;0m");
             Console.SetCursorPosition(15, 15);
-            Console.Write("\x1b[38;2;12;255;100mTestCharBG");
+            Console.Write("\x1b[38;2;12;255;100mTestCharBG");*/
 
-            SMALL_RECT readRegion = new SMALL_RECT
+            /*SMALL_RECT readRegion = new SMALL_RECT
             {
                 Left = 10,
                 Top = 50,
                 Right = 16, // Adjust these coordinates to specify the region you want to read
                 Bottom = 64
-            };
+            };*/
 
-            COORD bufferSize = new COORD
+            /*COORD bufferSize = new COORD
             {
                 X = (short)(readRegion.Right - readRegion.Left + 1),
                 Y = (short)(readRegion.Bottom - readRegion.Top + 1)
-            };
+            };*/
 
-            CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
+            //CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
 
-            bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
+            //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
 
-            int errorCode = Marshal.GetLastWin32Error();
-            Console.WriteLine("Error occurred. Error code: " + errorCode);
+         /*   int errorCode = Marshal.GetLastWin32Error();
+            Console.WriteLine("Error occurred. Error code: " + errorCode);*/
 
             return 0;
         }
@@ -152,8 +164,8 @@ namespace BigSwordRPG.Assets
         }
 
         public void DrawTexture(int[] position, Texture texture) {
-            Console.SetCursorPosition(0, 0);
-            Console.Write("Draw Texture");
+            //Console.SetCursorPosition(0, 0);
+            //Console.Write("Draw Texture");
             string line;
             int foregroundColor;
             int backgroundColor;
@@ -171,7 +183,26 @@ namespace BigSwordRPG.Assets
             }
         }
 
-        public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
+        public void DrawTextureRegion(int[] position, Texture texture, TextureRegion textureRegion)
+        {
+            string line;
+            int foregroundColor;
+            int backgroundColor;
+            for (int i = textureRegion.offsetY; i < textureRegion.offsetY + textureRegion.sizeY; i++)
+            {
+                line = "";
+                for (int j = textureRegion.offsetX; j < textureRegion.offsetX + textureRegion.sizeX; j++)
+                {
+                    foregroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].backgroundColor;
+                    line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
+                }
+                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.Write(line);
+            }
+        }   
+
+        public void MoveTextureBlackBackground(int[] position, Texture texture, int offset, Axis axis)
         {
             Console.SetCursorPosition(0, 0);
             Console.Write("Draw Texture");
@@ -187,14 +218,16 @@ namespace BigSwordRPG.Assets
                 {
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
-                Console.SetCursorPosition(position[0], position[1] + i);
+                Console.SetCursorPosition(position[0], position[1] + i - offset * (int)axis);
                 Console.Write(line);
             }
             for (int i = 0; i < texture.Size[1]; i++)
             {
                 line = "";
+                Console.SetCursorPosition(position[0], position[1] + i);
                 for (int k = 0;  k < offset * (1 - (int)axis); k++)
                 {
+                    Console.CursorLeft -= offset * (1 - (int)axis);
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
                 for (int j = 0; j < texture.Size[0]; j++)
@@ -207,7 +240,6 @@ namespace BigSwordRPG.Assets
                 {
                     line += $"\x1b[38;5;{0};48;5;{0}m▄";
                 }
-                Console.SetCursorPosition(position[0] - offset * (int)axis, position[1] + i - offset * (int)axis);
                 Console.Write(line);
             }
             for (int i = 0; i > offset * (int)axis; i--)
@@ -220,7 +252,38 @@ namespace BigSwordRPG.Assets
                 Console.SetCursorPosition(position[0], position[1] + texture.Size[1] + i);
                 Console.Write(line);
             }
+            Console.SetCursorPosition(0, 0);
         }
 
+        public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
+        {
+            DrawTexture(position, texture);
+            Texture tex2 = new Texture();
+            tex2.Size = new int[2] { 2, 3 };
+            tex2.PixelsBuffer = new List<Pixel>() {
+                new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160)
+            };
+           /* GameObject gameObject = new GameObject(new int[2] { 10, 10 }, tex2);
+            TextureRegion textureRegion = new TextureRegion();
+            if(axis == Axis.HORIZONTAL)
+            {
+                textureRegion.offsetX = offset > 0 ? position[0] - gameObject.Position[0] : position[0] - gameObject.Position[0] + texture.Size[0];
+                textureRegion.offsetY = position[1] - gameObject.Position[1];
+                textureRegion.sizeX = offset;
+                textureRegion.sizeY = texture.Size[1];
+            } else
+            {
+                textureRegion.offsetX = position[0] - gameObject.Position[0];
+                textureRegion.offsetY = offset > 0 ? position[1] - gameObject.Position[1] : position[1] - gameObject.Position[1] + texture.Size[1];
+                textureRegion.sizeX = texture.Size[0];
+                textureRegion.sizeY = offset;
+            }
+            DrawTextureRegion(position, gameObject.Texture, textureRegion);*/
+        }
+
+        public bool IsInBuffer(int[] position, int[] size)
+        {
+            return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < BufferSize[0] && position[1] + size[0] < BufferSize[1];
+        }   
     }
 }

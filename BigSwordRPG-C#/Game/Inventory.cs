@@ -29,7 +29,7 @@ namespace BigSwordRPG.Game
             else
             {
                 Console.WriteLine("L'inventaire est plein !");
-                newItem?.Destroy();
+               // newItem?.Destroy();
                 // Possible add of a menu for exchange
             }
         }

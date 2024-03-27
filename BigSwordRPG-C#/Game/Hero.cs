@@ -6,6 +6,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using BigSwordRPG_C_.Game;
 using System.Reflection.Metadata;
 
 namespace BigSwordRPG.Game
@@ -14,7 +15,7 @@ namespace BigSwordRPG.Game
     {
         List<Abilities> actAbilities;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead) :base(name, health,maxHealth,level,healthMultiplier,attMultiplier,healMultiplier,speed, abilities,isDead)
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM,int PMMax, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
         {
             Name = name;
             Health = health;
@@ -83,6 +84,7 @@ namespace BigSwordRPG.Game
             // Selection de la clé du héro
             do
             {
+                Console.Clear();
                 foreach (Ennemy ennemy in ennemies)
                 {
                     bool isSelected = ennemy == ennemies[index];
@@ -126,6 +128,7 @@ namespace BigSwordRPG.Game
             // Selection de la clé du héro
             do
             {
+                Console.Clear();
                 foreach (string name in heroesName)
                 {
                     bool isSelected = name == heroesName[index];
@@ -168,6 +171,9 @@ namespace BigSwordRPG.Game
         private float speed;
         private Dictionary<string, Abilities> abilities;
         private bool isDead;
+        private int PM;
+        private int PMmax;
+        private Dictionary<string, Equipement> equipements;
 
         public  Dictionary<string, Hero> CreateDictionaryHero()//Génerer le disctionnaire des Héros
         {
@@ -189,10 +195,9 @@ namespace BigSwordRPG.Game
                         string stringHealthMultiplier = heroData[4].Replace("\"", "");
                         string stringAttMultiplier = heroData[5].Replace("\"", "");
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
-                        string stringSpeed = heroData[7].Replace("\"", "");
+                        string stringSpeed = heroData[6].Replace("\"", "");
 
-
-                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead)
+                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements)
                         {
                             Name = heroData[0],
                             Health = int.Parse(heroData[1]),
@@ -203,11 +208,13 @@ namespace BigSwordRPG.Game
                             AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
                             Speed = float.Parse(stringSpeed.Replace(".", ",")),
-                            IsDead = false
+                            IsDead = false,
+                            PM = int.Parse(heroData[8]),
+                            PMMax = int.Parse(heroData[8]),
                         };
 
                         hero.CAbilities = new Dictionary<string, Abilities>();
-                        for (int i = 8; i < heroData.Length-1; i++)
+                        for (int i = 9; i < heroData.Length-1; i++)
                         {
                             hero.CAbilities.Add(heroData[i], createListAbilities.AbilitiesList[heroData[i]]);
                         }

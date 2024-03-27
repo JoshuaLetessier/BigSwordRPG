@@ -8,20 +8,23 @@ namespace BigSwordRPG.Assets
     public class FightScene : Scene
     {
         private Dictionary<string, Game.Hero> heroesInCombat;
-        List<Game.Ennemy> _ennemiesList;
+        private Dictionary<string, Game.Ennemy> _ennemiesList;
         private int indexAbility = 0;
 
         private bool startFight = false;
         private string firstTeamPlay;
-        private int heroPlayable;
-        private int ennemyPlaybale;
+        private int countHeros;
+        private int countEnnemy;
         private int allEnnemyDeath;
 
-        Player player = new Player(); //!!!!!!!!!!A changer !!!!!!!!!
+        Player _player;
 
-        public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+        
 
-        public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies) 
+        public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
+        public Player player { get => _player; set => _player = value; }
+
+        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string,Game.Ennemy> ennemies, Player player) 
         {
             int count = 0;
             foreach (var key in heroes.Keys)
@@ -31,65 +34,31 @@ namespace BigSwordRPG.Assets
             if (count == heroes.Count) { /*return false;*/ }
 
             heroesInCombat = heroes;
+            _ennemiesList = ennemies;
             firstTeamPlay = orderStartFight();
+            _player = player;
+            countHeros = 0;
+            countEnnemy = 0;
+
         } //exption pour remplacer le bool
 
         public override void Update()
         {
             Console.WriteLine("FIGHT !!!");
-            // boucle de combas
+            // boucle de combas 
+            //version 1 simplifié
             while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
-                if (startFight == true)
+                if (firstTeamPlay == "h")
                 {
-                    startFight = false;
-
-                    if (firstTeamPlay == "h")
-                    {
-                        Round(heroesInCombat.First().Value);
-                        firstTeamPlay = "e";
-                        if (heroesInCombat.Count != 1)
-                        {
-                            heroPlayable = 0;
-                        }
-                        heroPlayable += 1;
-
-                    }
-                    else
-                    {
-                        Round(EnnemiesList[0]);
-                        firstTeamPlay= "h";
-                        if (EnnemiesList.Count == 1)
-                        {
-                            ennemyPlaybale = 0;
-                        }
-                        ennemyPlaybale += 1;
-                    }
+                    //random
+                    Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                    firstTeamPlay = "e";  
                 }
                 else
                 {
-                    if(firstTeamPlay == "h")
-                    {
-                        Round(heroesInCombat.First().Value);
-                        firstTeamPlay = "e";
-                        if (heroesInCombat.Count != 1)
-                        {
-                            heroPlayable = 0;
-                        }
-                        heroPlayable += 1;
-
-                    }
-                    else
-                    {
-                        Round(EnnemiesList[0]);
-                        firstTeamPlay = "h";
-                        if (EnnemiesList.Count == 1)
-                        {
-                            ennemyPlaybale = 0;
-                        }
-                        ennemyPlaybale += 1;
-                    }
-                    //dico toList
+                    Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                    firstTeamPlay = "h";
                 }
             }
         }
@@ -119,8 +88,11 @@ namespace BigSwordRPG.Assets
             }
         }
 
-        public void FightLoop(string firstPlay)
-        {  
+        private int RandomFonction(int value)
+        {
+            Random random = new Random();
+
+            return random.Next(0, value);
         }
 
         private void Round(Hero actHero)
@@ -134,6 +106,7 @@ namespace BigSwordRPG.Assets
 
             do // Bug d'affichage ???
             {
+                Console.Clear();
                 foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
                 {
                     bool isSelected = ability == actHero.ActAbilities[indexAbility];
@@ -154,11 +127,11 @@ namespace BigSwordRPG.Assets
             } while (pressedKey != ConsoleKey.Enter);
 
             // Vérifie le type de l'action et l'effectue
-            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT /*&& actHero.ActAbilities[indexAbility].Cost > Pm*/)
+            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
             {
-                actHero.UseAbilities(indexAbility, EnnemiesList);
+                actHero.UseAbilities(indexAbility, EnnemiesList.Values.ToList());
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF /*&& actHero.ActAbilities[indexAbility].Cost > Pm*/)
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
             {
                 string buffType;
                 if (actHero.ActAbilities[indexAbility].Damage != 0)
@@ -173,7 +146,7 @@ namespace BigSwordRPG.Assets
             {
                 //actHero.UseSpecialAbility();
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth /*&& actHero.ActAbilities[indexAbility].Cost > actHero.Pm*/)
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
             {
                 actHero.UseAbilities(indexAbility);
             }

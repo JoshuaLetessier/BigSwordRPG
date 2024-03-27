@@ -18,12 +18,10 @@ namespace BigSwordRPG.Utils.Graphics
         }
     }
 
-    public class Texture
+    public struct Texture
     {
-        private List<Pixel> _pixelsBuffer;
-        private int[] _size;
+        public int[] Size;
+        public List<Pixel> PixelsBuffer;
 
-        public List<Pixel> PixelsBuffer { get => _pixelsBuffer; set => _pixelsBuffer = value; }
-        public int[] Size { get => _size; set => _size = value; }
     }
 }

@@ -1,3 +1,4 @@
+using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using System;
@@ -15,26 +16,40 @@ namespace BigSwordRPG_C_
     }
 
 
-    public class Player
+    public class Player : GameObject
     {
-        private int[] _position;
-        private Texture _texture;
+
+        private Dictionary<string, Hero> _heroes;
+        private CreateHero _DicoHeros;
 
         public bool _allHeroDead = false;
-        public int[] Position { get => _position; set => _position = value; }
-        public Texture Texture { get => _texture; set => _texture = value; }
+        public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
-        public int Initialize()
+        public Player() 
         {
-            Position = new int[2] { 150,90 };
-            Texture = new Texture();
-            Texture.Size = new int[2] { 2, 3 };
-            Texture.PixelsBuffer = new List<Pixel>() { 
-                new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160) 
-            };
-            /*GameManager.Instance.Renderer.DrawTexture(Position, Texture);
+            _DicoHeros = new CreateHero();
+            _heroes = _DicoHeros.CreateDictionaryHero();
+        }
+
+        public Player(int[] position) : 
+            base(
+                position, 
+                new Texture() {
+                    Size = new int[2] { 1, 1 }, 
+                    PixelsBuffer = new List<Pixel>() { 
+                        new Pixel(160, 40), 
+                        new Pixel(160, 40), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160) 
+                    }
+                }
+            )
+        {
+           // Draw();
             GameManager.Instance.InputManager.RegisterAction(
-                ConsoleKey.D, 
+                ConsoleKey.D,
                 new Action(
                     () => Move(1, Axis.HORIZONTAL)
                 )
@@ -56,17 +71,26 @@ namespace BigSwordRPG_C_
                  new Action(
                      () => Move(1, Axis.VERTICAL)
                  )
-             );*/
-            return 0;
+             );
         }
 
         public void Move(int distance, Axis axis)
         {
-            Console.SetCursorPosition(0, 0);
-            Console.Write("Moving Char");
-            GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
-            Position[0] += distance * (1 - (int)axis);
-            Position[1] += distance * (int)axis;
+            int[] newPosition = new int[2] { 
+                Position[0] + distance * (1 - (int)axis), 
+                Position[1] + distance * (int)axis 
+            };
+            if (GameManager.Instance.Renderer.IsInBuffer(newPosition, Texture.Size))
+            {
+                Position[0] = newPosition[0];
+                Position[1] = newPosition[1];
+                GameManager.Instance.Renderer.MoveTextureBlackBackground(Position, Texture, distance, axis);
+            }
+        }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
         }
     }
 }
