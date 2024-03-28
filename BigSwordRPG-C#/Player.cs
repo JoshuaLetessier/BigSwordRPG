@@ -23,20 +23,10 @@ namespace BigSwordRPG_C_
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
-        public Player(int[] position) : 
+        public Player(int[] position, Texture texture) : 
             base(
                 position, 
-                new Texture() {
-                    Size = new int[2] { 2, 3 }, 
-                    PixelsBuffer = new List<Pixel>() { 
-                        new Pixel(160, 40), 
-                        new Pixel(160, 40), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160) 
-                    }
-                }
+                texture
             )
         {
             _DicoHeros = new CreateHero();
