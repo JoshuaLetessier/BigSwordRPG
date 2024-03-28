@@ -17,7 +17,7 @@ namespace BigSwordRPG.Utils
             return 0;
         }
 
-        public int WaitForInput() {
+        public int Update() {
             ConsoleKey keyPressed = Console.ReadKey().Key;
             if(actionsMap.ContainsKey(keyPressed)) { 
                 foreach(var action in actionsMap[keyPressed]) 
@@ -25,6 +25,15 @@ namespace BigSwordRPG.Utils
                     action.Invoke();
                 }
             }
+            /*switch (keyPressed)
+            {
+                case ConsoleKey.Z:
+                    Console.Write(keyPressed);
+                    break;
+
+            }*/
+
+
             return 0; 
         }
 

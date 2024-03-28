@@ -10,5 +10,10 @@ namespace BigSwordRPG_C_.GameObjects
     public class Background : GameObject
     {
         public Background(int[] position) { }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

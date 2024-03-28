@@ -1,4 +1,4 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG_C_.Game;
 using BigSwordRPG_C_.Utils;
 using NAudio.Wave;
 using System;
@@ -79,9 +79,9 @@ namespace BigSwordRPG.Assets
         }
 
 
-        public override void Run()
+        public override void Update()
         {
-            Draw();
+            throw new NotImplementedException();
         }
 
         public void NouvelleGame()

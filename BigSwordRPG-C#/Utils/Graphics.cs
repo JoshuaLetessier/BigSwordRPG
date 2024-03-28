@@ -22,5 +22,6 @@ namespace BigSwordRPG.Utils.Graphics
     {
         public int[] Size;
         public List<Pixel> PixelsBuffer;
+
     }
 }
