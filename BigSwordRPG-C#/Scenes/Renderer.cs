@@ -27,6 +27,15 @@ namespace BigSwordRPG.Assets
         [DllImport("User32")]
         static extern bool SetWindowLongA(IntPtr hWnd, int longIndex, long newlong);
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
         private IntPtr _consoleHandle;
         private Camera _camera;
         private Background background;
@@ -43,6 +52,20 @@ namespace BigSwordRPG.Assets
             SetWindowPos(ConsoleHandle, 0, 0, 0, 1944, 1055, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
+
+            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+
+            uint mode;
+            GetConsoleMode(hConsole, out mode);
+
+            // Disable auto-scrolling and newline auto return
+            const uint ENABLE_EXTENDED_FLAGS = 0x0080;
+            mode &= ~ENABLE_EXTENDED_FLAGS; // Disable auto-scrolling
+            mode |= 0x0008; // Disable newline auto return
+            mode |= 0x0004;
+
+            // Set the new console mode
+            SetConsoleMode(hConsole, mode);
 
             Camera = new Camera();
 
