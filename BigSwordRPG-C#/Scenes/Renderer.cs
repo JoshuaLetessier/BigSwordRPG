@@ -8,6 +8,7 @@ using System.Text;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
+using BigSwordRPG_C_.GameObjects;
 
 namespace BigSwordRPG.Assets
 {
@@ -76,9 +77,7 @@ namespace BigSwordRPG.Assets
         static extern IntPtr GetStdHandle(int nStdHandle);
 
         private char[][] _consoleBuffer;
-        private int[] _bufferSize;
         public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
-        public int[] BufferSize { get => _bufferSize; set => _bufferSize = value; }
 
         public Texture _backgroundTexture;
 
@@ -90,16 +89,17 @@ namespace BigSwordRPG.Assets
         public int Initialize()
         {
             //Console.WindowWidth = 5;
-            /*IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
 
             Console.WriteLine(Console.LargestWindowWidth);
             IntPtr ConsoleHandle = GetConsoleWindow();
+
             List<CHAR_INFO> charInfoList = new List<CHAR_INFO>();
             COORD position = new COORD();
             COORD size = new COORD();
             //ReadConsoleOutput(ConsoleHandle, charInfoList, )
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 2600, 3000, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 1944, 1055, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
 
@@ -111,7 +111,7 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(15, 15);
             Console.Write("\x1b[48;2;12;4;255mTestCharBG\x1b[48;2;0;0;0m");
             Console.SetCursorPosition(15, 15);
-            Console.Write("\x1b[38;2;12;255;100mTestCharBG");*/
+            Console.Write("\x1b[38;2;12;255;100mTestCharBG");
 
             /*SMALL_RECT readRegion = new SMALL_RECT
             {
@@ -147,7 +147,7 @@ namespace BigSwordRPG.Assets
 
         public void DrawObject(int[] position, int[] size)
         {
-            string line;
+            /*string line;
             size[0] = Math.Min(size[0], Console.BufferWidth - position[0]);
             size[1] = Math.Min(size[1], Console.BufferHeight - position[1]);
 
@@ -160,7 +160,7 @@ namespace BigSwordRPG.Assets
                     line += "H";
                 }
                 Console.Write(line);
-            }
+            }*/
         }
 
         public void DrawTexture(int[] position, Texture texture) {
@@ -210,7 +210,6 @@ namespace BigSwordRPG.Assets
             int foregroundColor;
             int backgroundColor;
             // bufferCoords = pos1 - pos2
-            // 
             for (int i = 0; i < offset * (int)axis; i++)
             {
                 line = "";
@@ -263,7 +262,7 @@ namespace BigSwordRPG.Assets
             tex2.PixelsBuffer = new List<Pixel>() {
                 new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160)
             };
-           /* GameObject gameObject = new GameObject(new int[2] { 10, 10 }, tex2);
+            Background gameObject = new Background(new int[2] { 10, 10 });
             TextureRegion textureRegion = new TextureRegion();
             if(axis == Axis.HORIZONTAL)
             {
@@ -278,12 +277,13 @@ namespace BigSwordRPG.Assets
                 textureRegion.sizeX = texture.Size[0];
                 textureRegion.sizeY = offset;
             }
-            DrawTextureRegion(position, gameObject.Texture, textureRegion);*/
+            DrawTextureRegion(position, gameObject.Texture, textureRegion);
         }
 
         public bool IsInBuffer(int[] position, int[] size)
         {
-            return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < BufferSize[0] && position[1] + size[0] < BufferSize[1];
+            
+            return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < Console.BufferWidth && position[1] + size[0] < Console.BufferHeight;
         }   
     }
 }
