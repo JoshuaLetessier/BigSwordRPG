@@ -50,8 +50,8 @@ namespace BigSwordRPG.Assets
 
             Console.Write(maMapTexture);
             Console.SetBufferSize(854, 184);
-            GameManager.Instance.Renderer.Background = new Background(new int[2] { 0, 0 }, mapTexture);
-            GameManager.Instance.Renderer.DrawTexture(new int[2] { 0, 0 }, mapTexture);
+            GameManager.Instance.Renderer.Background = new Background(new int[2] { 0, 0 }, maMapTexture);
+            GameManager.Instance.Renderer.DrawTexture(new int[2] { 0, 0 }, maMapTexture);
             sr.Dispose();
 
             //testCam.setPositionCamera();
