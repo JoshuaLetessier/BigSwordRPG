@@ -9,8 +9,9 @@ namespace BigSwordRPG.Game
     public class Hero : Character
     {
         List<Abilities> actAbilities;
+        int magicPoint;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM,int PMMax, Dictionary<string, Equipement> equipements) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMax, Dictionary<string, Equipement> equipements, int magicPoint) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
         {
             Name = name;
             MaxHealth = maxHealth;
@@ -22,9 +23,11 @@ namespace BigSwordRPG.Game
             Speed = speed;
             CAbilities = abilities;
             IsDead = isDead;
+            this.magicPoint = magicPoint;
         }
 
         public List<Abilities> ActAbilities { get => actAbilities; set => actAbilities = value; }
+        public int MagicPoint { get => magicPoint; set => magicPoint = value; }
 
         public void UseAbilities(int index)
         {
@@ -134,7 +137,7 @@ namespace BigSwordRPG.Game
             //MagicPoint++
         }
 
-        private string SelectHero(List<Hero> heroes)
+        public string SelectHero(List<Hero> heroes)
         {
             ConsoleKey pressedKey;
             int previousLineIndex = -1, selectedLineIndex = 0;
@@ -226,6 +229,11 @@ namespace BigSwordRPG.Game
         private int PM;
         private int PMmax;
         private Dictionary<string, Equipement> equipements;
+        private CreateEquipement createEquipement = new CreateEquipement();
+
+        private int magicPoint;
+
+        public CreateEquipement CreateEquipement { get => createEquipement; set => createEquipement = value; }
 
         public  Dictionary<string, Hero> CreateDictionaryHero()//Génerer le disctionnaire des Héros
         {
@@ -249,11 +257,11 @@ namespace BigSwordRPG.Game
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
                         string stringSpeed = heroData[6].Replace("\"", "");
 
-                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements)
+                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements, magicPoint)
                         {
                             Name = heroData[0],
                             MaxHealth = int.Parse(heroData[2]),
-                            Health = int.Parse(heroData[1]),
+                            Health = int.Parse(heroData[2]),
                             Level = int.Parse(heroData[3]),
                             HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
 
@@ -263,6 +271,7 @@ namespace BigSwordRPG.Game
                             IsDead = false,
                             PMMax = int.Parse(heroData[8]),
                             PM = int.Parse(heroData[8]),
+                            Equipements = new Dictionary<string, Equipement> { }
                         };
 
                         hero.CAbilities = new Dictionary<string, Abilities>();
@@ -275,8 +284,15 @@ namespace BigSwordRPG.Game
                             hero.CAbilities.ElementAt(i).Value.Damage = hero.CAbilities.ElementAt(i).Value.Damage * hero.AttMultiplier * hero.Level;
                             hero.CAbilities.ElementAt(i).Value.Heal = hero.CAbilities.ElementAt(i).Value.Heal * hero.HealMultiplier * hero.Level;
                         }
+                        equipements = CreateEquipement.CreateDictionaryEquipement();
+                        hero.Equipements.Add(equipements["Defibrilateur Nanite"].Name, equipements["Defibrilateur Nanite"]);
+
                         heroes.Add(hero.Name, hero);
                     }
+
+                    heroes["Nova"].Equipements.Add(equipements["Gantelets Electro-Plasma"].Name, equipements["Gantelets Electro-Plasma"]);
+                    heroes["Lexus"].Equipements.Add(equipements["Dispositif de fission"].Name, equipements["Dispositif de fission"]);
+
                     return heroes;
 
                 }
@@ -284,6 +300,28 @@ namespace BigSwordRPG.Game
             else
             {
                 throw new FileNotFoundException("Fichier " + filePath + " entrouvable");
+            }
+        }
+
+        public void AffichageStat(Dictionary<string, Hero> heroes)
+        {
+            foreach (KeyValuePair<string, Hero> kvp in heroes)
+            {
+                string heroName = kvp.Key;
+                Hero hero = kvp.Value;
+
+                Console.WriteLine($"Hero: {heroName}, Health: {hero.Health}");
+                Console.WriteLine("Abilities:");
+
+                foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
+                {
+                    string abilityName = abilityKvp.Key;
+                    Abilities ability = abilityKvp.Value;
+
+                    Console.WriteLine($"- {abilityName}");
+                }
+
+                Console.WriteLine();
             }
         }
     }

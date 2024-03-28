@@ -32,8 +32,13 @@ namespace BigSwordRPG.Game
                     _health = 0;
                 else if(value > MaxHealth)
                     _health = MaxHealth;
-                else 
+                else
                     _health = value;
+
+                if (_health == 0)
+                {
+                    IsDead = true;
+                }
             }
         }
         public int Level { get => _level; set => _level = value; }
@@ -81,10 +86,7 @@ namespace BigSwordRPG.Game
             _equipements = equipements;
         }
 
-        public Character()
-        {
-            Health = 100;
-        }
+
 
         ~Character() { }
 
