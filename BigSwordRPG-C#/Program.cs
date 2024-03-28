@@ -40,7 +40,7 @@ namespace BigSwordRPG
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
+            //Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
             //LargestWindowWidth = 240
             //LargestWindowHeight = 63
 
@@ -51,11 +51,11 @@ namespace BigSwordRPG
             //Console.Read();
 
 
-            // p.fightScene.Update();
+            p.fightScene.Update();
 
 
 
-            Dictionary<string, Hero> heroes = p.testCreateHeros.CreateDictionaryHero();
+            /*Dictionary<string, Hero> heroes = p.testCreateHeros.CreateDictionaryHero();
             Dictionary<string, Ennemy> ennemies = p.createEnnemy.CreateDictionaryEnnemies();
 
 
@@ -96,7 +96,7 @@ namespace BigSwordRPG
                 }
 
                 Console.WriteLine();
-            }
+            }*/
             
 
 
@@ -105,46 +105,46 @@ namespace BigSwordRPG
 
             /*
 
-                        foreach (KeyValuePair<string, Hero> kvp in heroes)
-                        {
-                            string heroName = kvp.Key;
-                            Hero hero = kvp.Value;
+            foreach (KeyValuePair<string, Hero> kvp in heroes)
+            {
+                string heroName = kvp.Key;
+                Hero hero = kvp.Value;
 
-                            Console.WriteLine($"Hero: {heroName}, Health: {hero.Health}");
-                            Console.WriteLine("Abilities:");
+                Console.WriteLine($"Hero: {heroName}, Health: {hero.Health}");
+                Console.WriteLine("Abilities:");
 
-                            foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
-                            {
-                                string abilityName = abilityKvp.Key;
-                                Abilities ability = abilityKvp.Value;
+                foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
+                {
+                    string abilityName = abilityKvp.Key;
+                    Abilities ability = abilityKvp.Value;
 
-                                Console.WriteLine($"- {abilityName}");
-                            }
+                    Console.WriteLine($"- {abilityName}");
+                }
 
-                            Console.WriteLine();
-                        }
+                Console.WriteLine();
+            }
 
-                        foreach (KeyValuePair<string, Ennemy> kvp in ennemies)
-                        {
-                            string heroName = kvp.Key;
-                            Ennemy hero = kvp.Value;
+            foreach (KeyValuePair<string, Ennemy> kvp in ennemies)
+            {
+                string heroName = kvp.Key;
+                Ennemy hero = kvp.Value;
 
-                            Console.WriteLine($"Ennemy: {heroName}, Health: {hero.Health}");
-                            Console.WriteLine("Abilities:");
+                Console.WriteLine($"Ennemy: {heroName}, Health: {hero.Health}");
+                Console.WriteLine("Abilities:");
 
-                            foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
-                            {
-                                string abilityName = abilityKvp.Key;
-                                Abilities ability = abilityKvp.Value;
+                foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
+                {
+                    string abilityName = abilityKvp.Key;
+                    Abilities ability = abilityKvp.Value;
 
-                                Console.WriteLine($"- {abilityName}");
-                            }
+                    Console.WriteLine($"- {abilityName}");
+                }
 
-                            Console.WriteLine();
+                Console.WriteLine();
 
 
 
-                        }*/
+            }*/
         }
     }
 }

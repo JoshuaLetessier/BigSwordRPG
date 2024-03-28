@@ -1,6 +1,4 @@
 ﻿using BigSwordRPG.Game;
-using BigSwordRPG.Utils;
-using System.Linq;
 using BigSwordRPG_C_;
 
 namespace BigSwordRPG.Assets
@@ -75,7 +73,7 @@ namespace BigSwordRPG.Assets
             }
             else
             {
-                Random random = new Random();
+                Random random = new();
                 float randomFirstPlay = random.Next(0, 1);
                 if (randomFirstPlay < 0.5f)
                 {
@@ -99,40 +97,39 @@ namespace BigSwordRPG.Assets
         {
             actHero.ActAbilities = actHero.CAbilities.Values.ToList();
             // S'il n'a pas d'abilité selectionné, prends la première
-            int indexAbility = 0;
+            int previousLineIndex = 0, selectedLineIndex = 1;
+            bool isSepcialReady = false;
+            // Vérifie que la capacité peut être activée
+            //if (actHero.MagicPoint == 4) { previousLineIndex = -1, selectedLineIndex = 0, isSpecialReady = true; }
             ConsoleKey pressedKey;
-
+            
             do
             {
-                Console.Clear();
-                Console.WriteLine($"Au tour de {actHero.Name} !");
-                Console.WriteLine($"HP: {actHero.Health} | PM: {actHero.PM} \n");
-                foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
+                if(previousLineIndex != selectedLineIndex)
                 {
-                    bool isSelected = ability == actHero.ActAbilities[indexAbility];
-                    ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name} type -> {ability.Type} zone -> {ability.Zone}");
-                    Console.WriteLine($"ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp}");
+                    UpdateMenu(actHero.ActAbilities, selectedLineIndex);
+                    previousLineIndex = selectedLineIndex;
                 }
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.ActAbilities.Count)
+                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < actHero.ActAbilities.Count)
+                    selectedLineIndex++;
+
+                else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
                 {
-                    indexAbility++;
+                    if (actHero.ActAbilities[selectedLineIndex-1].Type == actionType.CAPA && isSepcialReady == true)
+                        selectedLineIndex--;
                 }
-                else if (pressedKey == ConsoleKey.UpArrow && indexAbility - 1 >= 0)
-                {
-                    indexAbility--;
-                }
-            } while (pressedKey != ConsoleKey.Enter);
+
+            } while (pressedKey != ConsoleKey.Enter && actHero.ActAbilities[selectedLineIndex].Cost > actHero.PM);
 
             // Vérifie le type de l'action et l'effectue
-            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost < actHero.PM)
+            if (actHero.ActAbilities[indexAbility].Type == actionType.ATT)
             {
                 actHero.UseAbilities(indexAbility, EnnemiesList.Values.ToList());
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
+            else if (actHero.ActAbilities[indexAbility].Type == actionType.BUFF)
             {
                 string buffType;
                 if (actHero.ActAbilities[indexAbility].Damage != 0)
@@ -147,7 +144,7 @@ namespace BigSwordRPG.Assets
             {
                 //actHero.UseSpecialAbility();
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth)
             {
                 actHero.UseAbilities(indexAbility);
             }
@@ -156,16 +153,34 @@ namespace BigSwordRPG.Assets
                 //Escape();
             }
         }
-
-        private static void ChangeLineColor(bool shouldHighlight)
+        static void UpdateMenu(List<Abilities> actAbilities, int index)
         {
-            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
-            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
+            Console.Clear(); Console.WriteLine("\x1b[3J");
+            foreach (var ability in actAbilities)
+            {
+                bool isSelected = ability == actAbilities[index];
+                if (isSelected)
+                {
+                    DrawSelectedMenu(ability);
+                }
+                else
+                    Console.WriteLine($"  {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone} \n");
+            }
+        }
+
+        static void DrawSelectedMenu(Abilities ability)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone}");
+            Console.WriteLine($"    ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp} \n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private void Round(Ennemy actEnnemy)
         {
-            Console.WriteLine($"{actEnnemy.Name} utilise :");
+            Console.Clear(); Console.WriteLine("\x1b[3J");
             RandomAction(actEnnemy);
             /*switch (GameManager.Instance.Difficulty)
             {
@@ -185,14 +200,13 @@ namespace BigSwordRPG.Assets
 
         private void RandomAction(Ennemy actEnnemy)
         {
-            Console.Clear();
             Console.WriteLine($"Au tour de {actEnnemy.Name} !");
             Console.WriteLine($"HP: {actEnnemy.Health} \n");
             Thread.Sleep(1000);
-            var rand = new Random();
+            Random rand = new();
             Abilities useAbility = actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
 
-            switch ((actionType)useAbility.Type)
+            switch (useAbility.Type)
             {
                 case actionType.ATT:
                     int nameIndex = 0;

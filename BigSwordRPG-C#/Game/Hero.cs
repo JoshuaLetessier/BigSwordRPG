@@ -1,13 +1,6 @@
 ﻿using BigSwordRPG_C_;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
-using System.Xml.Linq;
-using System.IO;
 using BigSwordRPG_C_.Game;
-using System.Reflection.Metadata;
 
 namespace BigSwordRPG.Game
 {
@@ -43,7 +36,7 @@ namespace BigSwordRPG.Game
         public void UseAbilities(int index, List<Ennemy> ennemies)
         {
             int ennemyIndex;
-            switch ((ZoneAction)actAbilities[index].Zone)
+            switch (actAbilities[index].Zone)
             {
                 case ZoneAction.All:
                     foreach (var enemy in ennemies)
@@ -222,7 +215,6 @@ namespace BigSwordRPG.Game
                         {
                             hero.CAbilities.ElementAt(i).Value.Damage = hero.CAbilities.ElementAt(i).Value.Damage * hero.AttMultiplier * hero.Level;
                             hero.CAbilities.ElementAt(i).Value.Heal = hero.CAbilities.ElementAt(i).Value.Heal * hero.HealMultiplier * hero.Level;
-                            hero.CAbilities.ElementAt(i).Value.Damage = hero.CAbilities.ElementAt(i).Value.Damage * hero.AttMultiplier * hero.Level;
                         }
                         heroes.Add(hero.Name, hero);
                     }
