@@ -1,4 +1,6 @@
-﻿using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG_C_.Game;
+using BigSwordRPG_C_.Utils;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,12 @@ namespace BigSwordRPG.Assets
         private OptionScene option;
         public List<SelectMenu> menu;
         private Difficulty difficulty;
+        private Music music;
 
         public MenuScene() 
         {
             test = new SelectMenu();
-            
+            music = new Music();
         }
 
 
@@ -27,6 +30,16 @@ namespace BigSwordRPG.Assets
             difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+            /*string filePath = "../../../Asset/Music/C418.mp3";
+
+            using (var audioFile = new AudioFileReader(filePath))
+            {
+                using (var outputDevice = new WaveOutEvent())
+                {
+                    outputDevice.Init(audioFile);
+                    outputDevice.Play();
+                }
+            }*/
 
             StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
