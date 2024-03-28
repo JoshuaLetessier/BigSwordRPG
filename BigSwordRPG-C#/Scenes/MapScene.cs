@@ -8,6 +8,7 @@ using System.Text.Json.Nodes;
 using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
 using BigSwordRPG.Utils;
+using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Assets
 {
@@ -16,18 +17,23 @@ namespace BigSwordRPG.Assets
         private Camera testCam;
         private Player testPlayer;
         private GameManager gameManager;
-        
+        private Music music;
+
+        private string FilePath = "../../../Asset/Music/robot.mp3";
+
 
         public MapScene(Camera testCam, Player testPlayer)
         {
             this.testCam = testCam;
             this.testPlayer = testPlayer;
-            
+            music = new Music();
         }
 
         public override void Draw()
         {
-           
+            music.CloseMusic();
+            Task audioTask = Task.Run(() => music.ImporterMP3(FilePath));
+
             Console.SetCursorPosition(0, 0);
 
             Console.SetBufferSize(854, 480);

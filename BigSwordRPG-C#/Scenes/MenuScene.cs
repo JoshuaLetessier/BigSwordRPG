@@ -18,6 +18,8 @@ namespace BigSwordRPG.Assets
         private Difficulty difficulty;
         private Music music;
 
+        private string filePath = "../../../Asset/Music/C418.mp3";
+
         public MenuScene() 
         {
             test = new SelectMenu();
@@ -31,16 +33,9 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            /*string filePath = "../../../Asset/Music/C418.mp3";
+            
 
-            using (var audioFile = new AudioFileReader(filePath))
-            {
-                using (var outputDevice = new WaveOutEvent())
-                {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                }
-            }*/
+            Task audioTask = Task.Run(() => music.ImporterMP3(filePath));
 
             StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
@@ -106,5 +101,7 @@ namespace BigSwordRPG.Assets
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,12 +13,7 @@ namespace BigSwordRPG_C_.Game
         private string test;
         private int[] frequencies;
         private int[] durations;
-
-        [DllImport("winmm.dll", SetLastError = true)]
-        public static extern bool mciGetErrorString([In] int error, [In, Out] char[] buffer, [In] int bufferCount);
-
-        [DllImport("winmm.dll", SetLastError = true)]
-        public static extern int mciSendString([In] string command, [Optional, In, Out] char[] returnBuffer, [Optional, In] int returnBufferCount, [Optional, In] IntPtr hNotifyWindow);
+        static WaveOutEvent waveOut;
 
 
         public Music()
@@ -36,68 +32,45 @@ namespace BigSwordRPG_C_.Game
         }
 
 
-        public void Play(string fileName)
+        public void ImporterMP3(string mp3FilePath)
         {
-            //Close();
-
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            try
             {
-                int error = mciSendString($"open \"{fileName}\" type mpegvideo alias RandomAudio", null, 0, IntPtr.Zero);
-
-                if (error != 0)
+                using (var reader = new Mp3FileReader(mp3FilePath))
                 {
-                    error = mciSendString($"open \"{fileName}\" alias RandomAudio", null, 0, IntPtr.Zero);
 
-                    if (error != 0)
+                    waveOut = new WaveOutEvent();
+                    waveOut.Init(reader);
+                    waveOut.Volume = 0.1f;
+
+                    waveOut.PlaybackStopped += (sender, e) => {
+                        waveOut.Stop();
+                        waveOut.Dispose();
+                        ImporterMP3(mp3FilePath); 
+                    };
+
+                    waveOut.Play();
+
+                    while (waveOut.PlaybackState == PlaybackState.Playing)
                     {
-                        throw new MciException(error);
+                        System.Threading.Thread.Sleep(100);
                     }
-                }
-                error = mciSendString($"play RandomAudio", null, 0, IntPtr.Zero);
 
-                if (error != 0)
-                {
-                    Close();
-
-                    throw new MciException(error);
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Une erreur est survenue lors de l'importation du fichier MP3 : " + ex.Message);
+            }
+            finally
+            {
+                waveOut?.Dispose();
             }
         }
 
-        static void Close()
+        public void CloseMusic()
         {
-            var error = mciSendString($"close RandomAudio", null, 0, IntPtr.Zero);
-
-            if (error != 0)
-            {
-                throw new MciException(error);
-            }
-        }
-
-        class MciException : SystemException
-        {
-            public MciException(int error)
-            {
-                var buffer = new char[128];
-
-                if (mciGetErrorString(error, buffer, 128))
-                {
-                    _message = new string(buffer);
-
-                    return;
-                }
-                _message = "An unknown error has occured.";
-            }
-
-            public override string Message
-            {
-                get
-                {
-                    return _message;
-                }
-            }
-
-            private string _message;
+            waveOut.Stop();
         }
     }
 }
