@@ -1,4 +1,5 @@
 ﻿using BigSwordRPG.Game;
+using BigSwordRPG.Utils;
 using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
@@ -90,32 +91,21 @@ namespace BigSwordRPG.Assets
 
         public void MakeFullscreen()
         {
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
-            SizeWindow = "Fullscreen";
+            GameManager.Instance.Renderer.ResizeWindow(new int[2] {1920, 1040});
             //LoadResolution();
             Draw();
         }
 
         public void MakeQuatreTier()
         {
-            Console.SetWindowSize(100, 35);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 800, 600, 0);
-            SizeWindow = "QuatreTier";
-
-
+            GameManager.Instance.Renderer.ResizeWindow(new int[2] { 800, 600 });
             //LoadResolution();
             Draw();
         }
 
         public void MakeTroisDemi()
         {
-            Console.SetWindowSize(90, 28);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 720, 480, 0);
-            SizeWindow = "TroisDemi";
+            GameManager.Instance.Renderer.ResizeWindow(new int[2] { 720, 480 });
             //LoadResolution();
             Draw();
         }

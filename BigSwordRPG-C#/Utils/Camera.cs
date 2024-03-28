@@ -23,7 +23,7 @@ namespace BigSwordRPG_C_.Utils
         public void SetCameraPosition(int[] centerPosition)
         {
             // Should be adjusted based on Window size directly
-            if (centerPosition[0] + (Size[0] / 2) > Console.BufferWidth)
+            if (centerPosition[0] + (Size[0] / 2) >= Console.BufferWidth)
             {
                 Position[0] = Console.BufferWidth - Size[0];
             } else if(centerPosition[0] - (Size[0] / 2) < 0)
