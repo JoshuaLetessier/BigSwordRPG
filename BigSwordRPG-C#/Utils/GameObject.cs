@@ -10,7 +10,11 @@ namespace BigSwordRPG.Utils
     public abstract class GameObject
     {
         public GameObject() { }
-        ~GameObject() { }       
+        ~GameObject() { }
+
+       
+        public abstract void Updtate();
+       
 
         private int[] _position = { 0, 0 };
         private Texture _texture;
@@ -30,5 +34,8 @@ namespace BigSwordRPG.Utils
         {
             GameManager.Instance.Renderer.DrawTexture(Position, Texture);
         }
+        /*public int Move(int[] newPosition) { 
+            Renderer->Move()
+        }*/
     }
 }

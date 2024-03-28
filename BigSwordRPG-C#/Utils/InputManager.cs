@@ -25,6 +25,15 @@ namespace BigSwordRPG.Utils
                     action.Invoke();
                 }
             }
+            /*switch (keyPressed)
+            {
+                case ConsoleKey.Z:
+                    Console.Write(keyPressed);
+                    break;
+
+            }*/
+
+
             return 0; 
         }
 

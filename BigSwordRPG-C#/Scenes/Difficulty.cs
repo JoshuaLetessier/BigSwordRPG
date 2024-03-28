@@ -1,5 +1,4 @@
-﻿using BigSwordRPG.Utils;
-using BigSwordRPG_C_;
+﻿using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
@@ -71,25 +70,27 @@ namespace BigSwordRPG.Assets
             srHard.Dispose();
         }
 
-        public override void Run()
+        public override void Update()
         {
             throw new NotImplementedException();
         }
 
+
+
         public void DifficultyEasy()
         {
+            testMap.Draw();
             DifficultyChoose = Easy;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
         public void DifficultyMiddle()
         {
+            testMap.Draw();
             DifficultyChoose = Middle;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
         public void DifficultyHard()
         {
+            testMap.Draw();
             DifficultyChoose = Hard;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
 
         public void ReturnMenu()

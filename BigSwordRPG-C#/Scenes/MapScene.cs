@@ -7,7 +7,6 @@ using System.IO;
 using System.Text.Json.Nodes;
 using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
-using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG.Utils;
 using BigSwordRPG.GameObjects;
 
@@ -16,6 +15,9 @@ namespace BigSwordRPG.Assets
     public class MapScene : Scene
     {
         private Camera testCam;
+        private Player testPlayer;
+        private GameManager gameManager;
+        private Music music;
         private TextureLoader textureLoader;
 
         public MapScene()
@@ -33,7 +35,9 @@ namespace BigSwordRPG.Assets
 
         public override void Draw()
         {
-           
+            music.CloseMusic();
+            Task audioTask = Task.Run(() => music.ImporterMP3(FilePath));
+
             Console.SetCursorPosition(0, 0);
 
             Console.SetBufferSize(854, 184);

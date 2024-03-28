@@ -27,8 +27,18 @@ namespace BigSwordRPG_C_
 
         public Player(int[] position, Texture texture) : 
             base(
-                position,
-                texture
+                position, 
+                new Texture() {
+                    Size = new int[2] { 1, 1 }, 
+                    PixelsBuffer = new List<Pixel>() { 
+                        new Pixel(160, 40), 
+                        new Pixel(160, 40), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160), 
+                        new Pixel(160, 160) 
+                    }
+                }
             )
         {
             _DicoHeros = new CreateHero();
@@ -74,6 +84,11 @@ namespace BigSwordRPG_C_
                 Position[1] = newPosition[1];
                 GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
             }
+        }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

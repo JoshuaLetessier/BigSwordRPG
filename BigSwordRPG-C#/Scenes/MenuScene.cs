@@ -1,6 +1,7 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG_C_.Utils;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,15 @@ namespace BigSwordRPG.Assets
         public List<SelectMenu> menu;
         private Difficulty difficulty;
         private SaveManager saveManager;
+        private Music music;
+
+        private string filePath = "../../../Asset/Music/C418.mp3";
 
         public MenuScene() 
         {
             test = new SelectMenu();
             saveManager = new SaveManager();
+            music = new Music();
         }
 
 
@@ -31,7 +36,11 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("./Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            
+
+            Task audioTask = Task.Run(() => music.ImporterMP3(filePath));
+
+            StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
             StreamReader srNouvellePartie = new StreamReader("./Asset/Image/nouvelle.txt");//Remettre le fichier dans Debug pour le déploiement
@@ -68,9 +77,9 @@ namespace BigSwordRPG.Assets
         }
 
 
-        public override void Run()
+        public override void Update()
         {
-            Draw();
+            throw new NotImplementedException();
         }
 
         public void RetrunDesktop()
@@ -97,5 +106,7 @@ namespace BigSwordRPG.Assets
             GameManager.Instance.SwitchScene(mapScene);
 
         }
+
+        
     }
 }

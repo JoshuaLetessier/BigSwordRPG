@@ -35,6 +35,7 @@ namespace BigSwordRPG.Assets
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        public int[] BufferSize { get => _bufferSize; set => _bufferSize = value; }
 
         private IntPtr _consoleHandle;
         private Camera _camera;
@@ -49,7 +50,7 @@ namespace BigSwordRPG.Assets
         {
             ConsoleHandle = GetConsoleWindow();
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 1944, 1055, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 2600, 3000, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
 
