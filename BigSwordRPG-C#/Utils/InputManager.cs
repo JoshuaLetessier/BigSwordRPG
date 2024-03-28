@@ -18,8 +18,8 @@ namespace BigSwordRPG.Utils
         }
 
         public int WaitForInput() {
-            ConsoleKey keyPressed = Console.ReadKey().Key;
-            if(actionsMap.ContainsKey(keyPressed)) { 
+            ConsoleKey keyPressed = Console.ReadKey(true).Key;
+            if (actionsMap.ContainsKey(keyPressed)) { 
                 foreach(var action in actionsMap[keyPressed]) 
                 {
                     action.Invoke();

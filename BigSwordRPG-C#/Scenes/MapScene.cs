@@ -16,12 +16,10 @@ namespace BigSwordRPG.Assets
     public class MapScene : Scene
     {
         private Camera testCam;
-        private Player testPlayer;
 
         public MapScene()
         {
-            testPlayer = new Player(new int[2] { 150, 60 });
-            testCam = new Camera("Fullscreen");
+            testCam = new Camera();
         }
 
         public override void Draw()
@@ -99,9 +97,9 @@ namespace BigSwordRPG.Assets
 
             //testCam.setPositionCamera();
             GameManager.Instance.Player.Draw();
-            Console.SetCursorPosition(testCam.joueur.Position[0], testCam.joueur.Position[1]);
+            testCam.ResetCursorPosition();
 
-            testCam.setPositionCamera(testCam.CameraSize);
+            testCam.SetCameraPosition(testCam.Size);
             //testCam.setPositionCamera();
             GameManager.Instance.Player.Draw();
         }
@@ -112,7 +110,7 @@ namespace BigSwordRPG.Assets
             while(true)
             {
                 GameManager.Instance.InputManager.WaitForInput();
-                testCam.setPositionCamera(GameManager.Instance.Player.Position);
+                testCam.SetCameraPosition(GameManager.Instance.Player.Position);
             }
         }
     }

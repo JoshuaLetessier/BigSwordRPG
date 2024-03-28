@@ -94,7 +94,7 @@ namespace BigSwordRPG.Assets
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
             SizeWindow = "Fullscreen";
-            LoadResolution();
+            //LoadResolution();
             Draw();
         }
 
@@ -104,7 +104,9 @@ namespace BigSwordRPG.Assets
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 800, 600, 0);
             SizeWindow = "QuatreTier";
-            LoadResolution();
+
+
+            //LoadResolution();
             Draw();
         }
 
@@ -114,7 +116,7 @@ namespace BigSwordRPG.Assets
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 720, 480, 0);
             SizeWindow = "TroisDemi";
-            LoadResolution();
+            //LoadResolution();
             Draw();
         }
 

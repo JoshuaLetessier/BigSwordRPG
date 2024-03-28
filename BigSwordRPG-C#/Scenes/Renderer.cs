@@ -9,56 +9,17 @@ using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
 using BigSwordRPG.GameObjects;
+using BigSwordRPG_C_.Utils;
 
 namespace BigSwordRPG.Assets
 {
-    public struct COORD
-    {
-        public short X;
-        public short Y;
-    }
-
-    public struct SMALL_RECT
-    {
-        public short Left;
-        public short Top;
-        public short Right;
-        public short Bottom;
-    }
-
-    public struct TextureRegion
-    {
-        public int offsetX;
-        public int offsetY;
-        public int sizeX;
-        public int sizeY;
-    }
-
-    /*public struct CHAR_INFO
-    {
-      public char Char;
-      public short Attributes;
-    }*/
-
-    public struct CHAR_INFO
-    {
-        public ushort UnicodeChar;
-        public ushort Attributes;
-    }
-
     public class Renderer
     {
         [DllImport("kernel32")]
         static extern IntPtr GetConsoleWindow();
 
-        [DllImport("kernel32")]
-        static extern bool ReadConsoleOutput(IntPtr hWnd, IntPtr copyBuffer, COORD copyBufferSize, COORD copyBufferPosition, SMALL_RECT targetRect); //ReadConsoleOutputCharacter
-
         [DllImport("User32")]
         static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
-
-        [DllImport("User32")]
-        static extern bool MoveWindow(IntPtr hWnd, int x, int y, int width, int height, bool repaint);
 
         [DllImport("User32")]
         static extern bool ShowScrollBar(IntPtr hWnd, int bar, bool show);
@@ -66,126 +27,38 @@ namespace BigSwordRPG.Assets
         [DllImport("User32")]
         static extern bool SetWindowLongA(IntPtr hWnd, int longIndex, long newlong);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool ReadConsoleOutput(IntPtr hConsoleOutput,
-                                      [Out] CHAR_INFO[] lpBuffer,
-                                      COORD dwBufferSize,
-                                      COORD dwBufferCoord,
-                                      ref SMALL_RECT lpReadRegion);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr GetStdHandle(int nStdHandle);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
-        private char[][] _consoleBuffer;
+        private IntPtr _consoleHandle;
+        private Camera _camera;
         private Background background;
-        public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+        public Camera Camera { get => _camera; set => _camera = value; }
         public Background Background { get => background; set => background = value; }
+        private IntPtr ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
 
-
-        public Renderer()
-        {
-
-        }
+        public Renderer() { }
         
         public int Initialize()
         {
-            //Console.WindowWidth = 5;
-            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
-
-            Console.WriteLine(Console.LargestWindowWidth);
-            IntPtr ConsoleHandle = GetConsoleWindow();
-
-            List<CHAR_INFO> charInfoList = new List<CHAR_INFO>();
-            COORD position = new COORD();
-            COORD size = new COORD();
-            //ReadConsoleOutput(ConsoleHandle, charInfoList, )
+            ConsoleHandle = GetConsoleWindow();
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
             SetWindowPos(ConsoleHandle, 0, 0, 0, 1944, 1055, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
 
-            //Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            DrawObject(new[] { 10, 50 }, new[] { 6, 14 });
-            DrawObject(new[] { 2, 3 }, new[] { 6, 14 });
-            DrawObject(new[] { 50, 30 }, new[] { 6, 5 });
-            DrawObject(new[] { 150, 20 }, new[] { 9, 3 });
-            Console.SetCursorPosition(15, 15);
-            Console.Write("\x1b[48;2;12;4;255mTestCharBG\x1b[48;2;0;0;0m");
-            Console.SetCursorPosition(15, 15);
-            Console.Write("\x1b[38;2;12;255;100mTestCharBG");
-
-            uint mode;
-            GetConsoleMode(hConsole, out mode);
-
-            // Disable auto-scrolling and newline auto return
-            const uint ENABLE_EXTENDED_FLAGS = 0x0080;
-            mode &= ~ENABLE_EXTENDED_FLAGS; // Disable auto-scrolling
-            mode |= 0x0008; // Disable newline auto return
-
-            // Set the new console mode
-            SetConsoleMode(hConsole, mode);
-
-            //Console.MoveBufferArea
-
-            /*SMALL_RECT readRegion = new SMALL_RECT
-            {
-                Left = 10,
-                Top = 50,
-                Right = 16, // Adjust these coordinates to specify the region you want to read
-                Bottom = 64
-            };*/
-
-            /*COORD bufferSize = new COORD
-            {
-                X = (short)(readRegion.Right - readRegion.Left + 1),
-                Y = (short)(readRegion.Bottom - readRegion.Top + 1)
-            };*/
-
-            //CHAR_INFO[] buffer = new CHAR_INFO[bufferSize.X * bufferSize.Y];
-
-            //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
-
-            /*   int errorCode = Marshal.GetLastWin32Error();
-               Console.WriteLine("Error occurred. Error code: " + errorCode);*/
+            Camera = new Camera();
 
             return 0;
         }
 
-        /// <summary>
-        /// Redraws the whole visible buffer.
-        /// </summary>
-        public void RenderFrame()
+        public void ResizeWindow(int[] newResolution)
         {
-
-        }
-
-        public void DrawObject(int[] position, int[] size)
-        {
-            /*string line;
-            size[0] = Math.Min(size[0], Console.BufferWidth - position[0]);
-            size[1] = Math.Min(size[1], Console.BufferHeight - position[1]);
-
-            for (int i = 0; i < size[1]; i++)
-            {
-                Console.SetCursorPosition(position[0], position[1] + i);
-                line = "";
-                for (int j = 0; j < size[0]; j++)
-                {
-                    line += "H";
-                }
-                Console.Write(line);
-            }*/
+            if(true) {  //Should check that the resolution isn't too big otherwise Console.SetWindowPosition will crash
+                SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+                SetWindowPos(ConsoleHandle, 0, 0, 0, newResolution[0], newResolution[1], 0);
+                Camera.ResizeCamera();
+            }
         }
 
         public void DrawTexture(int[] position, Texture texture) {
-            //Console.SetCursorPosition(0, 0);
-            //Console.Write("Draw Texture");
             string line;
             int foregroundColor;
             int backgroundColor;
@@ -201,6 +74,7 @@ namespace BigSwordRPG.Assets
                 Console.SetCursorPosition(position[0], position[1] + i);
                 Console.Write(line);
             }
+            Camera.ResetCursorPosition();
         }
 
         public void DrawTextureRegion(int[] position, Texture texture, TextureRegion textureRegion)
@@ -221,60 +95,8 @@ namespace BigSwordRPG.Assets
                 Console.SetCursorPosition(position[0], position[1] + i);
                 Console.Write(line);
             }
-            Console.SetCursorPosition(0, 0);
+            Camera.ResetCursorPosition();
         }   
-
-        public void MoveTextureBlackBackground(int[] position, Texture texture, int offset, Axis axis)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.Write("Draw Texture");
-            string line;
-            int foregroundColor;
-            int backgroundColor;
-            // bufferCoords = pos1 - pos2
-            for (int i = 0; i < offset * (int)axis; i++)
-            {
-                line = "";
-                for (int k = 0; k < texture.Size[0]; k++)
-                {
-                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
-                }
-                Console.SetCursorPosition(position[0], position[1] + i - offset * (int)axis);
-                Console.Write(line);
-            }
-            for (int i = 0; i < texture.Size[1]; i++)
-            {
-                line = "";
-                Console.SetCursorPosition(position[0], position[1] + i);
-                for (int k = 0;  k < offset * (1 - (int)axis); k++)
-                {
-                    Console.CursorLeft -= offset * (1 - (int)axis);
-                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
-                }
-                for (int j = 0; j < texture.Size[0]; j++)
-                {
-                    foregroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].foregroundColor;
-                    backgroundColor = texture.PixelsBuffer[i * texture.Size[0] + j].backgroundColor;
-                    line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
-                }
-                for (int k = 0; k > offset * (1 - (int)axis); k--)
-                {
-                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
-                }
-                Console.Write(line);
-            }
-            for (int i = 0; i > offset * (int)axis; i--)
-            {
-                line = "";
-                for (int k = 0; k < texture.Size[0]; k++)
-                {
-                    line += $"\x1b[38;5;{0};48;5;{0}m▄";
-                }
-                Console.SetCursorPosition(position[0], position[1] + texture.Size[1] + i);
-                Console.Write(line);
-            }
-            Console.SetCursorPosition(0, 0);
-        }
 
         public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
         {
@@ -297,12 +119,11 @@ namespace BigSwordRPG.Assets
                 position[0] + ((offset < 0 ? texture.Size[0] : -offset)) * (int)(1-axis),
                 position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis 
             };
-            DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion);
+            DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion); // DrawTextureRegion already calls Camera.ResetCursorPosition();
         }
 
         public bool IsInBuffer(int[] position, int[] size)
         {
-            
             return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < Console.BufferWidth && position[1] + size[0] < Console.BufferHeight;
         }   
     }
