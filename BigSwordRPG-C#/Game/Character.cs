@@ -33,6 +33,10 @@ namespace BigSwordRPG.Game
                     _health = 0;
                 else if(value > MaxHealth)
                     _health = MaxHealth;
+                else if(_health == 0)
+                {
+                    IsDead = true;
+                }
                 else 
                     _health = value;
             }

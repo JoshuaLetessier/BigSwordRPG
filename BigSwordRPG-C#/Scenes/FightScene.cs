@@ -2,6 +2,7 @@
 using BigSwordRPG.Utils;
 using System.Linq;
 using BigSwordRPG_C_;
+using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Assets
 {
@@ -9,6 +10,7 @@ namespace BigSwordRPG.Assets
     {
         private Dictionary<string, Game.Hero> heroesInCombat;
         private Dictionary<string, Game.Ennemy> _ennemiesList;
+        private Dictionary<string, Equipement> _equipementList;
         private int indexAbility = 0;
 
         private bool startFight = false;
@@ -18,6 +20,8 @@ namespace BigSwordRPG.Assets
         private int allEnnemyDeath;
 
         Player _player;
+
+        CreateEquipement createEquipement = new CreateEquipement();
 
         
 
@@ -34,7 +38,51 @@ namespace BigSwordRPG.Assets
             if (count == heroes.Count) { /*return false;*/ }
 
             heroesInCombat = heroes;
+            int levelTotal = 0;
+            for(int i = 0; i <heroesInCombat.Count; i++)
+            {
+                levelTotal += heroesInCombat.ElementAt(i).Value.Level;
+            }
+            int moyLevelHeros = levelTotal / heroesInCombat.Count;
+
             _ennemiesList = ennemies;
+
+            _equipementList = createEquipement.CreateDictionaryEquipement();
+            for(int i = 0; i < _ennemiesList.Count; ++i)
+            {
+                if(moyLevelHeros < 10)
+                {
+                    if (_ennemiesList.ContainsKey("Generatron"))
+                    {
+                        _ennemiesList.ElementAt(i).Value.Equipements.Clear();
+                        _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList["Defibrilateur Nanite"].Name, _equipementList["Defibrilateur Nanite"]);
+                    }
+                    else
+                    {
+                        Random random = new Random();
+                        int value = random.Next(0, 2);
+                        _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
+                    }
+                        
+                }
+                else
+                {
+                    if (_ennemiesList.ContainsKey("Generatron"))
+                        _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList["Stimulateur Neuro-Electrique"].Name, _equipementList["Stimulateur Neuro-Electrique"]);
+                    else
+                    {
+                        Random random = new Random();
+                        int value = random.Next(5, 7);
+                        _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
+                    }
+                        
+                }
+                
+                
+               
+
+            }
+
             firstTeamPlay = orderStartFight();
             _player = player;
             countHeros = 0;
@@ -107,6 +155,7 @@ namespace BigSwordRPG.Assets
                 Console.Clear();
                 Console.WriteLine($"Au tour de {actHero.Name} !");
                 Console.WriteLine($"HP: {actHero.Health} | PM: {actHero.PM} \n");
+
                 foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
                 {
                     bool isSelected = ability == actHero.ActAbilities[indexAbility];
@@ -131,6 +180,7 @@ namespace BigSwordRPG.Assets
             if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost < actHero.PM)
             {
                 actHero.UseAbilities(indexAbility, EnnemiesList.Values.ToList());
+                actHero.MagicPoint += 1;
             }
             else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
             {
@@ -142,14 +192,17 @@ namespace BigSwordRPG.Assets
                 else
                     buffType = "speed";
                 actHero.UseAbilities(indexAbility, heroesInCombat, buffType);
+                actHero.MagicPoint += 1;
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.CAPA /*&& actHero.MagicPoints == 4*/)
+            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.CAPA && actHero.MagicPoint == 4)
             {
                 //actHero.UseSpecialAbility();
+                actHero.MagicPoint = 0;
             }
             else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
             {
                 actHero.UseAbilities(indexAbility);
+                actHero.MagicPoint += 1;
             }
             else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ESCAPED)
             {
