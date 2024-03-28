@@ -46,7 +46,8 @@ namespace BigSwordRPG.Game
         public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
         public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
         public float HealMultiplier { get => _healMultiplier; set => _healMultiplier = value; }
-        public int PM { get => _PM; set
+        public int PM { 
+            get => _PM; set
             {
                 if (value < 0)
                     _PM = 0;
