@@ -38,6 +38,7 @@ namespace BigSwordRPG_C_
                 }
             )
         {
+            _heroes = new Dictionary<string, Hero>();
             //Draw();
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D,

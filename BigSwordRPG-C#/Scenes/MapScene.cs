@@ -20,6 +20,13 @@ namespace BigSwordRPG.Assets
         public MapScene()
         {
             testCam = new Camera();
+
+            GameManager.Instance.InputManager.RegisterAction(
+                ConsoleKey.Escape,
+                new Action(
+                    () => GameManager.Instance.SwitchScene<MenuAccueil>()
+                )
+            );
         }
 
         public override void Draw()
