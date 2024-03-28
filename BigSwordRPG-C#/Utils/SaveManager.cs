@@ -12,7 +12,7 @@ namespace BigSwordRPG_C_.Utils
     {
         private int[] position;
      
-        private string filePath = "../../../Save/Save.csv";
+        private string filePath = "./Save/Save.csv";
 
         public int[] Position { get => position; set => position = value; }
       

@@ -153,7 +153,7 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-            string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+            string filePath = "./Game/Stat/EnnemiesStat.csv";
 
             if (File.Exists(filePath))
             {

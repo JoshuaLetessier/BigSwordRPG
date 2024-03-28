@@ -18,7 +18,7 @@ namespace BigSwordRPG.Assets
         private MenuScene testMenu;
         private string sizeWindow;
 
-        private string filePath = "../../../Config/Config.csv";
+        private string filePath = "/Config/Config.csv";
 
         [DllImport("kernel32")]
         static extern IntPtr GetConsoleWindow();
@@ -42,19 +42,19 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader("/Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srFullscreen = new StreamReader("../../../Asset/Image/fullscreen.txt");
+            StreamReader srFullscreen = new StreamReader("/Asset/Image/fullscreen.txt");
             string Fullscreen = srFullscreen.ReadToEnd();
 
-            StreamReader srQuatreTier = new StreamReader("../../../Asset/Image/4 tiers.txt");
+            StreamReader srQuatreTier = new StreamReader("/Asset/Image/4 tiers.txt");
             string QuatreTier = srQuatreTier.ReadToEnd();
 
-            StreamReader srTroisDemi = new StreamReader("../../../Asset/Image/3demi.txt");
+            StreamReader srTroisDemi = new StreamReader("/Asset/Image/3demi.txt");
             string TroisDemi = srTroisDemi.ReadToEnd();
 
-            StreamReader srReturn = new StreamReader("../../../Asset/Image/Return.txt");
+            StreamReader srReturn = new StreamReader("/Asset/Image/Return.txt");
             string Return = srReturn.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;

@@ -61,7 +61,7 @@ namespace BigSwordRPG_C_
         private static Dictionary<string, Abilities> CreateAbilities()
         {
             
-            string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+            string filePath = "./Game/Stat/AbilitiesStat.csv";
             Dictionary<string, Abilities> abilities = new Dictionary<string, Abilities>(StringComparer.OrdinalIgnoreCase);
             if (File.Exists(filePath))
             {
