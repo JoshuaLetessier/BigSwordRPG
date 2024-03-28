@@ -110,7 +110,12 @@ namespace BigSwordRPG.Game
 
         public Abilities RandomAbilitiesEasyMod()
         {
-            return CAbilities.ElementAt(RandomAbilities(CAbilities)).Value;
+            Abilities randomAbility;
+            do 
+            {
+                randomAbility = CAbilities.ElementAt(RandomAbilities(CAbilities)).Value;
+            } while (randomAbility.Cost > PM);
+            return randomAbility;
         }
 
         //charactère des ennemis
@@ -163,7 +168,7 @@ namespace BigSwordRPG.Game
                 return CAbilities.ElementAt(RandomAbilities(GetAbilitiesByTypes(actionType.ESCAPED))).Value;
         }
 
-        private Dictionary<string, Abilities> GetAbilitiesByTypes(Enum type)
+        private Dictionary<string, Abilities> GetAbilitiesByTypes(actionType type)
         {
             Dictionary<string, Abilities> tempAbilities = new Dictionary<string, Abilities>();
 

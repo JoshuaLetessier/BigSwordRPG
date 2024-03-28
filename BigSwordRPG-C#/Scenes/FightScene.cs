@@ -1,7 +1,7 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
-using System.Linq;
 using BigSwordRPG_C_;
+using System.Reflection.Metadata.Ecma335;
 using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Assets
@@ -123,7 +123,7 @@ namespace BigSwordRPG.Assets
             }
             else
             {
-                Random random = new Random();
+                Random random = new();
                 float randomFirstPlay = random.Next(0, 1);
                 if (randomFirstPlay < 0.5f)
                 {
@@ -147,120 +147,165 @@ namespace BigSwordRPG.Assets
         {
             actHero.ActAbilities = actHero.CAbilities.Values.ToList();
             // S'il n'a pas d'abilité selectionné, prends la première
-            int indexAbility = 0;
+            int previousLineIndex = 0, selectedLineIndex = 1;
+            bool isSpecialReady = false, canBeUsed = false;
+            // Vérifie que la capacité peut être activée
+            //if (actHero.MagicPoint == 4) { previousLineIndex = -1, selectedLineIndex = 0, isSpecialReady = true; }
             ConsoleKey pressedKey;
-
+            
             do
             {
-                Console.Clear();
-                Console.WriteLine($"Au tour de {actHero.Name} !");
-                Console.WriteLine($"HP: {actHero.Health} | PM: {actHero.PM} \n");
-
-                foreach (BigSwordRPG_C_.Abilities ability in actHero.ActAbilities)
+                if(previousLineIndex != selectedLineIndex)
                 {
-                    bool isSelected = ability == actHero.ActAbilities[indexAbility];
-                    ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ability.Name} type -> {ability.Type} zone -> {ability.Zone}");
-                    Console.WriteLine($"ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp}");
+                    UpdateMenu(actHero, selectedLineIndex);
+                    previousLineIndex = selectedLineIndex;
                 }
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && indexAbility + 1 < actHero.ActAbilities.Count)
-                {
-                    indexAbility++;
-                }
-                else if (pressedKey == ConsoleKey.UpArrow && indexAbility - 1 >= 0)
-                {
-                    indexAbility--;
-                }
-            } while (pressedKey != ConsoleKey.Enter);
+                if (pressedKey == ConsoleKey.Enter && actHero.ActAbilities[selectedLineIndex].Cost < actHero.PM)
+                    canBeUsed = true;
+
+                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < actHero.ActAbilities.Count)
+                    selectedLineIndex++;
+
+                else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 1 || actHero.ActAbilities[selectedLineIndex - 1].Type == actionType.CAPA && isSpecialReady == true)
+                    selectedLineIndex--;
+
+            } while (pressedKey != ConsoleKey.Enter && canBeUsed != true);
 
             // Vérifie le type de l'action et l'effectue
-            if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ATT && actHero.ActAbilities[indexAbility].Cost < actHero.PM)
+            if (actHero.ActAbilities[selectedLineIndex].Type == actionType.ATT)
             {
-                actHero.UseAbilities(indexAbility, EnnemiesList.Values.ToList());
-                actHero.MagicPoint += 1;
+                actHero.UseAbilities(selectedLineIndex, EnnemiesList.Values.ToList());
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.BUFF && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
+            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.BUFF)
             {
                 string buffType;
-                if (actHero.ActAbilities[indexAbility].Damage != 0)
+                if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
                     buffType = "dammage";
-                else if (actHero.ActAbilities[indexAbility].Heal != 0)
+                else if (actHero.ActAbilities[selectedLineIndex].Heal != 0)
                     buffType = "heal";
                 else
                     buffType = "speed";
-                actHero.UseAbilities(indexAbility, heroesInCombat, buffType);
-                actHero.MagicPoint += 1;
+                actHero.UseAbilities(selectedLineIndex, heroesInCombat, buffType);
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.CAPA && actHero.MagicPoint == 4)
+            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.CAPA)
             {
-                //actHero.UseSpecialAbility();
-                actHero.MagicPoint = 0;
+                if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
+                    actHero.UseSpecialAbility(EnnemiesList.Values.ToList());
+                else
+                    actHero.UseSpecialAbility(heroesInCombat.Values.ToList());
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth && actHero.ActAbilities[indexAbility].Cost > actHero.PM)
+            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth)
             {
-                actHero.UseAbilities(indexAbility);
-                actHero.MagicPoint += 1;
+                actHero.UseAbilities(selectedLineIndex);
             }
-            else if ((actionType)actHero.ActAbilities[indexAbility].Type == actionType.ESCAPED)
+            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.ESCAPED)
             {
                 //Escape();
             }
         }
-
-        private static void ChangeLineColor(bool shouldHighlight)
+        static void UpdateMenu(Hero actHero, int index)
         {
-            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
-            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
+            Console.Clear();
+            Console.WriteLine($"A toi de jouer {actHero.Name} !");
+            Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actHero.Health}/{actHero.MaxHealth} " +
+                $"\u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} " +
+                $"\u001b[38;5;11m Vitesse: {actHero.Speed} " +
+                $"\u001b[38;5;13m MP: WIP\u001b[38;5;15m \n");
+            foreach (var ability in actHero.ActAbilities)
+            {
+                bool isSelected = ability == actHero.ActAbilities[index];
+                if (isSelected)
+                {
+                    DrawSelectedMenu(ability);
+                }
+                else
+                    Console.WriteLine($"  {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone} \n");
+            }
+        }
+
+        static void DrawSelectedMenu(Abilities ability)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone}");
+            Console.WriteLine($"    ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp} \n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private void Round(Ennemy actEnnemy)
         {
-            Console.WriteLine($"{actEnnemy.Name} utilise :");
-            RandomAction(actEnnemy);
-            /*switch (GameManager.Instance.Difficulty)
+            Console.Clear();
+            switch (GameManager.Instance.Difficulty)
             {
                 case Difficulties.EASY:
                     RandomAction(actEnnemy);
                     break;
                 case Difficulties.MEDIUM:
-                    RandomAction(actEnnemy);
+                    Action(actEnnemy);
                     break;
                 case Difficulties.HARD:
                     Action(actEnnemy);
                     break;
                 default:
+                    RandomAction(actEnnemy);
                     break;
-            }*/
+            }
         }
 
         private void RandomAction(Ennemy actEnnemy)
         {
-            Console.Clear();
             Console.WriteLine($"Au tour de {actEnnemy.Name} !");
-            Console.WriteLine($"HP: {actEnnemy.Health} \n");
-            Thread.Sleep(1000);
-            var rand = new Random();
-            Abilities useAbility = actEnnemy.RandomAbilitiesEasyMod(); // Savoir si c'est une att ou du soins
-
-            switch ((actionType)useAbility.Type)
+            Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actEnnemy.Health}/{actEnnemy.MaxHealth}\u001b[38;5;15m \n");
+            Thread.Sleep(2000);
+            Random rand = new();
+            Abilities useAbility = actEnnemy.RandomAbilitiesEasyMod();
+            // Savoir si c'est une att ou du soins
+            switch (useAbility.Type)
             {
                 case actionType.ATT:
                     int nameIndex = 0;
+                    // Si il n'y a pas qu'un héro au combat, randomize
                     if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
                     Console.WriteLine($"{actEnnemy.Name} utilise {useAbility.Name} sur {heroesInCombat.ElementAt(nameIndex).Value.Name} !");
-                    Thread.Sleep(3000);
                     heroesInCombat.ElementAt(nameIndex).Value.TakeDammage((int)useAbility.Damage);
+                    Console.WriteLine($"  {heroesInCombat.ElementAt(nameIndex).Value.Name} ->\u001b[38;5;40m HP: {heroesInCombat.ElementAt(nameIndex).Value.Health}/{heroesInCombat.ElementAt(nameIndex).Value.MaxHealth}\u001b[38;5;15m");
+                    Thread.Sleep(2000);
+                    // Si le héro visé est déjà à terre
+                    if (heroesInCombat.ElementAt(nameIndex).Value.Health == 0)
+                        Console.WriteLine("mais il est déjà à terre, il ne subit donc aucun dégat !");
+                    Thread.Sleep(3000);
                     break;
                 case actionType.HEAL:
                     actEnnemy.Heal((int)useAbility.Heal);
-                    Console.WriteLine($"{actEnnemy.Name} se soigne de {(int)useAbility.Heal}");
+                    Console.WriteLine($"{actEnnemy.Name} se soigne de {(int)useAbility.Heal} HP");
+                    Thread.Sleep(2000);
+                    // Si l'ennemi soigné est déjà full vie
+                    if (actEnnemy.Health == actEnnemy.MaxHealth)
+                        Console.WriteLine("malheur, il est déjà sur pied ! Pour la peine tu auras un bonbon.");
                     Thread.Sleep(3000);
                     break;
                 case actionType.BUFF:
-                    Console.WriteLine($"{actEnnemy.Name} buff quelqu'un");
+                    // Définis le type de buff
+                    string buffType;
+                    if (useAbility.Damage != 0)
+                        buffType = "dammage";
+                    else if (useAbility.Heal != 0)
+                        buffType = "heal";
+                    else
+                        buffType = "speed";
+                    // Choisi un allié au pif
+                    int ennemyIndex = rand.Next(0, EnnemiesList.Count);
+                    if (buffType == "dammage")
+                        EnnemiesList.ElementAt(ennemyIndex).Value.AttMultiplier *= useAbility.Damage;
+                    else if (buffType == "heal")
+                        EnnemiesList.ElementAt(ennemyIndex).Value.HealMultiplier *= useAbility.Heal;
+                    else
+                        EnnemiesList.ElementAt(ennemyIndex).Value.Speed += useAbility.SpeedUp;
+                    Console.WriteLine($"{actEnnemy.Name} soutient {EnnemiesList.ElementAt(ennemyIndex).Value.Name}");
                     Thread.Sleep(3000);
                     break;
                 case actionType.ESCAPED:
