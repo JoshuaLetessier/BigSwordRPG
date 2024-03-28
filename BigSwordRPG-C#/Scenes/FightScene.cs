@@ -47,13 +47,13 @@ namespace BigSwordRPG.Assets
             Console.WriteLine("FIGHT !!!");
             // boucle de combas 
             //version 1 simplifié
-            while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            while (player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
                 if (firstTeamPlay == "h")
                 {
                     //random
                     Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                    firstTeamPlay = "e";  
+                    firstTeamPlay = "e";
                 }
                 else
                 {
@@ -61,6 +61,10 @@ namespace BigSwordRPG.Assets
                     firstTeamPlay = "h";
                 }
             }
+            Console.Clear();
+            if (player._allHeroDead)
+                Console.WriteLine("Tu est nul");
+            else Console.WriteLine("Tu as gagné");
         }
 
         private string orderStartFight()
@@ -163,9 +167,7 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.WriteLine($"A toi de jouer {actHero.Name} !");
             Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actHero.Health}/{actHero.MaxHealth} " +
-                $"\u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} " +
-                $"\u001b[38;5;11m Vitesse: {actHero.Speed} " +
-                $"\u001b[38;5;13m MP: WIP\u001b[38;5;15m \n");
+                $"\u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} \u001b[38;5;11m Vitesse: {actHero.Speed} \u001b[38;5;13m MP: WIP\u001b[38;5;15m \n");
             foreach (var ability in actHero.ActAbilities)
             {
                 bool isSelected = ability == actHero.ActAbilities[index];
