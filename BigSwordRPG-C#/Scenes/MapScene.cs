@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.Json.Nodes;
 using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
+using BigSwordRPG.Utils;
 
 namespace BigSwordRPG.Assets
 {
@@ -14,11 +15,14 @@ namespace BigSwordRPG.Assets
     {
         private Camera testCam;
         private Player testPlayer;
+        private GameManager gameManager;
+        
 
         public MapScene(Camera testCam, Player testPlayer)
         {
             this.testCam = testCam;
             this.testPlayer = testPlayer;
+            
         }
 
         public override void Draw()
@@ -33,7 +37,7 @@ namespace BigSwordRPG.Assets
             string s2 = sr.ReadToEnd().Replace("\\e","\x1b");
 
             Console.Write(s2);
-            sr.Dispose();
+            sr.Dispose();          
 
             Console.SetCursorPosition(testCam.joueur.Position[0], testCam.joueur.Position[1]);
 

@@ -14,6 +14,7 @@ namespace BigSwordRPG
         private CreateHero testCreateHeros;
         private CreateEnnemy createEnnemy;
         private SaveManager saveManager;
+        private MenuAccueil menuAccueil;
 
         public Program()
         {
@@ -22,6 +23,7 @@ namespace BigSwordRPG
             testCreateHeros = new CreateHero();
             createEnnemy = new CreateEnnemy();
             saveManager = new SaveManager();
+            menuAccueil = new MenuAccueil();
         }
 
         ~Program()
@@ -37,7 +39,14 @@ namespace BigSwordRPG
 
             Program p = new Program();
             
-            p.testMenu.Draw();            
+            p.testMenu.Draw();
+
+            GameManager.Instance.InputManager.RegisterAction(
+                ConsoleKey.Escape,
+                new Action(
+                    () => p.menuAccueil.Draw()
+                )
+            );
 
             Console.Read();
 

@@ -30,6 +30,7 @@ namespace BigSwordRPG.Assets
             difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+
             /*string filePath = "../../../Asset/Music/C418.mp3";
 
             using (var audioFile = new AudioFileReader(filePath))
