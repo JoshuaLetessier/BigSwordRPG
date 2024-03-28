@@ -137,7 +137,7 @@ namespace BigSwordRPG.Game
             //MagicPoint++
         }
 
-        public string SelectHero(List<string> heroesName)
+        public string SelectHero(List<Hero> heroes)
         {
             ConsoleKey pressedKey;
             int previousLineIndex = -1, selectedLineIndex = 0;
@@ -261,7 +261,7 @@ namespace BigSwordRPG.Game
                         {
                             Name = heroData[0],
                             MaxHealth = int.Parse(heroData[2]),
-                            Health = int.Parse(heroData[1]),
+                            Health = int.Parse(heroData[2]),
                             Level = int.Parse(heroData[3]),
                             HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
 

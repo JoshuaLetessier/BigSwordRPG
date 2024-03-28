@@ -91,12 +91,12 @@ namespace BigSwordRPG_C_.Game
 
             } while (keyPressed != ConsoleKey.Enter);
 
-            List<string> heroesName = heroes.Select(heroes => heroes.Name).ToList();
-            string heroIndex = heroes[indexInventory].SelectHero(heroesName);
+            
+            string heroIndex = heroes[indexInventory].SelectHero(heroes);
 
-            for (int i = 0; i < heroesName.Count; i++)
+            for (int i = 0; i < heroes.Count; i++)
             {
-                if (heroesName[i] == heroIndex)
+                if (heroes[i].Name == heroIndex)
                 {
                     if ((this.Name == "Defibrilateur Nanite" || this.Name == "Stimulateur Neuro-Electrique")&& heroes[i].Name == "Seraph")
                     {

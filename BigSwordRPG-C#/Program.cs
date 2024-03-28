@@ -56,9 +56,9 @@ namespace BigSwordRPG
             // p.testMenu.Draw();            
 
             //Console.Read();
-            p.testCreateHeros.AffichageStat(heroes);
-
-            //p.fightScene.Update();
+            //p.testCreateHeros.AffichageStat(heroes);
+            
+            p.fightScene.Update();
         }
     }
 }
