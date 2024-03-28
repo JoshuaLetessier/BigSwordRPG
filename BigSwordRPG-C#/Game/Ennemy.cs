@@ -172,16 +172,17 @@ namespace BigSwordRPG.Game
                         Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
                         {
                             Name = ennemiesData[0],
-                            Health = int.Parse(ennemiesData[1]),
                             MaxHealth = int.Parse(ennemiesData[2]),
+                            Health = int.Parse(ennemiesData[1]),
                             Level = int.Parse(ennemiesData[3]),
                             HealthMultiplier = float.Parse(stringHealthMultiplier.Replace(".", ",")),
                             AttMultiplier = float.Parse(stringAttMultiplier.Replace(".", ",")),
                             HealMultiplier = float.Parse(stringHealMultiplier.Replace(".", ",")),
                             Speed = float.Parse(stringSpeed.Replace(".", ",")),
                             IsDead = false,
-                            PM = int.Parse(ennemiesData[8]),
                             PMMax = int.Parse(ennemiesData[8]),
+                            PM = int.Parse(ennemiesData[8]),
+                           
                         };
 
                         for (int i = 9; i < ennemiesData.Length-1; i++)

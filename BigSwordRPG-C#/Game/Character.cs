@@ -25,14 +25,15 @@ namespace BigSwordRPG.Game
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public int Health {
+        public int Health
+        {
             get => _health; set
             {
-                if (value < 0)
+                if(value < 0)
                     _health = 0;
-                else if (value > MaxHealth)
+                else if(value > MaxHealth)
                     _health = MaxHealth;
-                else
+                else 
                     _health = value;
             }
         }
@@ -83,6 +84,7 @@ namespace BigSwordRPG.Game
 
         public Character()
         {
+            Health = 100;
         }
 
         ~Character() { }
@@ -103,11 +105,6 @@ namespace BigSwordRPG.Game
             Health -= attackPoint;
         }
 
-       /* public int MakeDammage()
-        {
-            return Damage;
-        }*/
-
         public void Heal(int healValue)
         {
             Health += healValue;
@@ -115,17 +112,12 @@ namespace BigSwordRPG.Game
 
         public void ManaHeal(int manaValue)
         {
-            PMMax += manaValue;
-        }
-
-        public void takeDammage(int healValue)
-        {
-            Health -= healValue;
+            PM += manaValue;
         }
 
         public void UseMana(int manaValue)
         {
-            PMMax -= manaValue;
+            PM -= manaValue;
         }
 
         public  void Talk()

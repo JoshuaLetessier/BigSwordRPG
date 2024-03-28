@@ -218,6 +218,12 @@ namespace BigSwordRPG.Game
                         {
                             hero.CAbilities.Add(heroData[i], createListAbilities.AbilitiesList[heroData[i]]);
                         }
+                        for (int i = 0; i < hero.CAbilities.Count; i++)
+                        {
+                            hero.CAbilities.ElementAt(i).Value.Damage = hero.CAbilities.ElementAt(i).Value.Damage * hero.AttMultiplier * hero.Level;
+                            hero.CAbilities.ElementAt(i).Value.Heal = hero.CAbilities.ElementAt(i).Value.Heal * hero.HealMultiplier * hero.Level;
+                            hero.CAbilities.ElementAt(i).Value.Damage = hero.CAbilities.ElementAt(i).Value.Damage * hero.AttMultiplier * hero.Level;
+                        }
                         heroes.Add(hero.Name, hero);
                     }
                     return heroes;
