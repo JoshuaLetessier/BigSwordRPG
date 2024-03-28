@@ -14,8 +14,6 @@ namespace BigSwordRPG_C_
         VERTICAL,
         AXIS_COUNT
     }
-
-
     public class Player : GameObject
     {
 
@@ -77,7 +75,7 @@ namespace BigSwordRPG_C_
             {
                 Position[0] = newPosition[0];
                 Position[1] = newPosition[1];
-                GameManager.Instance.Renderer.MoveTextureBlackBackground(Position, Texture, distance, axis);
+                GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
             }
         }
     }

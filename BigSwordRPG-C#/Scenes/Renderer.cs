@@ -8,7 +8,7 @@ using System.Text;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
-using BigSwordRPG_C_.GameObjects;
+using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Assets
 {
@@ -76,10 +76,17 @@ namespace BigSwordRPG.Assets
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern IntPtr GetStdHandle(int nStdHandle);
 
-        private char[][] _consoleBuffer;
-        public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
-        public Texture _backgroundTexture;
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        private char[][] _consoleBuffer;
+        private Background background;
+        public char[][] ConsoleBuffer { get => _consoleBuffer; set => _consoleBuffer = value; }
+        public Background Background { get => background; set => background = value; }
+
 
         public Renderer()
         {
@@ -113,6 +120,19 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(15, 15);
             Console.Write("\x1b[38;2;12;255;100mTestCharBG");
 
+            uint mode;
+            GetConsoleMode(hConsole, out mode);
+
+            // Disable auto-scrolling and newline auto return
+            const uint ENABLE_EXTENDED_FLAGS = 0x0080;
+            mode &= ~ENABLE_EXTENDED_FLAGS; // Disable auto-scrolling
+            mode |= 0x0008; // Disable newline auto return
+
+            // Set the new console mode
+            SetConsoleMode(hConsole, mode);
+
+            //Console.MoveBufferArea
+
             /*SMALL_RECT readRegion = new SMALL_RECT
             {
                 Left = 10,
@@ -131,8 +151,8 @@ namespace BigSwordRPG.Assets
 
             //bool success = ReadConsoleOutput(hConsole, buffer, bufferSize, new COORD { X = 0, Y = 0 }, ref readRegion);
 
-         /*   int errorCode = Marshal.GetLastWin32Error();
-            Console.WriteLine("Error occurred. Error code: " + errorCode);*/
+            /*   int errorCode = Marshal.GetLastWin32Error();
+               Console.WriteLine("Error occurred. Error code: " + errorCode);*/
 
             return 0;
         }
@@ -188,18 +208,20 @@ namespace BigSwordRPG.Assets
             string line;
             int foregroundColor;
             int backgroundColor;
-            for (int i = textureRegion.offsetY; i < textureRegion.offsetY + textureRegion.sizeY; i++)
+           
+            for (int i = 0; i < textureRegion.sizeY; i++)
             {
                 line = "";
-                for (int j = textureRegion.offsetX; j < textureRegion.offsetX + textureRegion.sizeX; j++)
+                for (int j = 0; j < textureRegion.sizeX; j++)
                 {
-                    foregroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].foregroundColor;
-                    backgroundColor = texture.PixelsBuffer[(i) * texture.Size[0] + j].backgroundColor;
+                    foregroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + (j + textureRegion.offsetX)].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + (j + textureRegion.offsetX)].backgroundColor;
                     line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
                 }
                 Console.SetCursorPosition(position[0], position[1] + i);
                 Console.Write(line);
             }
+            Console.SetCursorPosition(0, 0);
         }   
 
         public void MoveTextureBlackBackground(int[] position, Texture texture, int offset, Axis axis)
@@ -257,27 +279,25 @@ namespace BigSwordRPG.Assets
         public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
         {
             DrawTexture(position, texture);
-            Texture tex2 = new Texture();
-            tex2.Size = new int[2] { 2, 3 };
-            tex2.PixelsBuffer = new List<Pixel>() {
-                new Pixel(160, 40), new Pixel(160, 40), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160), new Pixel(160, 160)
-            };
-            Background gameObject = new Background(new int[2] { 10, 10 });
             TextureRegion textureRegion = new TextureRegion();
-            if(axis == Axis.HORIZONTAL)
+            if (axis == Axis.HORIZONTAL)
             {
-                textureRegion.offsetX = offset > 0 ? position[0] - gameObject.Position[0] : position[0] - gameObject.Position[0] + texture.Size[0];
-                textureRegion.offsetY = position[1] - gameObject.Position[1];
-                textureRegion.sizeX = offset;
+                textureRegion.offsetX = offset > 0 ? position[0] - Background.Position[0] - offset : position[0] - Background.Position[0] + texture.Size[0];
+                textureRegion.offsetY = position[1] - Background.Position[1];
+                textureRegion.sizeX = offset & -offset;
                 textureRegion.sizeY = texture.Size[1];
             } else
             {
-                textureRegion.offsetX = position[0] - gameObject.Position[0];
-                textureRegion.offsetY = offset > 0 ? position[1] - gameObject.Position[1] : position[1] - gameObject.Position[1] + texture.Size[1];
+                textureRegion.offsetX = position[0] - Background.Position[0];
+                textureRegion.offsetY = offset > 0 ? position[1] - Background.Position[1] - offset : position[1] - Background.Position[1] + texture.Size[1];
                 textureRegion.sizeX = texture.Size[0];
-                textureRegion.sizeY = offset;
+                textureRegion.sizeY = offset & -offset;
             }
-            DrawTextureRegion(position, gameObject.Texture, textureRegion);
+            int[] backgroundRegionPosition = new int[2] { 
+                position[0] + ((offset < 0 ? texture.Size[0] : -offset)) * (int)(1-axis),
+                position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis 
+            };
+            DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion);
         }
 
         public bool IsInBuffer(int[] position, int[] size)
