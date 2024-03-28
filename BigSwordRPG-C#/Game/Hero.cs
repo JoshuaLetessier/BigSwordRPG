@@ -1,6 +1,8 @@
 ﻿using BigSwordRPG_C_;
 using System.Text;
 using BigSwordRPG_C_.Game;
+using System;
+using System.Reflection.PortableExecutable;
 
 namespace BigSwordRPG.Game
 {
@@ -31,6 +33,7 @@ namespace BigSwordRPG.Game
                 Health += healthDiff;
             else
                 Health += (int)actAbilities[index].Heal;
+            //MagicPoint++
         }
 
         public void UseAbilities(int index, List<Ennemy> ennemies)
@@ -67,88 +70,144 @@ namespace BigSwordRPG.Game
                     ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
                     break;
             }
+            //MagicPoint++
         }
 
         private int SelectEnnemy(List<Ennemy> ennemies)
         {
             ConsoleKey pressedKey;
-            int index = 0;
+            int previousLineIndex = -1, selectedLineIndex = 0;
 
             // Selection de la clé du héro
             do
             {
-                Console.Clear();
-                foreach (Ennemy ennemy in ennemies)
+                if (previousLineIndex != selectedLineIndex)
                 {
-                    bool isSelected = ennemy == ennemies[index];
-                    ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{ennemy.Name}");
+                    UpdateMenu(ennemies, selectedLineIndex);
+                    previousLineIndex = selectedLineIndex;
                 }
+
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && index + 1 < ennemies.Count)
-                {
-                    index++;
-                }
-                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
-                {
-                    index--;
-                }
-            } while(index < ennemies.Count);
+                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < ennemies.Count)
+                    selectedLineIndex++;
+                else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
+                    selectedLineIndex--;
+
+            } while(pressedKey != ConsoleKey.Enter);
 
             // Retoune la clé séléctionnée
-            return index;
+            return selectedLineIndex;
+        }
+        static void UpdateMenu(List<Ennemy> ennemies, int index)
+        {
+            Console.Clear();
+            Console.WriteLine("Qui doit subir la sentence ? \n");
+            foreach (var ennemy in ennemies)
+            {
+                bool isSelected = ennemy == ennemies[index];
+                if (isSelected)
+                    DrawSelectedMenu(ennemy);
+                else
+                    Console.WriteLine($"  {ennemy.Name} | HP: {ennemy.Health} \n");
+            }
+        }
+
+        static void DrawSelectedMenu(Ennemy ennemy)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {ennemy.Name} | HP: {ennemy.Health} \n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void UseAbilities(int indexAbilities, Dictionary<string, Game.Hero> heroes, string buffType)
         {
-            List<string> heroesName = heroes.Values.Select(h => h.Name).ToList();
-            string heroIndex = SelectHero(heroesName);
+            string heroIndex = SelectHero(heroes.Values.ToList());
             if (buffType == "dammage")
                 heroes[heroIndex].AttMultiplier *= actAbilities[indexAbilities].Damage;
             else if (buffType == "heal")
                 heroes[heroIndex].HealMultiplier *= actAbilities[indexAbilities].Heal;
             else
-                heroes[heroIndex].Speed *= actAbilities[indexAbilities].SpeedUp;
-
+                heroes[heroIndex].Speed += actAbilities[indexAbilities].SpeedUp;
+            //MagicPoint++
         }
 
-        private string SelectHero(List<string> heroesName)
+        private string SelectHero(List<Hero> heroes)
         {
             ConsoleKey pressedKey;
-            int index = 0;
+            int previousLineIndex = -1, selectedLineIndex = 0;
 
             // Selection de la clé du héro
             do
             {
-                Console.Clear();
-                foreach (string name in heroesName)
+                if (previousLineIndex != selectedLineIndex)
                 {
-                    bool isSelected = name == heroesName[index];
-                    ChangeLineColor(isSelected);
-                    Console.WriteLine($"{(isSelected ? "> " : "  ")}{name}");
+                    UpdateMenu(heroes, selectedLineIndex);
+                    previousLineIndex = selectedLineIndex;
                 }
+
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && index + 1 < heroesName.Count)
-                {
-                    index++;
-                }
-                else if (pressedKey == ConsoleKey.UpArrow && index - 1 >= 0)
-                {
-                    index--;
-                }
-            } while(index < heroesName.Count);
+                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < heroes.Count)
+                    selectedLineIndex++;
+                else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
+                    selectedLineIndex--;
+
+            } while(pressedKey != ConsoleKey.Enter);
 
             // Retoune la clé séléctionnée
-            return heroesName[index];
+            return heroes[selectedLineIndex].Name;
         }
-        private static void ChangeLineColor(bool shouldHighlight)
+        static void UpdateMenu(List<Hero> heroes, int index)
         {
-            Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
-            Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
+            Console.Clear();
+            Console.WriteLine("Qui doit-être soutenu ? \n");
+            foreach (var hero in heroes)
+            {
+                bool isSelected = hero == heroes[index];
+                if (isSelected)
+                {
+                    DrawSelectedMenu(hero);
+                }
+                else
+                    Console.WriteLine($"  {hero.Name} | HP: {hero.Health} | Speed: {hero.Speed} \n");
+            }
         }
 
+        static void DrawSelectedMenu(Hero hero)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {hero.Name} | HP: {hero.Health} | Speed: {hero.Speed} \n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UseSpecialAbility(List<Ennemy> ennemies)
+        {
+            Abilities specAbility = CAbilities.ElementAt(0).Value;
+            if (specAbility.Zone == ZoneAction.All)
+            {
+                for (int i = 0; i < ennemies.Count - 1; i++)
+                    ennemies[i].TakeDammage((int)specAbility.Damage);
+            }
+            else
+            {
+                int ennemyIndex = SelectEnnemy(ennemies);
+                ennemies[ennemyIndex].TakeDammage((int)specAbility.Damage);
+            }
+            //MagicPoint = 0;
+        }
+
+        public void UseSpecialAbility(List<Hero> heroes)
+        {
+            Abilities specAbility = CAbilities.ElementAt(0).Value;
+            for (int i = 0; i < heroes.Count - 1; i++)
+                heroes[i].Heal((int)specAbility.Heal);
+            //MagicPoint = 0;
+        }
     }
 
 

@@ -40,7 +40,7 @@ namespace BigSwordRPG
 
         static void Main(string[] args)
         {
-            //Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
+            Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
             //LargestWindowWidth = 240
             //LargestWindowHeight = 63
 
