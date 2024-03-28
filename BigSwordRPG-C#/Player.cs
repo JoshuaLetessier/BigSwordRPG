@@ -1,6 +1,7 @@
 using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,14 @@ namespace BigSwordRPG_C_
 
         private Dictionary<string, Hero> _heroes;
         private CreateHero _DicoHeros;
+        
 
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
         public Player(int[] position, Texture texture) : 
             base(
-                position, 
+                position,
                 texture
             )
         {

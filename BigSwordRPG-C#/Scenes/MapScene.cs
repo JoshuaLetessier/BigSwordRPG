@@ -16,10 +16,12 @@ namespace BigSwordRPG.Assets
     public class MapScene : Scene
     {
         private Camera testCam;
+        private TextureLoader textureLoader;
 
         public MapScene()
         {
             testCam = new Camera();
+            textureLoader = new TextureLoader();
 
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.Escape,
@@ -39,64 +41,14 @@ namespace BigSwordRPG.Assets
             StreamReader sr = new StreamReader("./Asset/Image/map.txt");//Remettre le fichier dans Debug pour le déploiement
             //StreamReader sr = new StreamReader("map.txt");//Remettre le fichier dans Debug pour le déploiement
             string s2 = sr.ReadToEnd();//.Replace("\\e","\x1b");
-            string groundLevel;
-            string foregroundColor;
-            string backgroundColor;
+
             Texture mapTexture = new Texture();
             mapTexture.Size = new int[2] { 854, 184 };
             mapTexture.PixelsBuffer = new List<Pixel>();
-            for (int i = 0; i < s2.Length; i++)
-            {
-                if (s2[i] == '\\' && s2[i + 3] != 'm')
-                {
-                    groundLevel = "";
-                    foregroundColor = "";
-                    backgroundColor = "";
 
-                    groundLevel += s2[i+3];
-                    groundLevel += s2[i+4];
-                    if(groundLevel == "38")
-                    {
-                        i += 8;
-                        while (s2[i] != ';')
-                        {
-                            foregroundColor += s2[i];
-                            i++;
-                        }
-                        i += 6;
-                        while (s2[i] != 'm')
-                        {
-                            backgroundColor += s2[i];
-                            i++;
-                        }
-                        i++;
-                        while (s2[i] == '▄')
-                        {
-                            mapTexture.PixelsBuffer.Add(new Pixel(int.Parse(foregroundColor), int.Parse(backgroundColor)));
-                            i++;
-                        }
-                        i--;
-                    } else
-                    {
+            Texture maMapTexture = textureLoader.getTexture(s2, mapTexture);
 
-                        i += 8;
-                        while (s2[i] != 'm')
-                        {
-                            backgroundColor += s2[i];
-                            i++;
-                        }
-                        i++;
-                        while (s2[i] == ' ')
-                        {
-                            mapTexture.PixelsBuffer.Add(new Pixel(int.Parse(backgroundColor), int.Parse(backgroundColor)));
-                            i++;
-                        }
-                        i--;
-                       
-                    }
-                }
-            }
-            Console.Write(mapTexture);
+            Console.Write(maMapTexture);
             Console.SetBufferSize(854, 184);
             GameManager.Instance.Renderer.Background = new Background(new int[2] { 0, 0 }, mapTexture);
             GameManager.Instance.Renderer.DrawTexture(new int[2] { 0, 0 }, mapTexture);
