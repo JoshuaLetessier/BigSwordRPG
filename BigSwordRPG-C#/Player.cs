@@ -18,6 +18,7 @@ namespace BigSwordRPG_C_
     {
 
         private Dictionary<string, Hero> _heroes;
+        private CreateHero _DicoHeros;
 
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
@@ -38,7 +39,10 @@ namespace BigSwordRPG_C_
                 }
             )
         {
-            _heroes = new Dictionary<string, Hero>();
+            _DicoHeros = new CreateHero();
+            _heroes = _DicoHeros.CreateDictionaryHero();
+
+
             //Draw();
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D,

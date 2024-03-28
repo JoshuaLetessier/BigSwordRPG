@@ -1,4 +1,5 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Game;
+using BigSwordRPG.Utils;
 using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace BigSwordRPG.Assets
         private OptionScene option;
         public List<SelectMenu> menu;
         private Difficulty difficulty;
+        private SaveManager saveManager;
 
         public MenuScene() 
         {
             test = new SelectMenu();
-            
+            saveManager = new SaveManager();
         }
 
 
@@ -71,11 +73,6 @@ namespace BigSwordRPG.Assets
             Draw();
         }
 
-        public void NouvelleGame()
-        {
-
-        }
-
         public void RetrunDesktop()
         {
             Console.Clear();
@@ -91,7 +88,14 @@ namespace BigSwordRPG.Assets
 
         public void ContinueGame()
         {
-            throw new NotImplementedException();
+            List<Item> item = new List<Item>();
+
+            saveManager.Load(GameManager.Instance.Player.Heroes, item);
+            
+
+            MapScene mapScene = new MapScene();
+            GameManager.Instance.SwitchScene(mapScene);
+
         }
     }
 }

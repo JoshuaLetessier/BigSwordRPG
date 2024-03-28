@@ -106,7 +106,7 @@ namespace BigSwordRPG.Assets
             GameManager.Instance.Player.Draw();
             testCam.ResetCursorPosition();
 
-            testCam.SetCameraPosition(testCam.Size);
+            testCam.SetCameraPosition(GameManager.Instance.Player.Position);
             //testCam.setPositionCamera();
             GameManager.Instance.Player.Draw();
         }

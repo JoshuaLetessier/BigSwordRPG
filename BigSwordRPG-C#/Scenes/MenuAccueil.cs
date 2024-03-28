@@ -65,13 +65,13 @@ namespace BigSwordRPG.Assets
 
         public void LaunchSave()
         {
-            saveManager.Save(GameManager.Instance.Player.Heroes, item);
+            saveManager.Save(GameManager.Instance.Player.Heroes, item, GameManager.Instance.Player.Position);
             GameManager.Instance.SwitchScene(PreviousScene);
         }
 
         public void QuitGame()
         {
-            saveManager.Save(GameManager.Instance.Player.Heroes, item);
+            //saveManager.Save(GameManager.Instance.Player.Heroes, item, GameManager.Instance.Player.Position);
             menu.Draw();
         }
 
