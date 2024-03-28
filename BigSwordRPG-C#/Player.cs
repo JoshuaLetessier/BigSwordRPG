@@ -39,30 +39,6 @@ namespace BigSwordRPG_C_
             )
         {
             //Draw();
-            GameManager.Instance.InputManager.RegisterAction(
-                ConsoleKey.D,
-                new Action(
-                    () => Move(1, Axis.HORIZONTAL)
-                )
-            );
-            GameManager.Instance.InputManager.RegisterAction(
-                 ConsoleKey.Q,
-                 new Action(
-                     () => Move(-1, Axis.HORIZONTAL)
-                 )
-             );
-            GameManager.Instance.InputManager.RegisterAction(
-                 ConsoleKey.Z,
-                 new Action(
-                     () => Move(-1, Axis.VERTICAL)
-                 )
-             );
-            GameManager.Instance.InputManager.RegisterAction(
-                 ConsoleKey.S,
-                 new Action(
-                     () => Move(1, Axis.VERTICAL)
-                 )
-             );
         }
 
         public void Move(int distance, Axis axis)

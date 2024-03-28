@@ -10,16 +10,51 @@ using BigSwordRPG_C_.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG.Utils;
 using BigSwordRPG.GameObjects;
+using System.Numerics;
 
 namespace BigSwordRPG.Assets
 {
     public class MapScene : Scene
     {
-        private Camera testCam;
+        private List<Interest> _interests;
+        public List<Interest> Interests { get => _interests; set => _interests = value; }
 
-        public MapScene()
+        public MapScene():base()
         {
-            testCam = new Camera();
+            Interest testInterest = new Interest(new int[2] { 140, 60 });
+            Interests = new List<Interest>() { testInterest };
+            GameObjects.Add(testInterest);
+            Draw();
+            RegisterAction(
+                ConsoleKey.D,
+                new Action(
+                    () => MovePlayer(1, Axis.HORIZONTAL)
+                )
+            );
+            RegisterAction(
+                 ConsoleKey.Q,
+                 new Action(
+                     () => MovePlayer(-1, Axis.HORIZONTAL)
+                 )
+             );
+            RegisterAction(
+                 ConsoleKey.Z,
+                 new Action(
+                     () => MovePlayer(-1, Axis.VERTICAL)
+                 )
+             );
+            RegisterAction(
+                 ConsoleKey.S,
+                 new Action(
+                     () => MovePlayer(1, Axis.VERTICAL)
+                 )
+             );
+            RegisterAction(
+                ConsoleKey.E,
+                new Action(
+                    () => TryInteracting()
+             )
+        );
         }
 
         public override void Draw()
@@ -95,22 +130,47 @@ namespace BigSwordRPG.Assets
             GameManager.Instance.Renderer.DrawTexture(new int[2] { 0, 0 }, mapTexture);
             sr.Dispose();
 
-            //testCam.setPositionCamera();
-            GameManager.Instance.Player.Draw();
-            testCam.ResetCursorPosition();
+            base.Draw();
+            GameManager.Instance.Renderer.Camera.ResetCursorPosition();
 
-            testCam.SetCameraPosition(testCam.Size);
-            //testCam.setPositionCamera();
+            GameManager.Instance.Renderer.Camera.SetCameraPosition(GameManager.Instance.Player.Position);
             GameManager.Instance.Player.Draw();
         }
 
         public override void Run()
         {
-            Draw();
             while(true)
             {
                 GameManager.Instance.InputManager.WaitForInput();
-                testCam.SetCameraPosition(GameManager.Instance.Player.Position);
+                GameManager.Instance.Renderer.Camera.SetCameraPosition(GameManager.Instance.Player.Position);
+            }
+        }
+
+        private void TryInteracting()
+        {
+            Player player = GameManager.Instance.Player;
+            for (int i = 0; i < Interests.Count; i++)
+            {
+                if (Interests[i].IsColliding(player))
+                {
+                    Interests[i].Interact();
+                }
+            }
+        }
+
+        public void MovePlayer(int distance, Axis axis)
+        {
+            Player player = GameManager.Instance.Player;
+
+            int[] newPosition = new int[2] {
+                player.Position[0] + distance * (1 - (int)axis),
+                player.Position[1] + distance * (int)axis
+            };
+            if (GameManager.Instance.Renderer.IsInBuffer(newPosition, player.Texture.Size))
+            {
+                player.Position[0] = newPosition[0];
+                player.Position[1] = newPosition[1];
+                GameManager.Instance.Renderer.MoveTexture(player.Position, player.Texture, distance, axis);
             }
         }
     }

@@ -30,5 +30,19 @@ namespace BigSwordRPG.Utils
         {
             GameManager.Instance.Renderer.DrawTexture(Position, Texture);
         }
+
+        public bool IsColliding(GameObject comparedGameObject)
+        {
+            if (
+                (comparedGameObject.Position[0] + comparedGameObject.Texture.Size[0] < Position[0]
+                || comparedGameObject.Position[0] > Position[0] + Texture.Size[0]
+                || comparedGameObject.Position[1] + comparedGameObject.Texture.Size[1] < Position[1]
+                || comparedGameObject.Position[1] > Position[1] + Texture.Size[1])
+            )
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
