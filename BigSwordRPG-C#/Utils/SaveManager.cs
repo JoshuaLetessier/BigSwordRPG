@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 namespace BigSwordRPG_C_.Utils
 {
     internal class SaveManager
-    {
-        private int[] position;
-     
-        private string filePath = "../../../Save/Save.csv";
+    {     
+#if DEBUG
+        const string SAVE_PATH = "../../../Asset/Image/";
+#else
+        const string SAVE_PATH = "./Data/Assets/Textures/";
+#endif
+        const string SAVE_EXTENSION = ".csv";
+        private string filePath = $"{SAVE_PATH}Save.csv";
 
-        public int[] Position { get => position; set => position = value; }
-      
         public void Save(Dictionary<string, Hero> _heroes, List<Item> _items, int[] pos)
         {
-            
-
             if(File.Exists(filePath))
             {
                 File.Delete(filePath);
@@ -51,7 +51,7 @@ namespace BigSwordRPG_C_.Utils
                 {
                     
                     //StreamReader srSave = new StreamReader("./Save/Save.csv");
-                    StreamReader srSave = new StreamReader("../../../Save/Save.csv");
+                    StreamReader srSave = new StreamReader($"{SAVE_PATH}Save.csv");
                     string[] data = srSave.ReadToEnd().Replace("\r\n", "").Split("+");
 
                     string[] pos = data[0].Split(",");

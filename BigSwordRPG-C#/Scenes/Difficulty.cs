@@ -22,31 +22,39 @@ namespace BigSwordRPG.Assets
 
         public string DifficultyChoose { get => difficultyChoose; set => difficultyChoose = value; }
 
+#if DEBUG
+        const string TEXTURE_PATH = "../../../Asset/Image/";
+        const string CONFIG_PATH = "../../../Config/";
+#else
+        const string TEXTURE_PATH = "./Data/Assets/Textures/";
+        const string CONFIG_PATH = "./Data/Config/";
+#endif
+        const string TEXTURE_EXTENSION = ".txt";
+        const string CONFIG_EXTENSION = ".csv";
         public Difficulty()
         {
             string SizeReturn = ReturnSize();
             test = new SelectMenu();
-            testMap = new MapScene();
         }
-
+        
         public override void Draw()
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("./Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader($"{TEXTURE_PATH}nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srEasy = new StreamReader("./Asset/Image/easy.txt");
+            StreamReader srEasy = new StreamReader($"{TEXTURE_PATH}easy.txt");
             Easy = srEasy.ReadToEnd();
 
-            StreamReader srMiddle = new StreamReader("./Asset/Image/middle.txt");
+            StreamReader srMiddle = new StreamReader($"{TEXTURE_PATH}middle.txt");
             Middle = srMiddle.ReadToEnd();
 
-            StreamReader srHard = new StreamReader("./Asset/Image/hard.txt");
+            StreamReader srHard = new StreamReader($"{TEXTURE_PATH}hard.txt");
             Hard = srHard.ReadToEnd();
 
-            StreamReader srReturn = new StreamReader("./Asset/Image/Return.txt");
+            StreamReader srReturn = new StreamReader($"{TEXTURE_PATH}Return.txt");
             string Return = srReturn.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -73,17 +81,14 @@ namespace BigSwordRPG.Assets
 
         public void DifficultyEasy()
         {
-            testMap.Draw();
             DifficultyChoose = Easy;
         }
         public void DifficultyMiddle()
         {
-            testMap.Draw();
             DifficultyChoose = Middle;
         }
         public void DifficultyHard()
         {
-            testMap.Draw();
             DifficultyChoose = Hard;
         }
 
@@ -94,7 +99,7 @@ namespace BigSwordRPG.Assets
 
         public string ReturnSize()
         {
-            StreamReader srSize = new StreamReader("./Config/Config.csv");
+            StreamReader srSize = new StreamReader($"{CONFIG_PATH}Config.csv");
             string Size = srSize.ReadToEnd().Replace("\r\n", "");
             srSize.Dispose();
 

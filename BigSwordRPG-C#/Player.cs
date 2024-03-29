@@ -19,17 +19,17 @@ namespace BigSwordRPG_C_
     {
 
         private Dictionary<string, Hero> _heroes;
-        private CreateHero _DicoHeros;
+        
         
 
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
-        public Player(int[] position, Texture texture) : 
+        public Player(int[] position) : 
             base(
                 position, 
                 new Texture() {
-                    Size = new int[2] { 1, 1 }, 
+                    Size = new int[2] { 2, 3 }, 
                     PixelsBuffer = new List<Pixel>() { 
                         new Pixel(160, 40), 
                         new Pixel(160, 40), 
@@ -41,11 +41,8 @@ namespace BigSwordRPG_C_
                 }
             )
         {
-            _DicoHeros = new CreateHero();
-            _heroes = _DicoHeros.CreateDictionaryHero();
-
-
-            //Draw();
+            CreateHero createHeroes = new CreateHero();
+            _heroes = createHeroes.CreateDictionaryHero();
         }
 
         public void Move(int distance, Axis axis)
@@ -60,11 +57,6 @@ namespace BigSwordRPG_C_
                 Position[1] = newPosition[1];
                 GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
             }
-        }
-
-        public override void Updtate()
-        {
-            throw new NotImplementedException();
         }
     }
 }

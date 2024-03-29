@@ -9,7 +9,7 @@ using BigSwordRPG.Utils.Graphics;
 
 namespace BigSwordRPG.GameObjects
 {
-    public class Interest : GameObject
+    public abstract class Interest : GameObject
     {
         public Interest(int[] position) : base(
                 position,
@@ -62,7 +62,7 @@ namespace BigSwordRPG.GameObjects
             DialogScene dialogScene = new DialogScene();
             GameManager.Instance.SwitchScene(dialogScene);
         }*/
-
+        public abstract void Interact();
         public void Interact<NewSceneType>() where NewSceneType : Scene, new()
         {
             GameManager.Instance.SwitchScene(new NewSceneType());

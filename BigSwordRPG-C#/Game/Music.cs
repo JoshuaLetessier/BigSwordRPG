@@ -43,12 +43,11 @@ namespace BigSwordRPG_C_.Game
                     waveOut.Init(reader);
                     waveOut.Volume = 0.1f;
 
-                    waveOut.PlaybackStopped += (sender, e) => {
+                    /*waveOut.PlaybackStopped += (sender, e) => { // Seems to create occasionnal crashes
                         waveOut.Stop();
                         waveOut.Dispose();
                         ImporterMP3(mp3FilePath); 
-                    };
-
+                    };*/
                     waveOut.Play();
 
                     while (waveOut.PlaybackState == PlaybackState.Playing)

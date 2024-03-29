@@ -12,9 +12,7 @@ namespace BigSwordRPG.Utils
         public GameObject() { }
         ~GameObject() { }
 
-       
-        public abstract void Updtate();
-       
+             
 
         private int[] _position = { 0, 0 };
         private Texture _texture;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace BigSwordRPG_C_
@@ -14,7 +12,7 @@ namespace BigSwordRPG_C_
         ESCAPED
     }
 
-    enum ZoneAction
+    public enum ZoneAction
     {
         Unique = 1,
         Near,
@@ -28,27 +26,27 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private Enum _type; 
+        private actionType _type;
         private float _damage;
         private float _heal;
         private float _speedUp;
         private int _cooldown;
-        private float _cost;
-        private Enum _zone;
+        private int _cost;
+        private ZoneAction _zone;
 
 
         //Property
         public string Name { get => _name; set => _name = value; }
-        public Enum Type { get => _type; set => _type = value; }
+        public actionType Type { get => _type; set => _type = value; }
         public float Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
-        public float Cost { get => _cost; set => _cost = value; }
+        public int Cost { get => _cost; set => _cost = value; }
         public float Heal { get => _heal; set => _heal = value; }
-        public Enum Zone { get => _zone; set => _zone = value; }
+        public ZoneAction Zone { get => _zone; set => _zone = value; }
         public float SpeedUp { get => _speedUp; set => _speedUp = value; }
 
 
-}
+    }
 
     class CreateListAbilities
     {
@@ -56,12 +54,17 @@ namespace BigSwordRPG_C_
 
         private Dictionary<string, Abilities> _abilitiesList = CreateAbilities();
 
-        public Dictionary<string, Abilities> AbilitiesList { get => _abilitiesList;}
+        public Dictionary<string, Abilities> AbilitiesList { get => _abilitiesList; }
 
         private static Dictionary<string, Abilities> CreateAbilities()
         {
-            
-            string filePath = "./Game/Stat/AbilitiesStat.csv";
+
+#if DEBUG
+            const string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+#else
+                const string filePath = "./Data/Stat/AbilitiesStat.csv";
+#endif
+
             Dictionary<string, Abilities> abilities = new Dictionary<string, Abilities>(StringComparer.OrdinalIgnoreCase);
             if (File.Exists(filePath))
             {
@@ -74,13 +77,13 @@ namespace BigSwordRPG_C_
                         Abilities ability = new Abilities
                         {
                             Name = abilitiesData[0],
-                            Type = (actionType)Enum.Parse(typeof(actionType), abilitiesData[1]),
+                            Type = (actionType)actionType.Parse(typeof(actionType), abilitiesData[1]),
                             Damage = float.Parse(abilitiesData[2].Replace(".", ",")),
                             Heal = float.Parse(abilitiesData[3].Replace(".", ",")),
                             SpeedUp = float.Parse(abilitiesData[4].Replace(".", ",")),
                             Cooldown = int.Parse(abilitiesData[5]),
-                            Cost = float.Parse(abilitiesData[6].Replace(".", ",")),
-                            Zone = (ZoneAction)Enum.Parse(typeof(ZoneAction), abilitiesData[7]),
+                            Cost = int.Parse(abilitiesData[6].Replace(".", ",")),
+                            Zone = (ZoneAction)ZoneAction.Parse(typeof(ZoneAction), abilitiesData[7]),
 
 
                         };

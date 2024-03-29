@@ -13,6 +13,13 @@ namespace BigSwordRPG.Assets
         private SaveManager saveManager;
         private List<Item> item;
 
+#if DEBUG
+        const string TEXTURE_PATH = "../../../Asset/Image/";
+#else
+        const string TEXTURE_PATH = "./Data/Assets/Textures/";
+#endif
+        const string TEXTURE_EXTENSION = ".txt";
+
         public MenuAccueil()
         {
             menuSelection = new SelectMenu();
@@ -27,16 +34,16 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("./Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader($"{TEXTURE_PATH}nameGame{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srReprendre = new StreamReader("./Asset/Image/reprendre.txt");
+            StreamReader srReprendre = new StreamReader($"{TEXTURE_PATH}reprendre{TEXTURE_EXTENSION}");
             string Reprendre = srReprendre.ReadToEnd();
 
-            StreamReader srSauvegarde = new StreamReader("./Asset/Image/sauvegarde.txt");
+            StreamReader srSauvegarde = new StreamReader($"{TEXTURE_PATH}sauvegarde{TEXTURE_EXTENSION}");
             string Sauvegarde = srSauvegarde.ReadToEnd();
 
-            StreamReader srQuitter = new StreamReader("./Asset/Image/quitter.txt");
+            StreamReader srQuitter = new StreamReader($"{TEXTURE_PATH}quitter{TEXTURE_EXTENSION}");
             string Quitter = srQuitter.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;

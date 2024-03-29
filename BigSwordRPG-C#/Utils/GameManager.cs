@@ -1,7 +1,6 @@
 ﻿using BigSwordRPG.Assets;
-using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
-using BigSwordRPG_C_.Utils;
+using BigSwordRPG_C_.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +21,13 @@ namespace BigSwordRPG.Utils
         private Difficulties _difficulty;
         private Renderer _renderer;
         private InputManager _inputManager;
+        private Music _music;
         private Scene _currentScene;
         private Player _player;
         private static GameManager _instance;
-        private bool _isRunning;
-        private TextureLoader textureLoader;
-
         public Renderer Renderer { get => _renderer; private set => _renderer = value; }
         public InputManager InputManager { get => _inputManager; set => _inputManager = value; }
+        public Music Music { get => _music; set => _music = value; }
         public Difficulties Difficulty { get => _difficulty; set => _difficulty = value; }
         public Scene CurrentScene { get => _currentScene; set => _currentScene = value; }
         public Player Player { get => _player; set => _player = value; }
@@ -41,43 +39,33 @@ namespace BigSwordRPG.Utils
                 if (_instance == null)
                 {
                     _instance = new GameManager();
+                    _instance.Initialize();
+                    _instance.Run();
                 }
                 return _instance;
             }
         }
 
 
-        private GameManager() {
+        private GameManager() { }
+        ~GameManager() { }
+
+        // Shouldn't be deleted
+        private int Initialize() // Shouldn't be deleted
+        {
             Renderer = new Renderer();
             Renderer.Initialize();
             InputManager = new InputManager();
             InputManager.Initialize();
-            _currentScene = new MenuScene();
-            textureLoader = new TextureLoader();
-
-            StreamReader sr = new StreamReader("./Asset/Image/player.txt");//Remettre le fichier dans Debug pour le déploiement
-            string s2 = sr.ReadToEnd();//.Replace("\\e","\x1b");
-            
-            Texture playerTexture = new Texture();
-            playerTexture.Size = new int[2] { 21, 28 };
-            playerTexture.PixelsBuffer = new List<Pixel>();
-
-            Texture player = textureLoader.getTexture(s2, playerTexture);
-
-            _player = new Player(new int[2] { 150, 60 }, player);
-            
+            Music = new Music();
+            CurrentScene = new MenuScene();
+            Player = new Player(new int[2] { 150, 60 });
+            return 0;
         }
-        ~GameManager() { }
 
-        public void Run()
+        private void Run()
         {
-            _isRunning = true;
-            while (_isRunning)
-            {
-                InputManager.Update();
-                //Renderer.Update();
-            }
-
+            CurrentScene.Run();
         }
 
         public void SwitchScene<NewSceneType>() where NewSceneType : Scene, new()

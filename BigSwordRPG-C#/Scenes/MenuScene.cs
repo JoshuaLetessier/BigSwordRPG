@@ -1,5 +1,6 @@
 ﻿using BigSwordRPG_C_.Game;
 using BigSwordRPG_C_.Utils;
+using BigSwordRPG.Utils;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using BigSwordRPG.Game;
 
 namespace BigSwordRPG.Assets
 {
@@ -16,14 +18,25 @@ namespace BigSwordRPG.Assets
         private OptionScene option;
         public List<SelectMenu> menu;
         private Difficulty difficulty;
-        private Music music;
+        private SaveManager _saveManager;
 
-        private string filePath = "../../../Asset/Music/C418.mp3";
+#if DEBUG
+        const string AUDIO_PATH = "../../../Asset/Music/";
+        const string TEXTURE_PATH = "../../../Asset/Image/";
+#else
+        const string AUDIO_PATH = "./Data/Assets/Musics/";
+        const string TEXTURE_PATH = "./Data/Assets/Textures/";
+#endif
+        const string AUDIO_EXTENSION = ".mp3";
+        const string TEXTURE_EXTENSION = ".txt";
+
+        private string filePath = $"{AUDIO_PATH}C418{AUDIO_EXTENSION}";
+
+        private SaveManager SaveManager { get => _saveManager; set => _saveManager = value; }
 
         public MenuScene()
         {
             test = new SelectMenu();
-            music = new Music();
         }
 
 
@@ -34,22 +47,21 @@ namespace BigSwordRPG.Assets
             Console.SetCursorPosition(0, 0);
 
 
+            Task audioTask = Task.Run(() => GameManager.Instance.Music.ImporterMP3(filePath));
 
-            Task audioTask = Task.Run(() => music.ImporterMP3(filePath));
-
-            StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader($"{TEXTURE_PATH}nameGame{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srNouvellePartie = new StreamReader("../../../Asset/Image/nouvelle.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srNouvellePartie = new StreamReader($"{TEXTURE_PATH}nouvelle{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string NouvellePartie = srNouvellePartie.ReadToEnd();
 
-            StreamReader srContinuerPartie = new StreamReader("../../../Asset/Image/continuer.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srContinuerPartie = new StreamReader($"{TEXTURE_PATH}continuer{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string ContinuerPartie = srContinuerPartie.ReadToEnd();
 
-            StreamReader srOption = new StreamReader("../../../Asset/Image/option.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srOption = new StreamReader($"{TEXTURE_PATH}option{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string Option = srOption.ReadToEnd();
 
-            StreamReader srQuitter = new StreamReader("../../../Asset/Image/quitter.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srQuitter = new StreamReader($"{TEXTURE_PATH}quitter{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string Quitter = srQuitter.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -93,12 +105,17 @@ namespace BigSwordRPG.Assets
 
         public void ContinueGame()
         {
-            throw new NotImplementedException();
+            List<Item> item = new List<Item>();
+            SaveManager = new SaveManager();
+            SaveManager.Load(GameManager.Instance.Player.Heroes, item);
+
+            MapScene mapScene = new MapScene();
+            GameManager.Instance.SwitchScene(mapScene);
         }
 
         public override void Run()
         {
-            throw new NotImplementedException();
+            Draw();
         }
     }
 }

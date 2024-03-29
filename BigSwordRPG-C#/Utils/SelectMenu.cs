@@ -1,4 +1,6 @@
-﻿using BigSwordRPG_C_.Game;
+﻿using BigSwordRPG.Assets;
+using BigSwordRPG.Utils;
+using BigSwordRPG_C_.Game;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace BigSwordRPG_C_.Utils
@@ -65,6 +67,7 @@ namespace BigSwordRPG_C_.Utils
                     Boucle = false;
                 }
             }
+            GameManager.Instance.SwitchScene<MapScene>();
         }
     }
 }
