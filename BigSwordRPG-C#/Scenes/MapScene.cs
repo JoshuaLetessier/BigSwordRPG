@@ -11,6 +11,8 @@ using BigSwordRPG_C_;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG.GameObjects;
+using BigSwordRPG_C_.Game;
+using BigSwordRPG.Utils.Graphics;
 
 namespace BigSwordRPG.Assets
 {
@@ -21,7 +23,8 @@ namespace BigSwordRPG.Assets
         private List<Interest> _onCollisionInterests;
         public List<Interest> InteractableInterests { get => _interactableInterests; set => _interactableInterests = value; }
         public List<Interest> OnCollisionInterests { get => _onCollisionInterests; set => _onCollisionInterests = value; }
-
+        private Music music;
+        private string FilePath = "../../../Asset/Image/robot.mp3";
         public MapScene():base()
         {
             Interest testInterest = new Interest(new int[2] { 140, 60 });
@@ -60,10 +63,19 @@ namespace BigSwordRPG.Assets
                     () => TryInteracting()
              )
         );
+        GameManager.Instance.InputManager.RegisterAction(
+            ConsoleKey.Escape,
+            new Action(
+                () => GameManager.Instance.SwitchScene<MenuAccueil>()
+            )
+        );
         }
 
         public override void Draw()
         {
+            music.CloseMusic();
+            Task audioTask = Task.Run(() => music.ImporterMP3(FilePath));
+
             Console.SetBufferSize(854, 184);
             GameManager.Instance.Renderer.Background = new Background(new int[2] { 0, 0 }, TexturesLoader.GetTexture("map"));
             GameManager.Instance.Renderer.Background.Draw();
@@ -123,5 +135,6 @@ namespace BigSwordRPG.Assets
                 GameManager.Instance.Renderer.MoveTexture(player.Position, player.Texture, distance, axis);
             }
         }
+
     }
 }

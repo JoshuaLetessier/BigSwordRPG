@@ -88,7 +88,7 @@ namespace BigSwordRPG_C_.Game
 
             Dictionary<string, Equipement> equipements = new Dictionary<string, Equipement>();
 
-            string filePath = "../../../Game/Stat/EquipementStat.csv";
+            string filePath = "./Game/Stat/EquipementStat.csv";
 
             if(File.Exists(filePath))
             {

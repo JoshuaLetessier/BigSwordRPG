@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace BigSwordRPG.Game
 {
-    public class Character
+    public class Character : GameObject
     {
         //champ
         private string _name;
@@ -80,6 +80,17 @@ namespace BigSwordRPG.Game
         }
 
         ~Character() { }
+
+        public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public void TakeDammage(int attackPoint)
         {

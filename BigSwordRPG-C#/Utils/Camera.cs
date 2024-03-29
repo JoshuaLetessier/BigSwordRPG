@@ -15,7 +15,8 @@ namespace BigSwordRPG_C_.Utils
         public int[] Size { get => _size; set => _size = value; }
 
 
-        public Camera() { 
+        public Camera()
+        {
             Position = new int[2] { 0, 0 };
             Size = new int[2] { Console.WindowWidth, Console.WindowHeight };
         }
@@ -26,10 +27,11 @@ namespace BigSwordRPG_C_.Utils
             if (centerPosition[0] + (Size[0] / 2) >= Console.BufferWidth)
             {
                 Position[0] = Console.BufferWidth - Size[0];
-            } else if(centerPosition[0] - (Size[0] / 2) < 0)
+            }
+            else if (centerPosition[0] - (Size[0] / 2) < 0)
             {
                 Position[0] = 0;
-            } 
+            }
             else
             {
                 Position[0] = centerPosition[0] - (Size[0] / 2);
@@ -54,7 +56,7 @@ namespace BigSwordRPG_C_.Utils
         {
             Console.SetCursorPosition(Position[0], Position[1]);
         }
-        
+
         public void ResizeCamera()
         {
             Size[0] = Console.WindowWidth;

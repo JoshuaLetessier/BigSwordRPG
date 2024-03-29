@@ -59,5 +59,6 @@ namespace BigSwordRPG.Assets
             GameManager.Instance.Renderer.HideGameObject(GameObjects[0]);
             GameManager.Instance.SwitchScene(PreviousScene);
         }
+
     }
 }

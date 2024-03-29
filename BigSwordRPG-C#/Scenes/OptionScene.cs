@@ -27,16 +27,16 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader("/Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srResolution = new StreamReader("../../../Asset/Image/resolution.txt");
+            StreamReader srResolution = new StreamReader("/Asset/Image/resolution.txt");
             string Resolution = srResolution.ReadToEnd();
 
-            StreamReader srLangues = new StreamReader("../../../Asset/Image/langues.txt");
+            StreamReader srLangues = new StreamReader("/Asset/Image/langues.txt");
             string Langues = srLangues.ReadToEnd();
 
-            StreamReader srReturn = new StreamReader("../../../Asset/Image/Return.txt");
+            StreamReader srReturn = new StreamReader("/Asset/Image/Return.txt");
             string Return = srReturn.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -57,11 +57,6 @@ namespace BigSwordRPG.Assets
             srLangues.Dispose();
             srReturn.Dispose();
         }
-        
-        public override void Run()
-        {
-            throw new NotImplementedException();
-        }
 
         public void AllResolution()
         {
@@ -76,6 +71,11 @@ namespace BigSwordRPG.Assets
         public void ReturnMenu()
         {
             testMenu.Draw();
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }

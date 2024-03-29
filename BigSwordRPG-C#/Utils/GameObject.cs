@@ -10,7 +10,11 @@ namespace BigSwordRPG.Utils
     public abstract class GameObject
     {
         public GameObject() { }
-        ~GameObject() { }       
+        ~GameObject() { }
+
+       
+        public abstract void Updtate();
+       
 
         private int[] _position = { 0, 0 };
         private Texture _texture;

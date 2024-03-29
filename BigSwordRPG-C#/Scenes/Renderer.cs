@@ -44,7 +44,7 @@ namespace BigSwordRPG.Assets
         private IntPtr ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
 
         public Renderer() { }
-        
+
         public int Initialize()
         {
             ConsoleHandle = GetConsoleWindow();
@@ -70,14 +70,16 @@ namespace BigSwordRPG.Assets
 
         public void ResizeWindow(int[] newResolution)
         {
-            if(true) {  //Should check that the resolution isn't too big otherwise Console.SetWindowPosition will crash
+            if (true)
+            {  //Should check that the resolution isn't too big otherwise Console.SetWindowPosition will crash
                 SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
                 SetWindowPos(ConsoleHandle, 0, 0, 0, newResolution[0], newResolution[1], 0);
                 Camera.ResizeCamera();
             }
         }
 
-        public void DrawTexture(int[] position, Texture texture) {
+        public void DrawTexture(int[] position, Texture texture)
+        {
             string line;
             int foregroundColor;
             int backgroundColor;
@@ -101,7 +103,7 @@ namespace BigSwordRPG.Assets
             string line;
             int foregroundColor;
             int backgroundColor;
-           
+
             for (int i = 0; i < textureRegion.sizeY; i++)
             {
                 line = "";
@@ -115,7 +117,7 @@ namespace BigSwordRPG.Assets
                 Console.Write(line);
             }
             Camera.ResetCursorPosition();
-        }   
+        }
 
         public void MoveTexture(int[] position, Texture texture, int offset, Axis axis)
         {
@@ -127,16 +129,17 @@ namespace BigSwordRPG.Assets
                 textureRegion.offsetY = position[1] - Background.Position[1];
                 textureRegion.sizeX = offset & -offset;
                 textureRegion.sizeY = texture.Size[1];
-            } else
+            }
+            else
             {
                 textureRegion.offsetX = position[0] - Background.Position[0];
                 textureRegion.offsetY = offset > 0 ? position[1] - Background.Position[1] - offset : position[1] - Background.Position[1] + texture.Size[1];
                 textureRegion.sizeX = texture.Size[0];
                 textureRegion.sizeY = offset & -offset;
             }
-            int[] backgroundRegionPosition = new int[2] { 
+            int[] backgroundRegionPosition = new int[2] {
                 position[0] + ((offset < 0 ? texture.Size[0] : -offset)) * (int)(1-axis),
-                position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis 
+                position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis
             };
             DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion); // DrawTextureRegion already calls Camera.ResetCursorPosition();
         }
@@ -159,6 +162,6 @@ namespace BigSwordRPG.Assets
         public bool IsInBuffer(int[] position, int[] size)
         {
             return position[0] >= 0 && position[1] >= 0 && position[0] + size[0] < Console.BufferWidth && position[1] + size[0] < Console.BufferHeight;
-        }   
+        }
     }
 }

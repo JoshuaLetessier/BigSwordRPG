@@ -27,6 +27,11 @@ namespace BigSwordRPG.Game
             throw new NotImplementedException();
         }
 
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Use()
         {
             throw new NotImplementedException();

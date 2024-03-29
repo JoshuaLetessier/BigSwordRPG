@@ -1,4 +1,5 @@
 ﻿using BigSwordRPG.Game;
+using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BigSwordRPG_C_.Utils
 
         public int[] Position { get => position; set => position = value; }
       
-        public void Save(Dictionary<string, Hero> _heroes, List<Item> _items)
+        public void Save(Dictionary<string, Hero> _heroes, List<Item> _items, int[] pos)
         {
             
 
@@ -28,16 +29,16 @@ namespace BigSwordRPG_C_.Utils
             FileInfo fileInfo = new FileInfo(filePath);
             using (StreamWriter streamWriter = fileInfo.CreateText())
             {
-                streamWriter.WriteLine(Position + ",");
+                streamWriter.WriteLine(pos[0].ToString() + "," + pos[1].ToString() + "+");
               
                 for (int i = 0; i < _heroes.Count; i++)
                 {
-                    streamWriter.WriteLine(_heroes.ElementAt(i).Value.Name +","+ _heroes.ElementAt(i).Value.Health + "," + _heroes.ElementAt(i).Value.Level + "," + _heroes.ElementAt(i).Value.PM + "," + _heroes.ElementAt(i).Value.IsDead + ",");
+                    streamWriter.WriteLine(_heroes.ElementAt(i).Value.Name +","+ _heroes.ElementAt(i).Value.Health + "," + _heroes.ElementAt(i).Value.Level + "," + _heroes.ElementAt(i).Value.PM + "," + _heroes.ElementAt(i).Value.IsDead + "+");
                 }
 
                 for(int i = 0; i < _items.Count ; i++)
                 {
-                    streamWriter.WriteLine(_items[i].Name + "," + _items[i].Value + ",");
+                    streamWriter.WriteLine(_items[i].Name + "," + _items[i].Value + "+");
                 }
             }
         }
@@ -48,30 +49,33 @@ namespace BigSwordRPG_C_.Utils
             {
                 using(StreamReader streamReader = new StreamReader(filePath))
                 {
-                    while(!streamReader.EndOfStream)
+                    
+                    //StreamReader srSave = new StreamReader("./Save/Save.csv");
+                    StreamReader srSave = new StreamReader("../../../Save/Save.csv");
+                    string[] data = srSave.ReadToEnd().Replace("\r\n", "").Split("+");
+
+                    string[] pos = data[0].Split(",");
+                    int[] position = new int[2] { int.Parse(pos[0]), int.Parse(pos[1]) };
+
+                    GameManager.Instance.Player.Position = position;
+
+                    for (int i = 0;i < _heroes.Count;i++) 
                     {
-                        string[] data = streamReader.ReadLine().Split(",");
-
-                        for(int i = 0; i < Position.Length; i++)
-                        {
-                            Position[i] = int.Parse(data[i]); 
-                        }
-
-                        for (int i = 0;i < _heroes.Count;i++) 
-                        { 
-                            _heroes.ElementAt(i).Value.Name = data[0];
-                            _heroes.ElementAt(i).Value.Health = int.Parse(data[1]);
-                            _heroes.ElementAt(i).Value.Level = int.Parse(data[2]);
-                            _heroes.ElementAt(i).Value.PM = int.Parse(data[3]);
-                            _heroes.ElementAt(i).Value.IsDead = bool.Parse(data[4]);
-                        }
-
-                        for (int i = 0; i < _items.Count; i++)
-                        {
-                            _items.ElementAt(i).Name = data[0];
-                            _items.ElementAt(i).Value = int.Parse(data[1]);
-                        }
+                        string[] heroes = data[i+1].Split(",");
+                        _heroes.ElementAt(i).Value.Name = heroes[0];
+                        _heroes.ElementAt(i).Value.Health = int.Parse(heroes[1]);
+                        _heroes.ElementAt(i).Value.Level = int.Parse(heroes[2]);
+                        _heroes.ElementAt(i).Value.PM = int.Parse(heroes[3]);
+                        _heroes.ElementAt(i).Value.IsDead = bool.Parse(heroes[4]);
                     }
+
+                    for (int i = 0; i < _items.Count; i++)
+                        {
+                        _items.ElementAt(i).Name = data[0];
+                        _items.ElementAt(i).Value = int.Parse(data[1]);
+                    }
+                    srSave.Dispose();
+                    
                 }
             }
         }

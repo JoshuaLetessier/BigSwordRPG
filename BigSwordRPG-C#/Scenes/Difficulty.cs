@@ -1,5 +1,4 @@
-﻿using BigSwordRPG.Utils;
-using BigSwordRPG_C_;
+﻿using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,6 @@ namespace BigSwordRPG.Assets
         {
             string SizeReturn = ReturnSize();
             test = new SelectMenu();
-            testMenu = new MenuScene();
             testMap = new MapScene();
         }
 
@@ -36,19 +34,19 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srName = new StreamReader("./Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srEasy = new StreamReader("../../../Asset/Image/easy.txt");
+            StreamReader srEasy = new StreamReader("./Asset/Image/easy.txt");
             Easy = srEasy.ReadToEnd();
 
-            StreamReader srMiddle = new StreamReader("../../../Asset/Image/middle.txt");
+            StreamReader srMiddle = new StreamReader("./Asset/Image/middle.txt");
             Middle = srMiddle.ReadToEnd();
 
-            StreamReader srHard = new StreamReader("../../../Asset/Image/hard.txt");
+            StreamReader srHard = new StreamReader("./Asset/Image/hard.txt");
             Hard = srHard.ReadToEnd();
 
-            StreamReader srReturn = new StreamReader("../../../Asset/Image/Return.txt");
+            StreamReader srReturn = new StreamReader("./Asset/Image/Return.txt");
             string Return = srReturn.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -71,25 +69,22 @@ namespace BigSwordRPG.Assets
             srHard.Dispose();
         }
 
-        public override void Run()
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void DifficultyEasy()
         {
+            testMap.Draw();
             DifficultyChoose = Easy;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
         public void DifficultyMiddle()
         {
+            testMap.Draw();
             DifficultyChoose = Middle;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
         public void DifficultyHard()
         {
+            testMap.Draw();
             DifficultyChoose = Hard;
-            GameManager.Instance.SwitchScene<MapScene>();
         }
 
         public void ReturnMenu()
@@ -99,11 +94,16 @@ namespace BigSwordRPG.Assets
 
         public string ReturnSize()
         {
-            StreamReader srSize = new StreamReader("../../../Config/Config.csv");
+            StreamReader srSize = new StreamReader("./Config/Config.csv");
             string Size = srSize.ReadToEnd().Replace("\r\n", "");
             srSize.Dispose();
 
             return Size;
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }
