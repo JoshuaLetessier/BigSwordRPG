@@ -25,10 +25,6 @@ namespace BigSwordRPG.Game
             throw new NotImplementedException();
         }
 
-        public override void Updtate()
-        {
-            throw new NotImplementedException();
-        }
 
         public virtual void Use(List<Hero> heroes)
         {
@@ -88,6 +84,11 @@ namespace BigSwordRPG.Game
         {
             Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
             Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
+        }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
         }
     }
 

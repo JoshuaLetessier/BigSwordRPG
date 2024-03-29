@@ -21,6 +21,11 @@ namespace BigSwordRPG.Assets
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
+        public FightScene()
+        {
+
+        }
+
         public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string, Game.Ennemy> ennemies, Player player)
         {
             heroesInCombat = heroes;
@@ -68,7 +73,7 @@ namespace BigSwordRPG.Assets
 
         } //exption pour remplacer le bool
 
-        public override void Update()
+        public void Update()
         {
             int countHeros = 0;
             int countEnnemy = 0;
@@ -318,6 +323,11 @@ namespace BigSwordRPG.Assets
         }
 
         public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Run()
         {
             throw new NotImplementedException();
         }

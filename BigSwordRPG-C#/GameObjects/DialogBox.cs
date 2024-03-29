@@ -83,5 +83,10 @@ namespace BigSwordRPG.GameObjects
                 PreviousLineLength = 0; // If DrawDialogLine is called again, it won't erase the line again
             }
         }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

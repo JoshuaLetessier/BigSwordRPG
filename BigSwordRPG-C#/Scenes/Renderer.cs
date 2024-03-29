@@ -2,6 +2,8 @@
 using BigSwordRPG_C_;
 using BigSwordRPG.GameObjects;
 using BigSwordRPG_C_.Utils;
+using BigSwordRPG.Utils;
+using System.Runtime.InteropServices;
 
 namespace BigSwordRPG.Assets
 {

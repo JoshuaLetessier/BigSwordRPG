@@ -57,6 +57,11 @@ namespace BigSwordRPG_C_
                 GameManager.Instance.Renderer.MoveTexture(Position, Texture, distance, axis);
             }
         }
+
+        public override void Updtate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

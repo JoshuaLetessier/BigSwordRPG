@@ -20,8 +20,8 @@ namespace BigSwordRPG
 
         public Program()
         {
-            GameManager tmpGameManager = GameManager.Instance;
-            tmpGameManager = null;
+            //GameManager tmpGameManager = GameManager.Instance;
+            //tmpGameManager = null;
             testCreateHeros = new CreateHero();
             createEnnemy = new CreateEnnemy();
             saveManager = new SaveManager();
@@ -47,8 +47,9 @@ namespace BigSwordRPG
 
             Program p = new Program();           
 
-            Dictionary<string, Hero> heroes = p.testCreateHeros.CreateDictionaryHero();
             Dictionary<string, Ennemy> ennemies = p.createEnnemy.CreateDictionaryEnnemies();
+
+            p.fightScene.Update();
         }
     }
 }
