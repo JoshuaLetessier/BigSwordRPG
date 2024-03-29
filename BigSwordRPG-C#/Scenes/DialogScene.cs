@@ -46,7 +46,10 @@ namespace BigSwordRPG.Assets
             */
             CurrentLine++;
             //DialogBox.Line = DialogLines[CurrentLine];
-            DialogBox.Line = "Hello, I am an old lady.";
+            DialogBox.Line = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" +
+                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+            DialogBox.DrawDialogLine();
+            DialogBox.Line = "By";
             DialogBox.DrawDialogLine();
         }
 
