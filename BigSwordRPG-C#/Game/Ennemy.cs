@@ -1,6 +1,4 @@
-﻿using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
-using System.Text;
+﻿using System.Text;
 
 namespace BigSwordRPG.Game
 {
@@ -18,8 +16,8 @@ namespace BigSwordRPG.Game
         Potion potion = new();
         CreateEquipement createEquipement = new CreateEquipement();
 
-        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMAX, Dictionary<string, Equipement> equipements)
-            : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
+        public Ennemy()
+            : base()
         {
         }
 
@@ -191,20 +189,7 @@ namespace BigSwordRPG.Game
 
     public class CreateEnnemy
     {
-
-        private string name;
-        private int health;
-        private int maxHealth;
-        private int level;
-        private float healthMultiplier;
-        private float attMultiplier;
-        private float healMultiplier;
-        private float speed;
-        private Dictionary<string, Abilities> abilities;
-        private bool isDead;
-        private int PM;
-        private int PMMAX;
-        private Dictionary<string, Equipement> equipements;
+        Dictionary<string, Equipement> equipements;
         private CreateEquipement createEquipement = new CreateEquipement();
 
         public CreateEquipement CreateEquipement { get => createEquipement; set => createEquipement = value; }
@@ -215,11 +200,11 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-            #if DEBUG
-                const string filePath = "../../../Game/Stat/EnnemiesStat.csv";
-            #else
+#if DEBUG
+            const string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+#else
                 const string filePath = "./Data/Stat/EnnemiesStat.csv";
-            #endif
+#endif
 
             if (File.Exists(filePath))
             {
@@ -234,7 +219,7 @@ namespace BigSwordRPG.Game
                         string stringHealMultiplier = ennemiesData[6].Replace("\"", "");
                         string stringSpeed = ennemiesData[6].Replace("\"", "");
 
-                        Ennemy ennemy = new Ennemy(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
+                        Ennemy ennemy = new Ennemy()
                         {
                             Name = ennemiesData[0],
                             MaxHealth = int.Parse(ennemiesData[2]),
@@ -248,7 +233,6 @@ namespace BigSwordRPG.Game
                             PMMax = int.Parse(ennemiesData[8]),
                             PM = int.Parse(ennemiesData[8]),
                             Equipements = new Dictionary<string, Equipement> { }
-
                         };
 
                         for (int i = 9; i < ennemiesData.Length - 1; i++)
@@ -260,6 +244,7 @@ namespace BigSwordRPG.Game
                             ennemy.CAbilities.ElementAt(i).Value.Damage = ennemy.CAbilities.ElementAt(i).Value.Damage * ennemy.AttMultiplier * ennemy.Level;
                             ennemy.CAbilities.ElementAt(i).Value.Heal = ennemy.CAbilities.ElementAt(i).Value.Heal * ennemy.HealMultiplier * ennemy.Level;
                         }
+                        equipements = new Dictionary<string, Equipement>();
                         equipements = CreateEquipement.CreateDictionaryEquipement();
                         ennemy.Equipements.Add(equipements["Defibrilateur Nanite"].Name, equipements["Defibrilateur Nanite"]);
 

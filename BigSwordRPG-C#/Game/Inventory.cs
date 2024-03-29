@@ -1,6 +1,4 @@
-﻿using BigSwordRPG_C_.Game;
-
-namespace BigSwordRPG.Game
+﻿namespace BigSwordRPG.Game
 {
     public class Inventory
     {

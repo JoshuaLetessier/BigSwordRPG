@@ -1,7 +1,4 @@
-﻿using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
 namespace BigSwordRPG.Game
 {
@@ -11,20 +8,8 @@ namespace BigSwordRPG.Game
         int coolDownCount;
         int magicPoint;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMax, Dictionary<string, Equipement> equipements, int coolDownCount, int magicPoint) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
+        public Hero() : base()
         {
-            Name = name;
-            MaxHealth = maxHealth;
-            Health = health;
-            Level = level;
-            HealthMultiplier = healthMultiplier;
-            AttMultiplier = attMultiplier;
-            HealMultiplier = healMultiplier;
-            Speed = speed;
-            CAbilities = abilities;
-            IsDead = isDead;
-            this.coolDownCount = coolDownCount;
-            this.magicPoint = magicPoint;
         }
 
         public List<Abilities> ActAbilities { get => actAbilities; set => actAbilities = value; }
@@ -101,7 +86,7 @@ namespace BigSwordRPG.Game
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
                     selectedLineIndex--;
 
-            } while(canBeSelected != true);
+            } while (canBeSelected != true);
 
             // Retoune la clé séléctionnée
             return selectedLineIndex;
@@ -166,7 +151,7 @@ namespace BigSwordRPG.Game
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
                     selectedLineIndex--;
 
-            } while(canBeSelected != true);
+            } while (canBeSelected != true);
 
             // Retoune la clé séléctionnée
             return heroes[selectedLineIndex].Name;
@@ -251,12 +236,11 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-
-            #if DEBUG
-                const string filePath = "../../../Game/Stat/HerosStat.csv";
-            #else
+#if DEBUG
+            const string filePath = "../../../Game/Stat/HerosStat.csv";
+#else
                 const string filePath = "./Data/Stat/HerosStat.csv";
-            #endif
+#endif
 
             if (File.Exists(filePath))
             {
@@ -271,7 +255,7 @@ namespace BigSwordRPG.Game
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
                         string stringSpeed = heroData[6].Replace("\"", "");
 
-                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements, coolDownCount, magicPoint)
+                        Hero hero = new Hero()
                         {
                             Name = heroData[0],
                             MaxHealth = int.Parse(heroData[2]),

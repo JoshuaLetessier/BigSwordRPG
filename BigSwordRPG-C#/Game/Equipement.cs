@@ -1,6 +1,4 @@
-﻿using BigSwordRPG.Game;
-using System.Diagnostics;
-
+﻿
 public enum EquipementType
 {
     Plasma = 1,
@@ -9,7 +7,7 @@ public enum EquipementType
     Bioelectrique
 }
 
-namespace BigSwordRPG_C_.Game
+namespace BigSwordRPG.Game
 {
     public class Equipement : Item
     {
@@ -17,14 +15,9 @@ namespace BigSwordRPG_C_.Game
         private int efficciencyMin;
         private int efficciencyMax;
 
-        public Equipement(string name, int value, int _rarety, int efficciencyMin, int efficciencyMax, EquipementType type) : base(name, value, _rarety)
+        public Equipement() : base()
         {
-
-            Type = type;
-            this.EfficciencyMin = efficciencyMin;
-            this.EfficciencyMax = efficciencyMax;
-
-            value = RandomBonusEquipement(EfficciencyMin, EfficciencyMax);
+            Value = RandomBonusEquipement(EfficciencyMin, EfficciencyMax);
         }
 
         public EquipementType Type { get => _type; set => _type = value; }
@@ -140,13 +133,11 @@ namespace BigSwordRPG_C_.Game
             Dictionary<string, Equipement> equipements = new Dictionary<string, Equipement>();
 
 
-            #if DEBUG
-                const string filePath = "../../../Game/Stat/EquipementStat.csv"; ;
-            #else
+#if DEBUG
+            const string filePath = "../../../Game/Stat/EquipementStat.csv"; ;
+#else
                 const string filePath = "./Data/Stat/EquipementStat.csv";
-            #endif
-
-
+#endif
 
             if (File.Exists(filePath))
             {
@@ -156,10 +147,12 @@ namespace BigSwordRPG_C_.Game
                     {
                         string[] line = streamReader.ReadLine().Split(',');
 
-                        Equipement equipement = new Equipement(_name, value, rarety, efficciencyMin, efficciencyMax, _type)
+                        Equipement equipement = new Equipement()
                         {
                             Name = line[0],
+                            Value = value,
                             Type = (EquipementType)Enum.Parse(typeof(EquipementType), line[1]),
+                            Rarety = rarety,
                             EfficciencyMin = int.Parse(line[2]),
                             EfficciencyMax = int.Parse(line[3])
                         };

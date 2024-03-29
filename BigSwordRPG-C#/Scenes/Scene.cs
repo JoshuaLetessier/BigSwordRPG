@@ -1,4 +1,4 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,8 @@ namespace BigSwordRPG.Assets
         public List<GameObject> GameObjects { get => _gameObjects; set => _gameObjects = value; }
         public Dictionary<ConsoleKey, List<Action>> ActionsMap { get => _actionsMap; set => _actionsMap = value; }
 
-        public Scene() { 
+        public Scene()
+        {
             ActionsMap = new Dictionary<ConsoleKey, List<Action>>();
             GameObjects = new List<GameObject>();
         }
@@ -28,9 +29,9 @@ namespace BigSwordRPG.Assets
             return 0;
         }
 
-        public virtual void Draw() 
-        { 
-            for(int i = 0; i < GameObjects.Count; i++)
+        public virtual void Draw()
+        {
+            for (int i = 0; i < GameObjects.Count; i++)
             {
                 GameObjects[i].Draw();
             }

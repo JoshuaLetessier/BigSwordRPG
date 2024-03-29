@@ -1,6 +1,8 @@
-﻿using BigSwordRPG_C_.Game;
+﻿using BigSwordRPG.Assets;
+using BigSwordRPG.Core;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace BigSwordRPG_C_.Utils
+namespace BigSwordRPG.Utils
 {
     public class SelectMenu
     {
@@ -64,6 +66,7 @@ namespace BigSwordRPG_C_.Utils
                     Boucle = false;
                 }
             }
+            GameManager.Instance.SwitchScene<MapScene>();
         }
     }
 }

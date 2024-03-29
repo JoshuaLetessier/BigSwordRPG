@@ -1,4 +1,4 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Game
 {
@@ -9,6 +9,8 @@ namespace BigSwordRPG.Game
         private int _value;
         private int _rarety;
 
+        public Item() { }
+
         public Item(string name, int value, int rarety)
         {
             _name = name;
@@ -18,13 +20,10 @@ namespace BigSwordRPG.Game
 
         ~Item() { }
 
-
-
         public override void Draw()
         {
             throw new NotImplementedException();
         }
-
 
         public virtual void Use(List<Hero> heroes)
         {
@@ -84,11 +83,6 @@ namespace BigSwordRPG.Game
         {
             Console.BackgroundColor = shouldHighlight ? ConsoleColor.White : ConsoleColor.Black;
             Console.ForegroundColor = shouldHighlight ? ConsoleColor.Black : ConsoleColor.White;
-        }
-
-        public override void Updtate()
-        {
-            throw new NotImplementedException();
         }
     }
 

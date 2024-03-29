@@ -33,5 +33,6 @@
     {
         public int[] Size;
         public List<Pixel> PixelsBuffer;
+
     }
 }

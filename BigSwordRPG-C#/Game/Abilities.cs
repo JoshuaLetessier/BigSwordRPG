@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG
 {
     public enum actionType
     {
@@ -59,12 +58,12 @@ namespace BigSwordRPG_C_
         private static Dictionary<string, Abilities> CreateAbilities()
         {
 
-            #if DEBUG
-                const string filePath = "../../../Game/Stat/AbilitiesStat.csv";
-            #else
+#if DEBUG
+            const string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+#else
                 const string filePath = "./Data/Stat/AbilitiesStat.csv";
-            #endif
-            
+#endif
+
             Dictionary<string, Abilities> abilities = new Dictionary<string, Abilities>(StringComparer.OrdinalIgnoreCase);
             if (File.Exists(filePath))
             {

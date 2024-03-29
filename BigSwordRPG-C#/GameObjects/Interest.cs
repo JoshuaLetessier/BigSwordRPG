@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BigSwordRPG.Assets;
-using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Assets;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
+
 
 namespace BigSwordRPG.GameObjects
 {
-    public class Interest : GameObject
+    public abstract class Interest : GameObject
     {
         public Interest(int[] position) : base(
                 position,
@@ -62,7 +58,7 @@ namespace BigSwordRPG.GameObjects
             DialogScene dialogScene = new DialogScene();
             GameManager.Instance.SwitchScene(dialogScene);
         }*/
-
+        public abstract void Interact();
         public void Interact<NewSceneType>() where NewSceneType : Scene, new()
         {
             GameManager.Instance.SwitchScene(new NewSceneType());

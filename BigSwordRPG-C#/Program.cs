@@ -1,39 +1,26 @@
 ﻿using BigSwordRPG.Assets;
+using BigSwordRPG;
 using BigSwordRPG.Game;
-using BigSwordRPG_C_;
-using BigSwordRPG_C_.Utils;
+using BigSwordRPG.Utils;
+using BigSwordRPG.Core;
 
 namespace BigSwordRPG
 {
     internal class Program
     {
-        
+
         //private MenuScene testMenu;
         private CreateHero testCreateHeros;
         private CreateEnnemy createEnnemy;
         private SaveManager saveManager;
-        private FightScene fightScene;
-        private Player player;
-        private Item potionMineur;
-        public Potion healPotion;
-
 
         public Program()
         {
-            //GameManager tmpGameManager = GameManager.Instance;
-            //tmpGameManager = null;
-            testCreateHeros = new CreateHero();
-            createEnnemy = new CreateEnnemy();
-            saveManager = new SaveManager();
-            player = new Player();
-
-
-            Dictionary<string, Hero> heroes = testCreateHeros.CreateDictionaryHero();
-            Dictionary<string, Ennemy> ennemies = createEnnemy.CreateDictionaryEnnemies();
-
-            fightScene = new FightScene(player.Heroes, ennemies, player);
-
-            healPotion = new Potion();
+            GameManager tmpGameManager = GameManager.Instance;
+            tmpGameManager = null;
+            //testCreateHeros = new CreateHero();
+            //createEnnemy = new CreateEnnemy();
+            //saveManager = new SaveManager();
         }
 
         ~Program()
@@ -43,14 +30,12 @@ namespace BigSwordRPG
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
+            //Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.LargestWindowHeight - 10);
 
-            Program p = new Program();           
+            Program p = new Program();
 
-            Dictionary<string, Ennemy> ennemies = p.createEnnemy.CreateDictionaryEnnemies();
-
-            p.fightScene.Update();
+            //Dictionary<string, Hero> heroes = p.testCreateHeros.CreateDictionaryHero();
+            //Dictionary<string, Ennemy> ennemies = p.createEnnemy.CreateDictionaryEnnemies();
         }
     }
 }
-

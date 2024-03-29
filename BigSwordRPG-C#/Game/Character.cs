@@ -1,10 +1,8 @@
-﻿using BigSwordRPG.Utils;
-using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
+﻿using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Game
 {
-    public class Character
+    public class Character : GameObject
     {
         //champ
         private string _name;
@@ -69,33 +67,25 @@ namespace BigSwordRPG.Game
 
 
         //Méthodes
-        public Character(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int pM, int PMMax, Dictionary<string, Equipement> equipements)
+        public Character()
         {
-            _name = name;
-            _health = health;
-            _maxHealth = maxHealth;
-            _level = level;
-            _healthMultiplier = healthMultiplier;
-            _attMultiplier = attMultiplier;
-            _healMultiplier = healMultiplier;
-            _speed = speed;
-            _abilities = abilities;
-            _isDead = isDead;
             CAbilities = new Dictionary<string, Abilities>();
-            _PM = pM;
-            _PMMax = pM;
-            _equipements = equipements;
-        }
-
-        public Character()//pour test Unitaire
-        {
         }
 
         ~Character() { }
 
+        public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TakeDammage(int attackPoint)
         {
             Health -= attackPoint;
+            if(Health <= 0)
+            {
+                IsDead = true;
+            }
         }
 
         public void Heal(int healValue)

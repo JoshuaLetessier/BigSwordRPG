@@ -1,7 +1,8 @@
 ﻿using BigSwordRPG.Game;
-using BigSwordRPG.Utils;
-using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
+using BigSwordRPG.Core;
+
+using BigSwordRPG.Game;
+using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Assets
 {
@@ -19,16 +20,13 @@ namespace BigSwordRPG.Assets
         CreateEquipement createEquipement = new CreateEquipement();
 
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
-        public Player player { get => _player; set => _player = value; }
+        public Player Player { get => _player; set => _player = value; }
 
         public FightScene()
         {
-
-        }
-
-        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string, Game.Ennemy> ennemies, Player player)
-        {
-            heroesInCombat = heroes;
+            CreateEnnemy createEnnemy = new CreateEnnemy();
+            Player = GameManager.Instance.Player;
+            heroesInCombat = Player.Heroes;
             int levelTotal = 0;
             for (int i = 0; i < heroesInCombat.Count; i++)
             {
@@ -36,7 +34,7 @@ namespace BigSwordRPG.Assets
             }
             int moyLevelHeros = levelTotal / heroesInCombat.Count;
 
-            _ennemiesList = ennemies;
+            _ennemiesList = createEnnemy.CreateDictionaryEnnemies();
 
             _equipementList = createEquipement.CreateDictionaryEquipement();
             for (int i = 0; i < _ennemiesList.Count; ++i)
@@ -67,18 +65,15 @@ namespace BigSwordRPG.Assets
                     }
                 }
             }
-
             firstTeamPlay = OrderStartFight();
-            _player = player;
-
         } //exption pour remplacer le bool
 
-        public void Update()
+        public override void Run()
         {
             int countHeros = 0;
             int countEnnemy = 0;
-            while (player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count) 
-            { 
+            while (Player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            {
                 switch (firstTeamPlay)
                 {
                     case "h":
@@ -98,9 +93,11 @@ namespace BigSwordRPG.Assets
                 }
             }
             Console.Clear();
-            if (player._allHeroDead)
+            if (Player._allHeroDead)
                 Console.WriteLine("Tu est nul");
             else Console.WriteLine("Tu as gagné");
+            Thread.Sleep(3000);
+            GameManager.Instance.SwitchScene(PreviousScene);
         }
 
         private string OrderStartFight()
@@ -138,7 +135,7 @@ namespace BigSwordRPG.Assets
             if (actHero.MagicPoint >= 4) { previousLineIndex = -1; selectedLineIndex = 0; isSpecialReady = true; }
             // Vérifie que le cooldown de buff est bien diminué
             if (actHero.CoolDownCount > 0) { actHero.CoolDownCount--; }
-            
+
             ConsoleKey pressedKey;
             do
             {
@@ -160,7 +157,8 @@ namespace BigSwordRPG.Assets
                 // Vérifie si la touche est UpArrow
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 1 || actHero.ActAbilities[selectedLineIndex - 1].Type == actionType.CAPA && isSpecialReady == true)
                     selectedLineIndex--;
-
+                else if (pressedKey == ConsoleKey.Escape)
+                    GameManager.Instance.SwitchScene(PreviousScene);
             } while (canBeUsed != true);
 
             // Vérifie le type de l'action et l'effectue
@@ -201,6 +199,7 @@ namespace BigSwordRPG.Assets
         }
         static void UpdateMenu(Hero actHero, int index)
         {
+            GameManager.Instance.Renderer.ResetCursorColors();
             Console.Clear();
             Console.WriteLine($"A toi de jouer {actHero.Name} !");
             Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actHero.Health}/{actHero.MaxHealth} \u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} " +
@@ -234,16 +233,11 @@ namespace BigSwordRPG.Assets
             Console.Clear();
             switch (GameManager.Instance.Difficulty)
             {
-                case Difficulties.EASY:
-                    RandomAction(actEnnemy);
-                    break;
                 case Difficulties.MEDIUM:
-                    Action(actEnnemy);
-                    break;
                 case Difficulties.HARD:
                     Action(actEnnemy);
                     break;
-                default:
+                default: // case Difficulties.EASY:
                     RandomAction(actEnnemy);
                     break;
             }
@@ -323,11 +317,6 @@ namespace BigSwordRPG.Assets
         }
 
         public override void Draw()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Run()
         {
             throw new NotImplementedException();
         }
