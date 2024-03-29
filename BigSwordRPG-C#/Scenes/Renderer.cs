@@ -38,9 +38,9 @@ namespace BigSwordRPG.Assets
 
         private IntPtr _consoleHandle;
         private Camera _camera;
-        private Background background;
+        private Background _background;
         public Camera Camera { get => _camera; set => _camera = value; }
-        public Background Background { get => background; set => background = value; }
+        public Background Background { get => _background; set => _background = value; }
         private IntPtr ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
 
         public Renderer() { }
@@ -149,6 +149,11 @@ namespace BigSwordRPG.Assets
             textureRegion.sizeX = gameObjectToHide.Texture.Size[0];
             textureRegion.sizeY = gameObjectToHide.Texture.Size[1];
             DrawTextureRegion(new int[2] { gameObjectToHide.Position[0], gameObjectToHide.Position[1] }, GameManager.Instance.Renderer.Background.Texture, textureRegion);
+        }
+
+        public void ResetCursorColors()
+        {
+            Console.Write("\x1b[0m");
         }
 
         public bool IsInBuffer(int[] position, int[] size)
