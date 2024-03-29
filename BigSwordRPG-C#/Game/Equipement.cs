@@ -10,37 +10,37 @@ public enum EquipementType
 
 namespace BigSwordRPG_C_.Game
 {
-    public class Equipement: Item
+    public class Equipement : Item
     {
         private EquipementType _type;
         private int efficciencyMin;
         private int efficciencyMax;
 
-        public Equipement(string name, int value, int _rarety, int efficciencyMin, int efficciencyMax,  EquipementType type) : base(name,value, _rarety)
+        public Equipement(string name, int value, int _rarety, int efficciencyMin, int efficciencyMax, EquipementType type) : base(name, value, _rarety)
         {
-         
+
             Type = type;
             this.EfficciencyMin = efficciencyMin;
             this.EfficciencyMax = efficciencyMax;
 
             value = RandomBonusEquipement(EfficciencyMin, EfficciencyMax);
         }
- 
+
         public EquipementType Type { get => _type; set => _type = value; }
         public int EfficciencyMin { get => efficciencyMin; set => efficciencyMin = value; }
         public int EfficciencyMax { get => efficciencyMax; set => efficciencyMax = value; }
 
-        public int typeHiarachy(Equipement charachaterVise, Equipement characheterPlay )
+        public int typeHiarachy(Equipement charachaterVise, Equipement characheterPlay)
         {
-            if(characheterPlay.Type == charachaterVise.Type)
+            if (characheterPlay.Type == charachaterVise.Type)
             {
                 return 0;
             }
-            else if(characheterPlay.Type == EquipementType.Plasma && charachaterVise.Type == EquipementType.Antimatiere)
+            else if (characheterPlay.Type == EquipementType.Plasma && charachaterVise.Type == EquipementType.Antimatiere)
             {
-               return Value;
+                return Value;
             }
-            else if(characheterPlay.Type == EquipementType.Antimatiere && charachaterVise.Type == EquipementType.Nucleaire)
+            else if (characheterPlay.Type == EquipementType.Antimatiere && charachaterVise.Type == EquipementType.Nucleaire)
             {
                 return Value;
             }
@@ -48,7 +48,7 @@ namespace BigSwordRPG_C_.Game
             {
                 return Value;
             }
-            else if(characheterPlay.Type == EquipementType.Bioelectrique)
+            else if (characheterPlay.Type == EquipementType.Bioelectrique)
             {
                 return Value;
             }
@@ -71,6 +71,7 @@ namespace BigSwordRPG_C_.Game
             ConsoleKey keyPressed;
             do
             {
+                Console.Clear();
                 foreach (Hero hero in heroes)
                 {
                     bool isSelected = hero == heroes[indexInventory];
@@ -91,19 +92,19 @@ namespace BigSwordRPG_C_.Game
 
             } while (keyPressed != ConsoleKey.Enter);
 
-            
+
             string heroIndex = heroes[indexInventory].SelectHero(heroes);
 
             for (int i = 0; i < heroes.Count; i++)
             {
                 if (heroes[i].Name == heroIndex)
                 {
-                    if ((this.Name == "Defibrilateur Nanite" || this.Name == "Stimulateur Neuro-Electrique")&& heroes[i].Name == "Seraph")
+                    if ((this.Name == "Defibrilateur Nanite" || this.Name == "Stimulateur Neuro-Electrique") && heroes[i].Name == "Seraph")
                     {
                         heroes[i].Equipements.Add(this.Name, this);
                         break;
                     }
-                    else if ((this.Name == "Defibrilateur Nanite" || this.Name == "Stimulateur Neuro-Electrique")&& heroes[i].Name != "Seraph")
+                    else if ((this.Name == "Defibrilateur Nanite" || this.Name == "Stimulateur Neuro-Electrique") && heroes[i].Name != "Seraph")
                     {
                         break;
                     }
@@ -119,7 +120,7 @@ namespace BigSwordRPG_C_.Game
         }
     }
 
-   
+
 
     public class CreateEquipement
     {
@@ -132,17 +133,18 @@ namespace BigSwordRPG_C_.Game
 
         private int value;
 
-        public Dictionary<string, Equipement> CreateDictionaryEquipement() {
+        public Dictionary<string, Equipement> CreateDictionaryEquipement()
+        {
 
             Dictionary<string, Equipement> equipements = new Dictionary<string, Equipement>();
 
             string filePath = "../../../Game/Stat/EquipementStat.csv";
 
-            if(File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                using(StreamReader streamReader = new StreamReader(filePath))
+                using (StreamReader streamReader = new StreamReader(filePath))
                 {
-                    while(!streamReader.EndOfStream)
+                    while (!streamReader.EndOfStream)
                     {
                         string[] line = streamReader.ReadLine().Split(',');
 

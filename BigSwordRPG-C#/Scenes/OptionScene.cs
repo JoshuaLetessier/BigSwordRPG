@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using BigSwordRPG_C_.Utils;
-using static System.Net.Mime.MediaTypeNames;
+﻿using BigSwordRPG_C_.Utils;
 
 namespace BigSwordRPG.Assets
 {
@@ -15,7 +8,7 @@ namespace BigSwordRPG.Assets
         private MenuScene testMenu;
         private ResizeWindow window;
 
-        public OptionScene() 
+        public OptionScene()
         {
             test = new SelectMenu();
             testMenu = new MenuScene();
@@ -49,7 +42,7 @@ namespace BigSwordRPG.Assets
                 new SelectMenu { menuChoix = Langues, ToDo = SetLangues },
                 new SelectMenu { menuChoix = Return, ToDo = ReturnMenu }
             };
-                        
+
             test.HandleUserInput(optionMenu);
 
             srName.Dispose();
@@ -57,7 +50,7 @@ namespace BigSwordRPG.Assets
             srLangues.Dispose();
             srReturn.Dispose();
         }
-        
+
         public override void Update()
         {
             throw new NotImplementedException();

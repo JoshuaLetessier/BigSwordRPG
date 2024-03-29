@@ -1,7 +1,6 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG_C_;
-using System.Reflection.Metadata.Ecma335;
 using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Assets
@@ -23,12 +22,12 @@ namespace BigSwordRPG.Assets
 
         CreateEquipement createEquipement = new CreateEquipement();
 
-        
+
 
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
-        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string,Game.Ennemy> ennemies, Player player) 
+        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string, Game.Ennemy> ennemies, Player player)
         {
             int count = 0;
             foreach (var key in heroes.Keys)
@@ -39,7 +38,7 @@ namespace BigSwordRPG.Assets
 
             heroesInCombat = heroes;
             int levelTotal = 0;
-            for(int i = 0; i <heroesInCombat.Count; i++)
+            for (int i = 0; i < heroesInCombat.Count; i++)
             {
                 levelTotal += heroesInCombat.ElementAt(i).Value.Level;
             }
@@ -48,9 +47,9 @@ namespace BigSwordRPG.Assets
             _ennemiesList = ennemies;
 
             _equipementList = createEquipement.CreateDictionaryEquipement();
-            for(int i = 0; i < _ennemiesList.Count; ++i)
+            for (int i = 0; i < _ennemiesList.Count; ++i)
             {
-                if(moyLevelHeros < 10)
+                if (moyLevelHeros < 10)
                 {
                     if (_ennemiesList.ContainsKey("Generatron"))
                     {
@@ -63,7 +62,7 @@ namespace BigSwordRPG.Assets
                         int value = random.Next(0, 2);
                         _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
                     }
-                        
+
                 }
                 else
                 {
@@ -75,11 +74,11 @@ namespace BigSwordRPG.Assets
                         int value = random.Next(5, 7);
                         _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
                     }
-                        
+
                 }
-                
-                
-               
+
+
+
 
             }
 
@@ -95,20 +94,38 @@ namespace BigSwordRPG.Assets
             Console.WriteLine("FIGHT !!!");
             // boucle de combas 
             //version 1 simplifié
-            while(player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
+            while (player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
             {
-                if (firstTeamPlay == "h")
+                /* if (firstTeamPlay == "h")
+                 {
+                     //random
+                     Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                     firstTeamPlay = "e";  
+                 }
+                 else
+                 {
+                     Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
+                     firstTeamPlay = "h";
+                 }*/
+
+                int countHeros = 0;
+                int countEnnemy = 0;
+                switch (firstTeamPlay)
                 {
-                    //random
-                    Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                    firstTeamPlay = "e";  
-                }
-                else
-                {
-                    Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                    firstTeamPlay = "h";
+                    case "h":
+                        Round(heroesInCombat.ElementAt(countHeros).Value);
+                        countHeros = (countHeros >= heroesInCombat.Count) ? 0 : countHeros + 1;
+                        firstTeamPlay = "e";
+                        break;
+                    case "e":
+                        Round(EnnemiesList.ElementAt(countEnnemy).Value);
+                        countEnnemy = (countEnnemy >= EnnemiesList.Count) ? 0 : countEnnemy + 1;
+                        firstTeamPlay = "h";
+                        break;
                 }
             }
+
+
         }
 
         private string orderStartFight()
@@ -152,10 +169,10 @@ namespace BigSwordRPG.Assets
             // Vérifie que la capacité peut être activée
             //if (actHero.MagicPoint == 4) { previousLineIndex = -1, selectedLineIndex = 0, isSpecialReady = true; }
             ConsoleKey pressedKey;
-            
+
             do
             {
-                if(previousLineIndex != selectedLineIndex)
+                if (previousLineIndex != selectedLineIndex)
                 {
                     UpdateMenu(actHero, selectedLineIndex);
                     previousLineIndex = selectedLineIndex;
@@ -321,7 +338,7 @@ namespace BigSwordRPG.Assets
             List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
             //List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
             List<int> _healthCompare = heroesInCombat.Values.Select(heroes => heroes.Health).ToList();
-            
+
             for (int i = 0; i < heroesInCombat.Count; i++)
             {
                 //heroesInCombat[_heroesNames[i]];

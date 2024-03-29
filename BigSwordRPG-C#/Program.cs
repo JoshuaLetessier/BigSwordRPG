@@ -1,15 +1,13 @@
 ﻿using BigSwordRPG.Assets;
-using BigSwordRPG_C_;
-
-using BigSwordRPG.Utils;
 using BigSwordRPG.Game;
+using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
 
 namespace BigSwordRPG
 {
     internal class Program
     {
-        
+
         private MenuScene testMenu;
         private CreateHero testCreateHeros;
         private CreateEnnemy createEnnemy;
@@ -18,18 +16,18 @@ namespace BigSwordRPG
         private Player player;
         private Item potionMineur;
         public Potion healPotion;
-        
+
 
         public Program()
         {
-           
+
 
             testMenu = new MenuScene();
             testCreateHeros = new CreateHero();
             createEnnemy = new CreateEnnemy();
             saveManager = new SaveManager();
-            player = new Player(); 
-           
+            player = new Player();
+
 
             Dictionary<string, Hero> heroes = testCreateHeros.CreateDictionaryHero();
             Dictionary<string, Ennemy> ennemies = createEnnemy.CreateDictionaryEnnemies();
@@ -56,9 +54,9 @@ namespace BigSwordRPG
             // p.testMenu.Draw();            
 
             //Console.Read();
-            //p.testCreateHeros.AffichageStat(heroes);
-            
-            p.fightScene.Update();
+            p.testCreateHeros.AffichageHeros(heroes);
+
+            //p.fightScene.Update();
         }
     }
 }

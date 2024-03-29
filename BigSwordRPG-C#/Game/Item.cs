@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Utils;
 
 namespace BigSwordRPG.Game
 {
@@ -40,6 +36,7 @@ namespace BigSwordRPG.Game
             ConsoleKey keyPressed;
             do
             {
+                Console.Clear();
                 foreach (Hero hero in heroes)
                 {
                     bool isSelected = hero == heroes[indexInventory];
@@ -62,11 +59,11 @@ namespace BigSwordRPG.Game
 
             string heroIndex = heroes[indexInventory].SelectHero(heroes);
 
-            for(int i = 0; i < heroes.Count; i++)
+            for (int i = 0; i < heroes.Count; i++)
             {
                 if (heroes[i].Name == heroIndex)
                 {
-                    if(this.Name == "Régénérateur Bio-Électrique" || this.Name == "Serum Électro-Cellulaire")
+                    if (this.Name == "Régénérateur Bio-Électrique" || this.Name == "Serum Électro-Cellulaire")
                     {
                         heroes[i].Heal(this.Value);
                         break;
@@ -78,7 +75,7 @@ namespace BigSwordRPG.Game
                     }
                 }
             }
-            
+
         }
 
 
@@ -100,16 +97,16 @@ namespace BigSwordRPG.Game
         {
         }
 
-        private Item potionMineur = new Item("Régénérateur Bio-Électrique", 25,0);
+        private Item potionMineur = new Item("Régénérateur Bio-Électrique", 25, 0);
         private Item potionMajeur = new Item("Serum Électro-Cellulaire", 75, 1);
 
-        private Item manaMineur = new Item("Booster Synaptique", 25,0);
-        private Item manaMajeur = new Item("Elixir Neuro-Énergétique", 75,1);
+        private Item manaMineur = new Item("Booster Synaptique", 25, 0);
+        private Item manaMajeur = new Item("Elixir Neuro-Énergétique", 75, 1);
 
         public List<Item> ListItem()
         {
             List<Item> listItems = new List<Item>();
-           
+
             listItems.Add(potionMineur);
             listItems.Add(potionMajeur);
 

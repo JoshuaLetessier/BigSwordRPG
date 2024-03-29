@@ -1,9 +1,4 @@
-﻿using BigSwordRPG.Assets;
-using BigSwordRPG.Utils.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BigSwordRPG.Utils.Graphics;
 
 namespace BigSwordRPG.Utils
 {
@@ -12,9 +7,9 @@ namespace BigSwordRPG.Utils
         public GameObject() { }
         ~GameObject() { }
 
-       
+
         public abstract void Updtate();
-       
+
 
         private int[] _position = { 0, 0 };
         private Texture _texture;

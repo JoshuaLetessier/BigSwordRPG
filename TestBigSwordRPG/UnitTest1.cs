@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
 using BigSwordRPG.Game;
 
 namespace TestBigSwordRPG.Game
@@ -19,7 +12,7 @@ namespace TestBigSwordRPG.Game
         [TestCase(110, 0)]
 
         public void takeDammage(int a, int expected)
-        {   
+        {
             character.MaxHealth = 100;
             character.Health = character.MaxHealth;
             character.TakeDammage(a);
