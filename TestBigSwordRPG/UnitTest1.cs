@@ -59,11 +59,5 @@ namespace TestBigSwordRPG.Game
             character.ManaHeal(a);
             Assert.That(character.PM, Is.EqualTo(expected));
         }
-
-
-
-
-
-
     }
 }

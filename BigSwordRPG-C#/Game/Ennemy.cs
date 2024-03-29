@@ -207,8 +207,6 @@ namespace BigSwordRPG.Game
         private Dictionary<string, Equipement> equipements;
         private CreateEquipement createEquipement = new CreateEquipement();
 
-
-
         public CreateEquipement CreateEquipement { get => createEquipement; set => createEquipement = value; }
 
         public Dictionary<string, Ennemy> CreateDictionaryEnnemies()
@@ -217,10 +215,11 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-
-
-
-            string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+            #else
+                const string filePath = "./Data/Stat/EnnemiesStat.csv";
+            #endif
 
             if (File.Exists(filePath))
             {

@@ -1,5 +1,6 @@
 ﻿using BigSwordRPG_C_;
 using BigSwordRPG_C_.Game;
+using System.Diagnostics;
 using System.Text;
 
 namespace BigSwordRPG.Game
@@ -240,7 +241,12 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-            string filePath = "../../../Game/Stat/HerosStat.csv";
+
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/HerosStat.csv";
+            #else
+                const string filePath = "./Data/Stat/HerosStat.csv";
+            #endif
 
             if (File.Exists(filePath))
             {

@@ -1,4 +1,5 @@
 ﻿using BigSwordRPG.Game;
+using System.Diagnostics;
 
 public enum EquipementType
 {
@@ -138,7 +139,14 @@ namespace BigSwordRPG_C_.Game
 
             Dictionary<string, Equipement> equipements = new Dictionary<string, Equipement>();
 
-            string filePath = "../../../Game/Stat/EquipementStat.csv";
+
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/EquipementStat.csv"; ;
+            #else
+                const string filePath = "./Data/Stat/EquipementStat.csv";
+            #endif
+
+
 
             if (File.Exists(filePath))
             {

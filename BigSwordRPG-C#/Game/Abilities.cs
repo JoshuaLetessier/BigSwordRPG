@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 
 namespace BigSwordRPG_C_
 {
@@ -58,7 +59,12 @@ namespace BigSwordRPG_C_
         private static Dictionary<string, Abilities> CreateAbilities()
         {
 
-            string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+            #else
+                const string filePath = "./Data/Stat/AbilitiesStat.csv";
+            #endif
+            
             Dictionary<string, Abilities> abilities = new Dictionary<string, Abilities>(StringComparer.OrdinalIgnoreCase);
             if (File.Exists(filePath))
             {
