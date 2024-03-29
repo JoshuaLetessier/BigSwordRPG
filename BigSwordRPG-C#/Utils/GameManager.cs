@@ -24,12 +24,15 @@ namespace BigSwordRPG.Utils
         private InputManager _inputManager;
         private Scene _currentScene;
         private Player _player;
-        private TextureLoader textureLoader;
         private static GameManager _instance;
+        private bool _isRunning;
+        private TextureLoader textureLoader;
 
         public Renderer Renderer { get => _renderer; private set => _renderer = value; }
         public InputManager InputManager { get => _inputManager; set => _inputManager = value; }
         public Difficulties Difficulty { get => _difficulty; set => _difficulty = value; }
+        public Scene CurrentScene { get => _currentScene; set => _currentScene = value; }
+        public Player Player { get => _player; set => _player = value; }
 
         public static GameManager Instance
         {
@@ -49,7 +52,7 @@ namespace BigSwordRPG.Utils
             Renderer.Initialize();
             InputManager = new InputManager();
             InputManager.Initialize();
-            CurrentScene = new MenuScene();
+            _currentScene = new MenuScene();
             textureLoader = new TextureLoader();
 
             StreamReader sr = new StreamReader("./Asset/Image/player.txt");//Remettre le fichier dans Debug pour le déploiement
@@ -61,8 +64,8 @@ namespace BigSwordRPG.Utils
 
             Texture player = textureLoader.getTexture(s2, playerTexture);
 
-            Player = new Player(new int[2] { 150, 60 }, player);
-            return 0;
+            _player = new Player(new int[2] { 150, 60 }, player);
+            
         }
         ~GameManager() { }
 
@@ -75,6 +78,21 @@ namespace BigSwordRPG.Utils
                 //Renderer.Update();
             }
 
+        }
+
+        public void SwitchScene<NewSceneType>() where NewSceneType : Scene, new()
+        {
+            Scene tempScene = CurrentScene;
+            CurrentScene = new NewSceneType();
+            CurrentScene.Initialize(tempScene);
+            CurrentScene.Run();
+        }
+
+        public void SwitchScene(Scene newScene)
+        {
+            newScene.PreviousScene = CurrentScene;
+            CurrentScene = newScene;
+            CurrentScene.Run();
         }
     }
 }

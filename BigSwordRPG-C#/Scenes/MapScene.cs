@@ -9,6 +9,8 @@ using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
 using BigSwordRPG.Utils;
 using BigSwordRPG.GameObjects;
+using BigSwordRPG_C_.Game;
+using BigSwordRPG.Utils.Graphics;
 
 namespace BigSwordRPG.Assets
 {
@@ -19,6 +21,8 @@ namespace BigSwordRPG.Assets
         private GameManager gameManager;
         private Music music;
         private TextureLoader textureLoader;
+
+        private string FilePath = "../../../Asset/Image/robot.mp3";
 
         public MapScene()
         {
@@ -76,5 +80,6 @@ namespace BigSwordRPG.Assets
                 testCam.SetCameraPosition(GameManager.Instance.Player.Position);
             }
         }
+
     }
 }

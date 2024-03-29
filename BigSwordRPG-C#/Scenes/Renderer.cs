@@ -35,7 +35,7 @@ namespace BigSwordRPG.Assets
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-        public int[] BufferSize { get => _bufferSize; set => _bufferSize = value; }
+        
 
         private IntPtr _consoleHandle;
         private Camera _camera;

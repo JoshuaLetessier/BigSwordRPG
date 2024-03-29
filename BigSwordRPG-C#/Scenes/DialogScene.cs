@@ -12,9 +12,10 @@ namespace BigSwordRPG.Assets
             throw new NotImplementedException();
         }
 
-        public override void Update()
+        public override void Run()
         {
             throw new NotImplementedException();
         }
+
     }
 }

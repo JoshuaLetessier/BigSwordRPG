@@ -55,5 +55,10 @@ namespace BigSwordRPG.Utils
             }
             actionsMap[consoleKey].Add(action);
         }
+
+        internal void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

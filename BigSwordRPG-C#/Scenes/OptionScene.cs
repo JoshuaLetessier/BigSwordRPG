@@ -57,11 +57,6 @@ namespace BigSwordRPG.Assets
             srLangues.Dispose();
             srReturn.Dispose();
         }
-        
-        public override void Update()
-        {
-            throw new NotImplementedException();
-        }
 
         public void AllResolution()
         {
@@ -76,6 +71,11 @@ namespace BigSwordRPG.Assets
         public void ReturnMenu()
         {
             testMenu.Draw();
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }

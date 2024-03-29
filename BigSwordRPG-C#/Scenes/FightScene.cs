@@ -37,7 +37,7 @@ namespace BigSwordRPG.Assets
 
         } //exption pour remplacer le bool
 
-        public override void Update()
+        public void Update()
         {
             Console.WriteLine("FIGHT !!!");
             // boucle de combas
@@ -220,6 +220,11 @@ namespace BigSwordRPG.Assets
         }
 
         public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Run()
         {
             throw new NotImplementedException();
         }

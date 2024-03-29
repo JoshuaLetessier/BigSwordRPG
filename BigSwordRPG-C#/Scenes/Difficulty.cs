@@ -26,7 +26,6 @@ namespace BigSwordRPG.Assets
         {
             string SizeReturn = ReturnSize();
             test = new SelectMenu();
-            testMenu = new MenuScene();
             testMap = new MapScene();
         }
 
@@ -70,11 +69,6 @@ namespace BigSwordRPG.Assets
             srHard.Dispose();
         }
 
-        public override void Update()
-        {
-            throw new NotImplementedException();
-        }
-
 
 
         public void DifficultyEasy()
@@ -105,6 +99,11 @@ namespace BigSwordRPG.Assets
             srSize.Dispose();
 
             return Size;
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }

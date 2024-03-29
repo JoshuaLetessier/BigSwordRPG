@@ -1,5 +1,6 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
+using BigSwordRPG_C_.Game;
 using BigSwordRPG_C_.Utils;
 using NAudio.Wave;
 using System;
@@ -32,7 +33,7 @@ namespace BigSwordRPG.Assets
 
         public override void Draw()
         {
-            difficulty = new Difficulty();
+            //difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
@@ -43,16 +44,16 @@ namespace BigSwordRPG.Assets
             StreamReader srName = new StreamReader("../../../Asset/Image/nameGame.txt");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srNouvellePartie = new StreamReader("./Asset/Image/nouvelle.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srNouvellePartie = new StreamReader("../../../Asset/Image/nouvelle.txt");//Remettre le fichier dans Debug pour le déploiement
             string NouvellePartie = srNouvellePartie.ReadToEnd();
 
-            StreamReader srContinuerPartie = new StreamReader("./Asset/Image/continuer.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srContinuerPartie = new StreamReader("../../../Asset/Image/continuer.txt");//Remettre le fichier dans Debug pour le déploiement
             string ContinuerPartie = srContinuerPartie.ReadToEnd();
 
-            StreamReader srOption = new StreamReader("./Asset/Image/option.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srOption = new StreamReader("../../../Asset/Image/option.txt");//Remettre le fichier dans Debug pour le déploiement
             string Option = srOption.ReadToEnd();
 
-            StreamReader srQuitter = new StreamReader("./Asset/Image/quitter.txt");//Remettre le fichier dans Debug pour le déploiement
+            StreamReader srQuitter = new StreamReader("../../../Asset/Image/quitter.txt");//Remettre le fichier dans Debug pour le déploiement
             string Quitter = srQuitter.ReadToEnd();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -74,12 +75,6 @@ namespace BigSwordRPG.Assets
             srContinuerPartie.Dispose();
             srOption.Dispose();
             srQuitter.Dispose();
-        }
-
-
-        public override void Update()
-        {
-            throw new NotImplementedException();
         }
 
         public void RetrunDesktop()
@@ -107,6 +102,9 @@ namespace BigSwordRPG.Assets
 
         }
 
-        
+        public override void Run()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

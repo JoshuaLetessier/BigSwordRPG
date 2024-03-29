@@ -78,11 +78,6 @@ namespace BigSwordRPG.Assets
             srReturn.Dispose();
         }
 
-        public override void Update()
-        {
-            throw new NotImplementedException();
-        }
-
         public void ReturnMenu()
         {
             testMenu.Draw();
@@ -132,6 +127,11 @@ namespace BigSwordRPG.Assets
             {
                 streamWriter.WriteLine(SizeWindow);
             }
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }
