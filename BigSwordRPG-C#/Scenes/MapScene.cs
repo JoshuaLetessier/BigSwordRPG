@@ -17,14 +17,19 @@ namespace BigSwordRPG.Assets
     public class MapScene : Scene
     {
         bool isMapDrawn = false;
-        private List<Interest> _interests;
-        public List<Interest> Interests { get => _interests; set => _interests = value; }
+        private List<Interest> _interactableInterests;
+        private List<Interest> _onCollisionInterests;
+        public List<Interest> InteractableInterests { get => _interactableInterests; set => _interactableInterests = value; }
+        public List<Interest> OnCollisionInterests { get => _onCollisionInterests; set => _onCollisionInterests = value; }
 
         public MapScene():base()
         {
             Interest testInterest = new Interest(new int[2] { 140, 60 });
-            Interests = new List<Interest>() { testInterest };
+            Interest testColInterest = new Interest(new int[2] { 160, 60 });
+            InteractableInterests = new List<Interest>() { testInterest };
+            OnCollisionInterests = new List<Interest>() { testColInterest };
             GameObjects.Add(testInterest);
+            GameObjects.Add(testColInterest);
             RegisterAction(
                 ConsoleKey.D,
                 new Action(
@@ -88,11 +93,11 @@ namespace BigSwordRPG.Assets
         private void TryInteracting()
         {
             Player player = GameManager.Instance.Player;
-            for (int i = 0; i < Interests.Count; i++)
+            for (int i = 0; i < InteractableInterests.Count; i++)
             {
-                if (Interests[i].IsColliding(player))
+                if (InteractableInterests[i].IsColliding(player))
                 {
-                    Interests[i].Interact();
+                    InteractableInterests[i].Interact<DialogScene>();
                 }
             }
         }
@@ -100,7 +105,13 @@ namespace BigSwordRPG.Assets
         public void MovePlayer(int distance, Axis axis)
         {
             Player player = GameManager.Instance.Player;
-
+            for (int i = 0; i < OnCollisionInterests.Count; i++)
+            {
+                if (OnCollisionInterests[i].IsColliding(player))
+                {
+                    OnCollisionInterests[i].Interact<FightScene>();
+                }
+            }
             int[] newPosition = new int[2] {
                 player.Position[0] + distance * (1 - (int)axis),
                 player.Position[1] + distance * (int)axis

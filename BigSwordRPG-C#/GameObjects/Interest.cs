@@ -57,10 +57,15 @@ namespace BigSwordRPG.GameObjects
         )
         { }
 
-        public void Interact()
+        /*public void Interact()
         {
             DialogScene dialogScene = new DialogScene();
             GameManager.Instance.SwitchScene(dialogScene);
+        }*/
+
+        public void Interact<NewSceneType>() where NewSceneType : Scene, new()
+        {
+            GameManager.Instance.SwitchScene(new NewSceneType());
         }
     }
 }

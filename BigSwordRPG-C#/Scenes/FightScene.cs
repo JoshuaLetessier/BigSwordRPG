@@ -22,6 +22,8 @@ namespace BigSwordRPG.Assets
         public List<Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
+        public FightScene() { }
+
         public FightScene(Dictionary<string, Game.Hero> heroes, List<Game.Ennemy> ennemies, Player player) 
         {
             int count = 0;
