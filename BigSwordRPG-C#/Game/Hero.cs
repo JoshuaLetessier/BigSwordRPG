@@ -34,7 +34,7 @@ namespace BigSwordRPG.Game
         public void UseAbilities(int index)
         {
             int healthDiff = MaxHealth - Health;
-            if (healthDiff < (int)_actAbilities[index].Heal)
+            if (healthDiff < (int)ActAbilities[index].Heal)
                 Health += healthDiff;
             else
                 Health += (int)actAbilities[index].Heal;
@@ -44,35 +44,35 @@ namespace BigSwordRPG.Game
         public void UseAbilities(int index, List<Ennemy> ennemies)
         {
             int ennemyIndex;
-            switch (_actAbilities[index].Zone)
+            switch (ActAbilities[index].Zone)
             {
                 case ZoneAction.All:
                     foreach (var enemy in ennemies)
-                    { enemy.TakeDammage((int)_actAbilities[index].Damage); }
+                    { enemy.TakeDammage((int)ActAbilities[index].Damage); }
                     break;
                 case ZoneAction.Near:
                     ennemyIndex = SelectEnnemy(ennemies);
                     int finalIndex = ennemies.Count - 1;
                     if (ennemyIndex == 0)
                     {
-                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
-                        ennemies[ennemyIndex + 1].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)ActAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)ActAbilities[index].Damage);
                     }
                     else if (ennemyIndex == finalIndex)
                     {
-                        ennemies[ennemyIndex - 1].TakeDammage((int)_actAbilities[index].Damage);
-                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex - 1].TakeDammage((int)ActAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)ActAbilities[index].Damage);
                     }
                     else
                     {
-                        ennemies[ennemyIndex - 1].TakeDammage((int)_actAbilities[index].Damage);
-                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
-                        ennemies[ennemyIndex + 1].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex - 1].TakeDammage((int)ActAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)ActAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)ActAbilities[index].Damage);
                     }
                     break;
                 default:
                     ennemyIndex = SelectEnnemy(ennemies);
-                    ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
+                    ennemies[ennemyIndex].TakeDammage((int)ActAbilities[index].Damage);
                     break;
             }
             MagicPoint++;
@@ -133,9 +133,9 @@ namespace BigSwordRPG.Game
         {
             string heroIndex = SelectHero(heroes.Values.ToList());
             if (buffType == "dammage")
-                heroes[heroIndex].AttMultiplier *= _actAbilities[indexAbilities].Damage;
+                heroes[heroIndex].AttMultiplier *= ActAbilities[indexAbilities].Damage;
             else if (buffType == "heal")
-                heroes[heroIndex].HealMultiplier *= _actAbilities[indexAbilities].Heal;
+                heroes[heroIndex].HealMultiplier *= ActAbilities[indexAbilities].Heal;
             else
                 heroes[heroIndex].Speed += actAbilities[indexAbilities].SpeedUp;
             CoolDownCount = actAbilities[indexAbilities].Cooldown + 1;

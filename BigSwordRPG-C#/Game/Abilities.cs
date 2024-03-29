@@ -82,7 +82,7 @@ namespace BigSwordRPG_C_
                             Heal = float.Parse(abilitiesData[3].Replace(".", ",")),
                             SpeedUp = float.Parse(abilitiesData[4].Replace(".", ",")),
                             Cooldown = int.Parse(abilitiesData[5]),
-                            Cost = float.Parse(abilitiesData[6].Replace(".", ",")),
+                            Cost = int.Parse(abilitiesData[6].Replace(".", ",")),
                             Zone = (ZoneAction)ZoneAction.Parse(typeof(ZoneAction), abilitiesData[7]),
 
 
