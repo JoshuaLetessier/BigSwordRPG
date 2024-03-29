@@ -1,6 +1,4 @@
-﻿using BigSwordRPG.Game;
-using BigSwordRPG.Utils;
-using BigSwordRPG_C_.Game;
+﻿using BigSwordRPG_C_.Game;
 using BigSwordRPG_C_.Utils;
 using NAudio.Wave;
 using System;
@@ -18,26 +16,24 @@ namespace BigSwordRPG.Assets
         private OptionScene option;
         public List<SelectMenu> menu;
         private Difficulty difficulty;
-        private SaveManager saveManager;
         private Music music;
 
         private string filePath = "../../../Asset/Music/C418.mp3";
 
-        public MenuScene() 
+        public MenuScene()
         {
             test = new SelectMenu();
-            saveManager = new SaveManager();
             music = new Music();
         }
 
 
         public override void Draw()
         {
-            //difficulty = new Difficulty();
+            difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
-            
+
 
             Task audioTask = Task.Run(() => music.ImporterMP3(filePath));
 
@@ -77,6 +73,11 @@ namespace BigSwordRPG.Assets
             srQuitter.Dispose();
         }
 
+        public void NouvelleGame()
+        {
+
+        }
+
         public void RetrunDesktop()
         {
             Console.Clear();
@@ -92,14 +93,7 @@ namespace BigSwordRPG.Assets
 
         public void ContinueGame()
         {
-            List<Item> item = new List<Item>();
-
-            saveManager.Load(GameManager.Instance.Player.Heroes, item);
-            
-
-            MapScene mapScene = new MapScene();
-            GameManager.Instance.SwitchScene(mapScene);
-
+            throw new NotImplementedException();
         }
 
         public override void Run()

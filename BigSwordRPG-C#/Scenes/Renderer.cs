@@ -35,13 +35,12 @@ namespace BigSwordRPG.Assets
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-        
 
         private IntPtr _consoleHandle;
         private Camera _camera;
-        private Background background;
+        private Background _background;
         public Camera Camera { get => _camera; set => _camera = value; }
-        public Background Background { get => background; set => background = value; }
+        public Background Background { get => _background; set => _background = value; }
         private IntPtr ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
 
         public Renderer() { }
@@ -50,24 +49,20 @@ namespace BigSwordRPG.Assets
         {
             ConsoleHandle = GetConsoleWindow();
             SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 2600, 3000, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 1944, 1055, 0);
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
 
-            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
-
+            IntPtr hConsole = GetStdHandle(-11);
             uint mode;
             GetConsoleMode(hConsole, out mode);
-
-            // Disable auto-scrolling and newline auto return
             const uint ENABLE_EXTENDED_FLAGS = 0x0080;
             mode &= ~ENABLE_EXTENDED_FLAGS; // Disable auto-scrolling
             mode |= 0x0008; // Disable newline auto return
-            mode |= 0x0004;
-
-            // Set the new console mode
+            mode |= 0x0004; // Enable Virtual Terminal Processing / ANSI handling
             SetConsoleMode(hConsole, mode);
 
+            Console.CursorVisible = false;
             Camera = new Camera();
 
             return 0;
@@ -147,6 +142,21 @@ namespace BigSwordRPG.Assets
                 position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis
             };
             DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion); // DrawTextureRegion already calls Camera.ResetCursorPosition();
+        }
+
+        public void HideGameObject(GameObject gameObjectToHide)
+        {
+            TextureRegion textureRegion = new TextureRegion();
+            textureRegion.offsetX = gameObjectToHide.Position[0]; //+Backgorund pos which is 0
+            textureRegion.offsetY = gameObjectToHide.Position[1]; //+Backgorund pos which is 0
+            textureRegion.sizeX = gameObjectToHide.Texture.Size[0];
+            textureRegion.sizeY = gameObjectToHide.Texture.Size[1];
+            DrawTextureRegion(new int[2] { gameObjectToHide.Position[0], gameObjectToHide.Position[1] }, GameManager.Instance.Renderer.Background.Texture, textureRegion);
+        }
+
+        public void ResetCursorColors()
+        {
+            Console.Write("\x1b[0m");
         }
 
         public bool IsInBuffer(int[] position, int[] size)
