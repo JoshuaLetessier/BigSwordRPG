@@ -1,10 +1,6 @@
 using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BigSwordRPG_C_
 {
@@ -25,29 +21,30 @@ namespace BigSwordRPG_C_
         public bool _allHeroDead = false;
         public Dictionary<string, Hero> Heroes { get => _heroes; set => _heroes = value; }
 
-        public Player() 
+        public Player()
         {
             _DicoHeros = new CreateHero();
             _heroes = _DicoHeros.CreateDictionaryHero();
         }
 
-        public Player(int[] position) : 
+        public Player(int[] position) :
             base(
-                position, 
-                new Texture() {
-                    Size = new int[2] { 1, 1 }, 
-                    PixelsBuffer = new List<Pixel>() { 
-                        new Pixel(160, 40), 
-                        new Pixel(160, 40), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160), 
-                        new Pixel(160, 160) 
+                position,
+                new Texture()
+                {
+                    Size = new int[2] { 1, 1 },
+                    PixelsBuffer = new List<Pixel>() {
+                        new Pixel(160, 40),
+                        new Pixel(160, 40),
+                        new Pixel(160, 160),
+                        new Pixel(160, 160),
+                        new Pixel(160, 160),
+                        new Pixel(160, 160)
                     }
                 }
             )
         {
-           // Draw();
+            // Draw();
             GameManager.Instance.InputManager.RegisterAction(
                 ConsoleKey.D,
                 new Action(
@@ -76,9 +73,9 @@ namespace BigSwordRPG_C_
 
         public void Move(int distance, Axis axis)
         {
-            int[] newPosition = new int[2] { 
-                Position[0] + distance * (1 - (int)axis), 
-                Position[1] + distance * (int)axis 
+            int[] newPosition = new int[2] {
+                Position[0] + distance * (1 - (int)axis),
+                Position[1] + distance * (int)axis
             };
             if (GameManager.Instance.Renderer.IsInBuffer(newPosition, Texture.Size))
             {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace BigSwordRPG_C_
@@ -28,7 +26,7 @@ namespace BigSwordRPG_C_
 
         //Champ
         private string _name;
-        private actionType _type; 
+        private actionType _type;
         private float _damage;
         private float _heal;
         private float _speedUp;
@@ -48,7 +46,7 @@ namespace BigSwordRPG_C_
         public float SpeedUp { get => _speedUp; set => _speedUp = value; }
 
 
-}
+    }
 
     class CreateListAbilities
     {
@@ -56,12 +54,17 @@ namespace BigSwordRPG_C_
 
         private Dictionary<string, Abilities> _abilitiesList = CreateAbilities();
 
-        public Dictionary<string, Abilities> AbilitiesList { get => _abilitiesList;}
+        public Dictionary<string, Abilities> AbilitiesList { get => _abilitiesList; }
 
         private static Dictionary<string, Abilities> CreateAbilities()
         {
+
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/AbilitiesStat.csv";
+            #else
+                const string filePath = "./Data/Stat/AbilitiesStat.csv";
+            #endif
             
-            string filePath = "../../../Game/Stat/AbilitiesStat.csv";
             Dictionary<string, Abilities> abilities = new Dictionary<string, Abilities>(StringComparer.OrdinalIgnoreCase);
             if (File.Exists(filePath))
             {

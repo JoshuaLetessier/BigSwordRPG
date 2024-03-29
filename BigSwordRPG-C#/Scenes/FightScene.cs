@@ -1,7 +1,6 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using BigSwordRPG_C_;
-using System.Reflection.Metadata.Ecma335;
 using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Assets
@@ -22,11 +21,11 @@ namespace BigSwordRPG.Assets
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
-        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string,Game.Ennemy> ennemies, Player player) 
+        public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string, Game.Ennemy> ennemies, Player player)
         {
             heroesInCombat = heroes;
             int levelTotal = 0;
-            for(int i = 0; i <heroesInCombat.Count; i++)
+            for (int i = 0; i < heroesInCombat.Count; i++)
             {
                 levelTotal += heroesInCombat.ElementAt(i).Value.Level;
             }
@@ -35,9 +34,9 @@ namespace BigSwordRPG.Assets
             _ennemiesList = ennemies;
 
             _equipementList = createEquipement.CreateDictionaryEquipement();
-            for(int i = 0; i < _ennemiesList.Count; ++i)
+            for (int i = 0; i < _ennemiesList.Count; ++i)
             {
-                if(moyLevelHeros < 10)
+                if (moyLevelHeros < 10)
                 {
                     if (_ennemiesList.ContainsKey("Generatron"))
                     {
@@ -310,7 +309,7 @@ namespace BigSwordRPG.Assets
             List<string> _heroesNames = heroesInCombat.Values.Select(heroes => heroes.Name).ToList();
             //List<int> _damageCompare = heroesInCombat.Values.Select(heroes => heroes.Damage).ToList();
             List<int> _healthCompare = heroesInCombat.Values.Select(heroes => heroes.Health).ToList();
-            
+
             for (int i = 0; i < heroesInCombat.Count; i++)
             {
                 //heroesInCombat[_heroesNames[i]];

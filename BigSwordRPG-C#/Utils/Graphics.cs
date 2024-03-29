@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BigSwordRPG.Utils.Graphics
+﻿namespace BigSwordRPG.Utils.Graphics
 {
     public struct Pixel
     {
@@ -12,9 +6,9 @@ namespace BigSwordRPG.Utils.Graphics
         public int backgroundColor;
 
         public Pixel(int foregroundColor, int backgroundColor)
-        { 
-            this.foregroundColor = foregroundColor; 
-            this.backgroundColor = backgroundColor; 
+        {
+            this.foregroundColor = foregroundColor;
+            this.backgroundColor = backgroundColor;
         }
     }
 

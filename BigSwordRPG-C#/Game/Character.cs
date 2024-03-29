@@ -28,9 +28,9 @@ namespace BigSwordRPG.Game
         {
             get => _health; set
             {
-                if(value < 0)
+                if (value < 0)
                     _health = 0;
-                else if(value > MaxHealth)
+                else if (value > MaxHealth)
                     _health = MaxHealth;
                 else
                     _health = value;
@@ -45,12 +45,13 @@ namespace BigSwordRPG.Game
 
         public float Speed { get => _speed; set => _speed = value; }
         public bool IsDead { get => _isDead; set => _isDead = value; }
-        public Dictionary<string,Abilities> CAbilities { get => _abilities; set => _abilities = value; }
+        public Dictionary<string, Abilities> CAbilities { get => _abilities; set => _abilities = value; }
         public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         public float HealthMultiplier { get => _healthMultiplier; set => _healthMultiplier = value; }
         public float AttMultiplier { get => _attMultiplier; set => _attMultiplier = value; }
         public float HealMultiplier { get => _healMultiplier; set => _healMultiplier = value; }
-        public int PM { 
+        public int PM
+        {
             get => _PM; set
             {
                 if (value < 0)
@@ -63,7 +64,7 @@ namespace BigSwordRPG.Game
         }
         public int PMMax { get => _PMMax; set => _PMMax = value; }
         public Dictionary<string, Equipement> Equipements { get => _equipements; set => _equipements = value; }
-       
+
 
 
 
@@ -86,7 +87,9 @@ namespace BigSwordRPG.Game
             _equipements = equipements;
         }
 
-
+        public Character()//pour test Unitaire
+        {
+        }
 
         ~Character() { }
 
@@ -121,7 +124,7 @@ namespace BigSwordRPG.Game
             PM -= manaValue;
         }
 
-        public  void Talk()
+        public void Talk()
         {
             throw new NotImplementedException();
         }

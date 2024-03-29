@@ -1,10 +1,5 @@
 ﻿using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BigSwordRPG.Assets
 {
@@ -15,7 +10,7 @@ namespace BigSwordRPG.Assets
         private MapScene testMap;
 
         private string difficultyChoose;
-        
+
         private string Easy;
         private string Middle;
         private string Hard;
@@ -26,7 +21,7 @@ namespace BigSwordRPG.Assets
         {
             test = new SelectMenu();
             testMenu = new MenuScene();
-            testMap = new MapScene(new Camera(), new Player(new int[2] {150,60}));
+            testMap = new MapScene(new Camera(), new Player(new int[2] { 150, 60 }));
         }
 
         public override void Draw()

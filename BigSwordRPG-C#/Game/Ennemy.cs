@@ -18,7 +18,7 @@ namespace BigSwordRPG.Game
         Potion potion = new();
         CreateEquipement createEquipement = new CreateEquipement();
 
-        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMAX,Dictionary<string, Equipement> equipements) 
+        public Ennemy(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMAX, Dictionary<string, Equipement> equipements)
             : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMAX, equipements)
         {
         }
@@ -29,11 +29,11 @@ namespace BigSwordRPG.Game
         {
 
             List<Item> tempList = new List<Item>();
-            Dictionary<string, Equipement> tempDico= new Dictionary<string, Equipement>() ;
+            Dictionary<string, Equipement> tempDico = new Dictionary<string, Equipement>();
             Dictionary<string, Equipement> equipements = createEquipement.CreateDictionaryEquipement();
             if (herosLevel < 10)
             {
-                    
+
                 for (int i = 0; i < potion.ListItem().Count; i++)
                 {
                     if (potion.ListItem()[i].Rarety == 0)
@@ -47,7 +47,7 @@ namespace BigSwordRPG.Game
                     inventory.Store(tempList[rand.Next(tempList.Count)]);
                 else
                 {
-                    for(int i = 0;i < equipements.Count;i++)
+                    for (int i = 0; i < equipements.Count; i++)
                     {
                         if (equipements.ElementAt(i).Value.Rarety == 0)
                             tempDico.Add(equipements.ElementAt(i).Value.Name, equipements.ElementAt(i).Value);
@@ -80,7 +80,7 @@ namespace BigSwordRPG.Game
                     inventory.Store(tempDico.ElementAt(rand.Next(tempList.Count)).Value);
                 }
             }
-            
+
         }
 
         public Abilities UseAbilities(int difficulty)
@@ -111,7 +111,7 @@ namespace BigSwordRPG.Game
         public Abilities RandomAbilitiesEasyMod()
         {
             Abilities randomAbility;
-            do 
+            do
             {
                 randomAbility = CAbilities.ElementAt(RandomAbilities(CAbilities)).Value;
             } while (randomAbility.Cost > PM);
@@ -204,10 +204,8 @@ namespace BigSwordRPG.Game
         private bool isDead;
         private int PM;
         private int PMMAX;
-        private Dictionary<string , Equipement> equipements;
+        private Dictionary<string, Equipement> equipements;
         private CreateEquipement createEquipement = new CreateEquipement();
-
-
 
         public CreateEquipement CreateEquipement { get => createEquipement; set => createEquipement = value; }
 
@@ -217,16 +215,17 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-
-
-
-            string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/EnnemiesStat.csv";
+            #else
+                const string filePath = "./Data/Stat/EnnemiesStat.csv";
+            #endif
 
             if (File.Exists(filePath))
             {
                 using (StreamReader streamReader = new StreamReader(filePath, Encoding.UTF8))
                 {
-                    while(!streamReader.EndOfStream)
+                    while (!streamReader.EndOfStream)
                     {
                         string[] ennemiesData = streamReader.ReadLine().Split(',');
 
@@ -249,10 +248,10 @@ namespace BigSwordRPG.Game
                             PMMax = int.Parse(ennemiesData[8]),
                             PM = int.Parse(ennemiesData[8]),
                             Equipements = new Dictionary<string, Equipement> { }
-                           
+
                         };
 
-                        for (int i = 9; i < ennemiesData.Length-1; i++)
+                        for (int i = 9; i < ennemiesData.Length - 1; i++)
                         {
                             ennemy.CAbilities.Add(ennemiesData[i], createListAbilities.AbilitiesList[ennemiesData[i]]);
                         }
@@ -263,7 +262,7 @@ namespace BigSwordRPG.Game
                         }
                         equipements = CreateEquipement.CreateDictionaryEquipement();
                         ennemy.Equipements.Add(equipements["Defibrilateur Nanite"].Name, equipements["Defibrilateur Nanite"]);
-                       
+
                         ennemies.Add(ennemy.Name, ennemy);
                     }
                     return ennemies;
@@ -273,7 +272,7 @@ namespace BigSwordRPG.Game
             {
                 throw new FileNotFoundException("Fichier " + filePath + " entrouvable");
             }
-                
+
         }
     }
 }

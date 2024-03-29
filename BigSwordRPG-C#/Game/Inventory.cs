@@ -1,9 +1,4 @@
-﻿using BigSwordRPG.Game;
-using BigSwordRPG_C_.Game;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BigSwordRPG_C_.Game;
 
 namespace BigSwordRPG.Game
 {
@@ -12,12 +7,12 @@ namespace BigSwordRPG.Game
         // Champs
         private List<Item> _inventory;
         private List<Equipement> _inventoryEquipement;
-        
-        public Inventory() 
+
+        public Inventory()
         {
             // Define the initial size of the inventory
-            _inventory = new List<Item>( new Item[10] );
-            _inventoryEquipement = new List<Equipement>(10); 
+            _inventory = new List<Item>(new Item[10]);
+            _inventoryEquipement = new List<Equipement>(10);
             //_inventory = new List<Item>(10);
         }
 
@@ -25,7 +20,7 @@ namespace BigSwordRPG.Game
 
         public void Store(Item newItem)
         {
-            if ( newItem != null && _inventory.Count != 10 )
+            if (newItem != null && _inventory.Count != 10)
             {
                 _inventory.Add(newItem);
                 Console.WriteLine($"{newItem.Name} a été ajouter à votre inventaire !");
@@ -33,7 +28,7 @@ namespace BigSwordRPG.Game
             else
             {
                 Console.WriteLine("L'inventaire est plein !");
-               // newItem?.Destroy();
+                // newItem?.Destroy();
                 // Possible add of a menu for exchange
             }
         }
@@ -59,10 +54,11 @@ namespace BigSwordRPG.Game
             ConsoleKey keyPressed;
             do
             {
+                Console.Clear();
                 List<String> value = new List<String>();
                 value[0] = "Item";
                 value[1] = "Equipements";
-                foreach(String str in value)
+                foreach (String str in value)
                 {
                     bool isSelected = str == value[indexInventoryType];
                     ChangeLineColor(isSelected);
@@ -85,7 +81,7 @@ namespace BigSwordRPG.Game
                 UseEquipement(heroes);
             else
                 UseItem(heroes);
-                
+
         }
 
         private void UseEquipement(List<Hero> heroes)
@@ -96,6 +92,7 @@ namespace BigSwordRPG.Game
 
             do
             {
+                Console.Clear();
                 foreach (Equipement equipement in _inventoryEquipement)
                 {
                     bool isSelected = equipement == _inventoryEquipement[indexEquipement];
@@ -125,6 +122,7 @@ namespace BigSwordRPG.Game
 
             do
             {
+                Console.Clear();
                 foreach (Item item in _inventory)
                 {
                     bool isSelected = item == _inventory[indexInventory];

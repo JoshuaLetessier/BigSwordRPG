@@ -1,8 +1,7 @@
 ﻿using BigSwordRPG_C_;
-using System.Text;
 using BigSwordRPG_C_.Game;
-using System;
-using System.Reflection.PortableExecutable;
+using System.Diagnostics;
+using System.Text;
 
 namespace BigSwordRPG.Game
 {
@@ -35,7 +34,7 @@ namespace BigSwordRPG.Game
         public void UseAbilities(int index)
         {
             int healthDiff = MaxHealth - Health;
-            if (healthDiff < (int)actAbilities[index].Heal)
+            if (healthDiff < (int)_actAbilities[index].Heal)
                 Health += healthDiff;
             else
                 Health += (int)actAbilities[index].Heal;
@@ -45,35 +44,35 @@ namespace BigSwordRPG.Game
         public void UseAbilities(int index, List<Ennemy> ennemies)
         {
             int ennemyIndex;
-            switch (actAbilities[index].Zone)
+            switch (_actAbilities[index].Zone)
             {
                 case ZoneAction.All:
                     foreach (var enemy in ennemies)
-                    { enemy.TakeDammage((int)actAbilities[index].Damage); }
+                    { enemy.TakeDammage((int)_actAbilities[index].Damage); }
                     break;
                 case ZoneAction.Near:
                     ennemyIndex = SelectEnnemy(ennemies);
                     int finalIndex = ennemies.Count - 1;
                     if (ennemyIndex == 0)
                     {
-                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
-                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)_actAbilities[index].Damage);
                     }
                     else if (ennemyIndex == finalIndex)
                     {
-                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
-                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex - 1].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
                     }
                     else
                     {
-                        ennemies[ennemyIndex - 1].TakeDammage((int)actAbilities[index].Damage);
-                        ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
-                        ennemies[ennemyIndex + 1].TakeDammage((int)actAbilities[index].Damage);
+                        ennemies[ennemyIndex - 1].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
+                        ennemies[ennemyIndex + 1].TakeDammage((int)_actAbilities[index].Damage);
                     }
                     break;
                 default:
                     ennemyIndex = SelectEnnemy(ennemies);
-                    ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
+                    ennemies[ennemyIndex].TakeDammage((int)_actAbilities[index].Damage);
                     break;
             }
             MagicPoint++;
@@ -134,9 +133,9 @@ namespace BigSwordRPG.Game
         {
             string heroIndex = SelectHero(heroes.Values.ToList());
             if (buffType == "dammage")
-                heroes[heroIndex].AttMultiplier *= actAbilities[indexAbilities].Damage;
+                heroes[heroIndex].AttMultiplier *= _actAbilities[indexAbilities].Damage;
             else if (buffType == "heal")
-                heroes[heroIndex].HealMultiplier *= actAbilities[indexAbilities].Heal;
+                heroes[heroIndex].HealMultiplier *= _actAbilities[indexAbilities].Heal;
             else
                 heroes[heroIndex].Speed += actAbilities[indexAbilities].SpeedUp;
             CoolDownCount = actAbilities[indexAbilities].Cooldown + 1;
@@ -252,7 +251,12 @@ namespace BigSwordRPG.Game
 
             CreateListAbilities createListAbilities = new CreateListAbilities();
 
-            string filePath = "../../../Game/Stat/HerosStat.csv";
+
+            #if DEBUG
+                const string filePath = "../../../Game/Stat/HerosStat.csv";
+            #else
+                const string filePath = "./Data/Stat/HerosStat.csv";
+            #endif
 
             if (File.Exists(filePath))
             {
@@ -281,11 +285,11 @@ namespace BigSwordRPG.Game
                             IsDead = false,
                             PMMax = int.Parse(heroData[8]),
                             PM = int.Parse(heroData[8]),
-                            Equipements = new Dictionary<string, Equipement> { }
+                            Equipements = new Dictionary<string, Equipement> { },
                         };
 
                         hero.CAbilities = new Dictionary<string, Abilities>();
-                        for (int i = 9; i < heroData.Length-1; i++)
+                        for (int i = 9; i < heroData.Length - 1; i++)
                         {
                             hero.CAbilities.Add(heroData[i], createListAbilities.AbilitiesList[heroData[i]]);
                         }
@@ -295,11 +299,15 @@ namespace BigSwordRPG.Game
                             hero.CAbilities.ElementAt(i).Value.Heal = hero.CAbilities.ElementAt(i).Value.Heal * hero.HealMultiplier * hero.Level;
                         }
                         equipements = CreateEquipement.CreateDictionaryEquipement();
+
+
                         hero.Equipements.Add(equipements["Defibrilateur Nanite"].Name, equipements["Defibrilateur Nanite"]);
 
                         heroes.Add(hero.Name, hero);
                     }
 
+                    heroes["Nova"].Equipements.Clear();
+                    heroes["Lexus"].Equipements.Clear();
                     heroes["Nova"].Equipements.Add(equipements["Gantelets Electro-Plasma"].Name, equipements["Gantelets Electro-Plasma"]);
                     heroes["Lexus"].Equipements.Add(equipements["Dispositif de fission"].Name, equipements["Dispositif de fission"]);
 
@@ -313,26 +321,144 @@ namespace BigSwordRPG.Game
             }
         }
 
-        public void AffichageStat(Dictionary<string, Hero> heroes)
+        public void AffichageHeros(Dictionary<string, Hero> heroes)
         {
-            foreach (KeyValuePair<string, Hero> kvp in heroes)
+            List<Hero> h = heroes.Values.ToList();
+
+            int previousLineIndex = 0, selectedLineIndex = 1;
+            ConsoleKey keyPressed;
+            do
             {
-                string heroName = kvp.Key;
-                Hero hero = kvp.Value;
-
-                Console.WriteLine($"Hero: {heroName}, Health: {hero.Health}");
-                Console.WriteLine("Abilities:");
-
-                foreach (KeyValuePair<string, Abilities> abilityKvp in hero.CAbilities)
+                Console.Clear();
+                if (previousLineIndex != selectedLineIndex)
                 {
-                    string abilityName = abilityKvp.Key;
-                    Abilities ability = abilityKvp.Value;
-
-                    Console.WriteLine($"- {abilityName}");
+                    UpadateAffichageHeros(h, selectedLineIndex);
+                    previousLineIndex = selectedLineIndex;
                 }
 
-                Console.WriteLine();
+                keyPressed = Console.ReadKey().Key;
+
+                if (keyPressed == ConsoleKey.DownArrow && selectedLineIndex + 1 < h.Count)
+                {
+                    selectedLineIndex++;
+                }
+                else if (keyPressed == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
+                {
+                    selectedLineIndex--;
+                }
+
+                if (keyPressed == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    AfficherStatHeros(h[selectedLineIndex], heroes);
+                    AffichageHeros(heroes);
+                    return;
+                }
+
+                if (keyPressed == ConsoleKey.Tab)
+                {
+                    Console.Clear();
+                    return;
+                }
+
+            } while (true);
+
+
+        }
+
+        public void AfficherStatHeros(Hero hero, Dictionary<string, Hero> heroes)
+        {
+            Console.Clear();
+            List<Abilities> ability = hero.CAbilities.Values.ToList();
+
+
+            int previousLineIndex = -1, selectedLineIndex = 0;
+            ConsoleKey keyPressed;
+            do
+            {
+                if (previousLineIndex != selectedLineIndex)
+                {
+                    UpdateAfficherStatHeros(selectedLineIndex, hero);
+                    previousLineIndex = selectedLineIndex;
+                }
+
+                keyPressed = Console.ReadKey().Key;
+
+                if (keyPressed == ConsoleKey.DownArrow && selectedLineIndex + 1 < ability.Count)
+                {
+                    selectedLineIndex++;
+                }
+                else if (keyPressed == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
+                {
+                    selectedLineIndex--;
+                }
+
+                if (keyPressed == ConsoleKey.Tab)
+                {
+                    Console.Clear();
+                    AffichageHeros(heroes);
+                }
+            } while (keyPressed != ConsoleKey.Enter);
+
+            Console.WriteLine($"\u001b[38;5;7m Abilities:");
+
+            Console.WriteLine();
+        }
+
+        static void UpadateAffichageHeros(List<Hero> h, int index)
+        {
+            foreach (Hero hero in h)
+            {
+                bool isSelected = hero == h[index];
+                if (isSelected)
+                    DrawHero(h[index]);
+                else
+                    Console.WriteLine($"{(isSelected ? ">" : " ")}{hero.Name}");
             }
+        }
+        static void UpdateAfficherStatHeros(int index, Hero hero)
+        {
+            Console.Clear();
+            Console.WriteLine($"Hero: {hero.Name} \n" + $"\u001b[38;5;40m Health: {hero.Health} \n Max health: {hero.MaxHealth} \n Level: {hero.Level} \n" + $"\u001b[38;5;11m Speed: {hero.Speed} \n" + $"\u001b[38;5;12m PM: {hero.PM} \n PM Max \n");
+
+            Console.WriteLine($"\u001b[38;5;7m Equipement :");
+
+            foreach (KeyValuePair<string, Equipement> abilityKvp in hero.Equipements)
+            {
+                string abilityName = abilityKvp.Key;
+                //Equipement ability = abilityKvp.Value;
+
+                Console.WriteLine($"- {abilityName} + \n");
+            }
+
+            hero.ActAbilities = hero.CAbilities.Values.ToList();
+            foreach (Abilities abi in hero.ActAbilities)
+            {
+                bool isSelected = abi == hero.ActAbilities[index];
+                if (isSelected)
+                {
+                    DrawStatHero(abi);
+                }
+                else
+                    Console.WriteLine($"{(isSelected ? ">" : " ")}{hero.ActAbilities.ElementAt(index).Name}");
+            }
+        }
+        static void DrawHero(Hero hero)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {hero.Name}");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        static void DrawStatHero(Abilities ability)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"> {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone}");
+            Console.WriteLine($"    ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp} | Cost: {ability.Cost} | Cooldown: {ability.Cooldown}\n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

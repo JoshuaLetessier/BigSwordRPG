@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BigSwordRPG_C_.Utils
+﻿namespace BigSwordRPG_C_.Utils
 {
     public class Camera
     {
@@ -12,7 +6,7 @@ namespace BigSwordRPG_C_.Utils
 
         public Camera()
         {
-            joueur = new Player(new int[2] {150,60});
+            joueur = new Player(new int[2] { 150, 60 });
         }
 
         public void setPositionCamera()

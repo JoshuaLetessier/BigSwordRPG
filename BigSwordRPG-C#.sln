@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigSwordRPG-C#", "BigSwordRPG-C#\BigSwordRPG-C#.csproj", "{7E014D32-B7CF-4AF5-85C7-EBD4C3FDFC90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBigSwordRPG", "TestBigSwordRPG\TestBigSwordRPG.csproj", "{4464F3D2-BAC2-4CAF-A751-3CA92D9ECE94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBigSwordRPG", "TestBigSwordRPG\TestBigSwordRPG.csproj", "{4464F3D2-BAC2-4CAF-A751-3CA92D9ECE94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
