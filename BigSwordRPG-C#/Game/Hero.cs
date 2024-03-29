@@ -9,9 +9,10 @@ namespace BigSwordRPG.Game
     public class Hero : Character
     {
         List<Abilities> actAbilities;
+        int coolDownCount;
         int magicPoint;
 
-        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMax, Dictionary<string, Equipement> equipements, int magicPoint) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
+        public Hero(string name, int health, int maxHealth, int level, float healthMultiplier, float attMultiplier, float healMultiplier, float speed, Dictionary<string, Abilities> abilities, bool isDead, int PM, int PMMax, Dictionary<string, Equipement> equipements, int coolDownCount, int magicPoint) : base(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMMax, equipements)
         {
             Name = name;
             MaxHealth = maxHealth;
@@ -23,10 +24,12 @@ namespace BigSwordRPG.Game
             Speed = speed;
             CAbilities = abilities;
             IsDead = isDead;
+            this.coolDownCount = coolDownCount;
             this.magicPoint = magicPoint;
         }
 
         public List<Abilities> ActAbilities { get => actAbilities; set => actAbilities = value; }
+        public int CoolDownCount { get => coolDownCount; set => coolDownCount = value; }
         public int MagicPoint { get => magicPoint; set => magicPoint = value; }
 
         public void UseAbilities(int index)
@@ -36,7 +39,7 @@ namespace BigSwordRPG.Game
                 Health += healthDiff;
             else
                 Health += (int)actAbilities[index].Heal;
-            //MagicPoint++
+            MagicPoint++;
         }
 
         public void UseAbilities(int index, List<Ennemy> ennemies)
@@ -73,15 +76,15 @@ namespace BigSwordRPG.Game
                     ennemies[ennemyIndex].TakeDammage((int)actAbilities[index].Damage);
                     break;
             }
-            //MagicPoint++
+            MagicPoint++;
         }
 
         private int SelectEnnemy(List<Ennemy> ennemies)
         {
-            ConsoleKey pressedKey;
+            bool canBeSelected = false;
             int previousLineIndex = -1, selectedLineIndex = 0;
 
-            // Selection de la clé du héro
+            ConsoleKey pressedKey;
             do
             {
                 if (previousLineIndex != selectedLineIndex)
@@ -92,12 +95,14 @@ namespace BigSwordRPG.Game
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < ennemies.Count)
+                if (pressedKey == ConsoleKey.Enter && ennemies[selectedLineIndex].Health > 0)
+                    canBeSelected = true;
+                else if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < ennemies.Count)
                     selectedLineIndex++;
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
                     selectedLineIndex--;
 
-            } while(pressedKey != ConsoleKey.Enter);
+            } while(canBeSelected != true);
 
             // Retoune la clé séléctionnée
             return selectedLineIndex;
@@ -112,15 +117,15 @@ namespace BigSwordRPG.Game
                 if (isSelected)
                     DrawSelectedMenu(ennemy);
                 else
-                    Console.WriteLine($"  {ennemy.Name} | HP: {ennemy.Health} \n");
+                    Console.WriteLine($"  {ennemy.Name} \u001b[38;5;40mHP: {ennemy.Health}/{ennemy.MaxHealth}\u001b[38;5;15m \n");
             }
         }
 
         static void DrawSelectedMenu(Ennemy ennemy)
         {
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine($"> {ennemy.Name} | HP: {ennemy.Health} \n");
+            Console.WriteLine($"> {ennemy.Name} | HP: {ennemy.Health}/{ennemy.MaxHealth} \n");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -134,14 +139,16 @@ namespace BigSwordRPG.Game
                 heroes[heroIndex].HealMultiplier *= actAbilities[indexAbilities].Heal;
             else
                 heroes[heroIndex].Speed += actAbilities[indexAbilities].SpeedUp;
-            //MagicPoint++
+            CoolDownCount = actAbilities[indexAbilities].Cooldown + 1;
+            MagicPoint++;
         }
 
         public string SelectHero(List<Hero> heroes)
         {
-            ConsoleKey pressedKey;
+            bool canBeSelected = false;
             int previousLineIndex = -1, selectedLineIndex = 0;
 
+            ConsoleKey pressedKey;
             // Selection de la clé du héro
             do
             {
@@ -153,12 +160,14 @@ namespace BigSwordRPG.Game
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < heroes.Count)
+                if (pressedKey == ConsoleKey.Enter && heroes[selectedLineIndex].Health > 0)
+                    canBeSelected = true;
+                else if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < heroes.Count)
                     selectedLineIndex++;
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 0)
                     selectedLineIndex--;
 
-            } while(pressedKey != ConsoleKey.Enter);
+            } while(canBeSelected != true);
 
             // Retoune la clé séléctionnée
             return heroes[selectedLineIndex].Name;
@@ -175,15 +184,15 @@ namespace BigSwordRPG.Game
                     DrawSelectedMenu(hero);
                 }
                 else
-                    Console.WriteLine($"  {hero.Name} | HP: {hero.Health} | Speed: {hero.Speed} \n");
+                    Console.WriteLine($"  {hero.Name} \u001b[38;5;11mSpeed: {hero.Speed} \u001b[38;5;40mHealMult: {hero.HealMultiplier} \u001b[38;5;9mAttMult: {hero.AttMultiplier}\u001b[38;5;15m \n");
             }
         }
 
         static void DrawSelectedMenu(Hero hero)
         {
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine($"> {hero.Name} | HP: {hero.Health} | Speed: {hero.Speed} \n");
+            Console.WriteLine($"> {hero.Name} | Speed: {hero.Speed} | HealMult: {hero.HealMultiplier} | AttMult: {hero.AttMultiplier} \n");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -201,7 +210,7 @@ namespace BigSwordRPG.Game
                 int ennemyIndex = SelectEnnemy(ennemies);
                 ennemies[ennemyIndex].TakeDammage((int)specAbility.Damage);
             }
-            //MagicPoint = 0;
+            MagicPoint = 0;
         }
 
         public void UseSpecialAbility(List<Hero> heroes)
@@ -209,7 +218,7 @@ namespace BigSwordRPG.Game
             Abilities specAbility = CAbilities.ElementAt(0).Value;
             for (int i = 0; i < heroes.Count - 1; i++)
                 heroes[i].Heal((int)specAbility.Heal);
-            //MagicPoint = 0;
+            MagicPoint = 0;
         }
     }
 
@@ -231,11 +240,12 @@ namespace BigSwordRPG.Game
         private Dictionary<string, Equipement> equipements;
         private CreateEquipement createEquipement = new CreateEquipement();
 
+        private int coolDownCount;
         private int magicPoint;
 
         public CreateEquipement CreateEquipement { get => createEquipement; set => createEquipement = value; }
 
-        public  Dictionary<string, Hero> CreateDictionaryHero()//Génerer le disctionnaire des Héros
+        public Dictionary<string, Hero> CreateDictionaryHero()//Génerer le disctionnaire des Héros
         {
 
             Dictionary<string, Hero> heroes = new Dictionary<string, Hero>();
@@ -257,7 +267,7 @@ namespace BigSwordRPG.Game
                         string stringHealMultiplier = heroData[6].Replace("\"", "");
                         string stringSpeed = heroData[6].Replace("\"", "");
 
-                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements, magicPoint)
+                        Hero hero = new Hero(name, health, maxHealth, level, healthMultiplier, attMultiplier, healMultiplier, speed, abilities, isDead, PM, PMmax, equipements, coolDownCount, magicPoint)
                         {
                             Name = heroData[0],
                             MaxHealth = int.Parse(heroData[2]),
@@ -299,7 +309,7 @@ namespace BigSwordRPG.Game
             }
             else
             {
-                throw new FileNotFoundException("Fichier " + filePath + " entrouvable");
+                throw new FileNotFoundException("Fichier " + filePath + " introuvable");
             }
         }
 

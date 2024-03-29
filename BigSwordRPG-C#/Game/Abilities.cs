@@ -33,7 +33,7 @@ namespace BigSwordRPG_C_
         private float _heal;
         private float _speedUp;
         private int _cooldown;
-        private float _cost;
+        private int _cost;
         private ZoneAction _zone;
 
 
@@ -42,7 +42,7 @@ namespace BigSwordRPG_C_
         public actionType Type { get => _type; set => _type = value; }
         public float Damage { get => _damage; set => _damage = value; }
         public int Cooldown { get => _cooldown; set => _cooldown = value; }
-        public float Cost { get => _cost; set => _cost = value; }
+        public int Cost { get => _cost; set => _cost = value; }
         public float Heal { get => _heal; set => _heal = value; }
         public ZoneAction Zone { get => _zone; set => _zone = value; }
         public float SpeedUp { get => _speedUp; set => _speedUp = value; }

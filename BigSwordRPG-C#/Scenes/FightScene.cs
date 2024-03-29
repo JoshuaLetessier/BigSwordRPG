@@ -11,32 +11,19 @@ namespace BigSwordRPG.Assets
         private Dictionary<string, Game.Hero> heroesInCombat;
         private Dictionary<string, Game.Ennemy> _ennemiesList;
         private Dictionary<string, Equipement> _equipementList;
-        private int indexAbility = 0;
 
-        private bool startFight = false;
         private string firstTeamPlay;
-        private int countHeros;
-        private int countEnnemy;
         private int allEnnemyDeath;
 
         Player _player;
 
         CreateEquipement createEquipement = new CreateEquipement();
 
-        
-
         public Dictionary<string, Ennemy> EnnemiesList { get => _ennemiesList; set => _ennemiesList = value; }
         public Player player { get => _player; set => _player = value; }
 
         public FightScene(Dictionary<string, Game.Hero> heroes, Dictionary<string,Game.Ennemy> ennemies, Player player) 
         {
-            int count = 0;
-            foreach (var key in heroes.Keys)
-            {
-                if (heroes[key].Health == 0) { ++count; }
-            }
-            if (count == heroes.Count) { /*return false;*/ }
-
             heroesInCombat = heroes;
             int levelTotal = 0;
             for(int i = 0; i <heroesInCombat.Count; i++)
@@ -63,7 +50,6 @@ namespace BigSwordRPG.Assets
                         int value = random.Next(0, 2);
                         _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
                     }
-                        
                 }
                 else
                 {
@@ -75,38 +61,36 @@ namespace BigSwordRPG.Assets
                         int value = random.Next(5, 7);
                         _ennemiesList.ElementAt(i).Value.Equipements.Add(_equipementList.ElementAt(value).Value.Name, _equipementList.ElementAt(value).Value);
                     }
-                        
                 }
-                
-                
-               
-
             }
 
-            firstTeamPlay = orderStartFight();
+            firstTeamPlay = OrderStartFight();
             _player = player;
-            countHeros = 0;
-            countEnnemy = 0;
 
         } //exption pour remplacer le bool
 
         public override void Update()
         {
-            Console.WriteLine("FIGHT !!!");
-            // boucle de combas 
-            //version 1 simplifié
-            while (player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count)
-            {
-                if (firstTeamPlay == "h")
+            int countHeros = 0;
+            int countEnnemy = 0;
+            while (player._allHeroDead == false || allEnnemyDeath == EnnemiesList.Count) 
+            { 
+                switch (firstTeamPlay)
                 {
-                    //random
-                    Round(heroesInCombat.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                    firstTeamPlay = "e";
-                }
-                else
-                {
-                    Round(EnnemiesList.ElementAt(RandomFonction(heroesInCombat.Count)).Value);
-                    firstTeamPlay = "h";
+                    case "h":
+                        heroesInCombat.ElementAt(countHeros).Value.ManaHeal(10);
+                        Round(heroesInCombat.ElementAt(countHeros).Value);
+                        if (countHeros >= heroesInCombat.Count - 1) { countHeros = 0; }
+                        else { countHeros++; }
+                        firstTeamPlay = "e";
+                        break;
+                    case "e":
+                        EnnemiesList.ElementAt(countEnnemy).Value.ManaHeal(10);
+                        Round(EnnemiesList.ElementAt(countEnnemy).Value);
+                        if (countEnnemy >= EnnemiesList.Count - 1) { countEnnemy = 0; }
+                        else { countEnnemy++; }
+                        firstTeamPlay = "h";
+                        break;
                 }
             }
             Console.Clear();
@@ -115,7 +99,7 @@ namespace BigSwordRPG.Assets
             else Console.WriteLine("Tu as gagné");
         }
 
-        private string orderStartFight()
+        private string OrderStartFight()
         {
             if (heroesInCombat.Count < EnnemiesList.Count)
             {
@@ -140,26 +124,22 @@ namespace BigSwordRPG.Assets
             }
         }
 
-        private int RandomFonction(int value)
-        {
-            Random random = new Random();
-
-            return random.Next(0, value);
-        }
-
         private void Round(Hero actHero)
         {
             actHero.ActAbilities = actHero.CAbilities.Values.ToList();
             // S'il n'a pas d'abilité selectionné, prends la première
             int previousLineIndex = 0, selectedLineIndex = 1;
             bool isSpecialReady = false, canBeUsed = false;
-            // Vérifie que la capacité peut être activée
-            //if (actHero.MagicPoint == 4) { previousLineIndex = -1, selectedLineIndex = 0, isSpecialReady = true; }
-            ConsoleKey pressedKey;
+            // Vérifie que la capacité spéciale peut être activée
+            if (actHero.MagicPoint >= 4) { previousLineIndex = -1; selectedLineIndex = 0; isSpecialReady = true; }
+            // Vérifie que le cooldown de buff est bien diminué
+            if (actHero.CoolDownCount > 0) { actHero.CoolDownCount--; }
             
+            ConsoleKey pressedKey;
             do
             {
-                if(previousLineIndex != selectedLineIndex)
+                // Méthode d'affichage pour toutes les capacitées
+                if (previousLineIndex != selectedLineIndex)
                 {
                     UpdateMenu(actHero, selectedLineIndex);
                     previousLineIndex = selectedLineIndex;
@@ -167,55 +147,62 @@ namespace BigSwordRPG.Assets
 
                 pressedKey = Console.ReadKey().Key;
 
-                if (pressedKey == ConsoleKey.Enter && actHero.ActAbilities[selectedLineIndex].Cost < actHero.PM)
+                // Vérifie si la touche est Enter et que le coût en PM est bon et le cooldown des buff
+                if (pressedKey == ConsoleKey.Enter && actHero.ActAbilities[selectedLineIndex].Cost <= actHero.PM && (actHero.CoolDownCount == 0 || actHero.ActAbilities[selectedLineIndex].Cooldown == 0))
                     canBeUsed = true;
-
-                if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < actHero.ActAbilities.Count)
+                // Vérifie si la touche est DownArrow
+                else if (pressedKey == ConsoleKey.DownArrow && selectedLineIndex + 1 < actHero.ActAbilities.Count)
                     selectedLineIndex++;
-
+                // Vérifie si la touche est UpArrow
                 else if (pressedKey == ConsoleKey.UpArrow && selectedLineIndex - 1 >= 1 || actHero.ActAbilities[selectedLineIndex - 1].Type == actionType.CAPA && isSpecialReady == true)
                     selectedLineIndex--;
 
-            } while (pressedKey != ConsoleKey.Enter && canBeUsed != true);
+            } while (canBeUsed != true);
 
             // Vérifie le type de l'action et l'effectue
-            if (actHero.ActAbilities[selectedLineIndex].Type == actionType.ATT)
+            switch (actHero.ActAbilities[selectedLineIndex].Type)
             {
-                actHero.UseAbilities(selectedLineIndex, EnnemiesList.Values.ToList());
-            }
-            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.BUFF)
-            {
-                string buffType;
-                if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
-                    buffType = "dammage";
-                else if (actHero.ActAbilities[selectedLineIndex].Heal != 0)
-                    buffType = "heal";
-                else
-                    buffType = "speed";
-                actHero.UseAbilities(selectedLineIndex, heroesInCombat, buffType);
-            }
-            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.CAPA)
-            {
-                if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
-                    actHero.UseSpecialAbility(EnnemiesList.Values.ToList());
-                else
-                    actHero.UseSpecialAbility(heroesInCombat.Values.ToList());
-            }
-            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.HEAL && actHero.Health != actHero.MaxHealth)
-            {
-                actHero.UseAbilities(selectedLineIndex);
-            }
-            else if (actHero.ActAbilities[selectedLineIndex].Type == actionType.ESCAPED)
-            {
-                //Escape();
+                case actionType.ATT:
+                    actHero.UseAbilities(selectedLineIndex, EnnemiesList.Values.ToList());
+                    actHero.UseMana(actHero.ActAbilities[selectedLineIndex].Cost);
+                    break;
+                case actionType.BUFF:
+                    string buffType;
+                    if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
+                        buffType = "dammage";
+                    else if (actHero.ActAbilities[selectedLineIndex].Heal != 0)
+                        buffType = "heal";
+                    else
+                        buffType = "speed";
+                    actHero.UseAbilities(selectedLineIndex, heroesInCombat, buffType);
+                    actHero.UseMana(actHero.ActAbilities[selectedLineIndex].Cost);
+                    break;
+                case actionType.HEAL:
+                    actHero.UseAbilities(selectedLineIndex);
+                    actHero.UseMana(actHero.ActAbilities[selectedLineIndex].Cost);
+                    break;
+                case actionType.CAPA:
+                    if (actHero.ActAbilities[selectedLineIndex].Damage != 0)
+                        actHero.UseSpecialAbility(EnnemiesList.Values.ToList());
+                    else
+                        actHero.UseSpecialAbility(heroesInCombat.Values.ToList());
+                    actHero.UseMana(actHero.ActAbilities[selectedLineIndex].Cost);
+                    break;
+                case actionType.ESCAPED:
+                    //Escape();
+                    break;
+                default:
+                    break;
             }
         }
         static void UpdateMenu(Hero actHero, int index)
         {
             Console.Clear();
             Console.WriteLine($"A toi de jouer {actHero.Name} !");
-            Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actHero.Health}/{actHero.MaxHealth} " +
-                $"\u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} \u001b[38;5;11m Vitesse: {actHero.Speed} \u001b[38;5;13m MP: WIP\u001b[38;5;15m \n");
+            Console.WriteLine($"  Stats ->\u001b[38;5;40m HP: {actHero.Health}/{actHero.MaxHealth} \u001b[38;5;12m PM: {actHero.PM}/{actHero.PMMax} " +
+                $"\u001b[38;5;11m Vitesse: {actHero.Speed} \u001b[38;5;13m MP: {actHero.MagicPoint}\u001b[38;5;15m \n");
+            if (actHero.CoolDownCount > 0)
+                Console.WriteLine($"Tours avant Buff disponible: {actHero.CoolDownCount}");
             foreach (var ability in actHero.ActAbilities)
             {
                 bool isSelected = ability == actHero.ActAbilities[index];
@@ -224,7 +211,7 @@ namespace BigSwordRPG.Assets
                     DrawSelectedMenu(ability);
                 }
                 else
-                    Console.WriteLine($"  {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone} \n");
+                    Console.WriteLine($"  {ability.Name} \u001b[38;5;210mType: {ability.Type}\u001b[38;5;15m \n");
             }
         }
 
@@ -232,8 +219,8 @@ namespace BigSwordRPG.Assets
         {
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine($"> {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone}");
-            Console.WriteLine($"    ATT: {ability.Damage} | HEAL: {ability.Heal} | SP-UP: {ability.SpeedUp} \n");
+            Console.WriteLine($"> {ability.Name} | Type: {ability.Type} | Zone: {ability.Zone} | Cout PM: {ability.Cost}");
+            Console.WriteLine($"    ATT: {ability.Damage} | SOIN: {ability.Heal} | VIT-SUP: {ability.SpeedUp} \n");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -274,7 +261,7 @@ namespace BigSwordRPG.Assets
                     if (heroesInCombat.Count != 1) { nameIndex = rand.Next(heroesInCombat.Count); }
                     Console.WriteLine($"{actEnnemy.Name} utilise {useAbility.Name} sur {heroesInCombat.ElementAt(nameIndex).Value.Name} !");
                     heroesInCombat.ElementAt(nameIndex).Value.TakeDammage((int)useAbility.Damage);
-                    Console.WriteLine($"  {heroesInCombat.ElementAt(nameIndex).Value.Name} ->\u001b[38;5;40m HP: {heroesInCombat.ElementAt(nameIndex).Value.Health}/{heroesInCombat.ElementAt(nameIndex).Value.MaxHealth}\u001b[38;5;15m");
+                    Console.WriteLine($"  {heroesInCombat.ElementAt(nameIndex).Value.Name} -> \u001b[38;5;40mHP: {heroesInCombat.ElementAt(nameIndex).Value.Health}/{heroesInCombat.ElementAt(nameIndex).Value.MaxHealth}\u001b[38;5;15m");
                     Thread.Sleep(2000);
                     // Si le héro visé est déjà à terre
                     if (heroesInCombat.ElementAt(nameIndex).Value.Health == 0)
