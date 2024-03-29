@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
 
 namespace BigSwordRPG.GameObjects
 {
@@ -50,13 +46,15 @@ namespace BigSwordRPG.GameObjects
             int remainingCharactersCount = Line.Length;
             int charactersToDrawCount = 0;
             int writableAreaWidth = Console.WindowWidth - DIALOG_BOX_MARGIN_RIGHT - CharacterTexture.Size[0] - 5;
+            int alreadyWrittenLinesCount = 0;
             // Draw dialog line and take care of Dialog Box Size / Margins
-            for(int i = 0; i < DIALOG_BOX_HEIGHT - 2 && remainingCharactersCount > 0; i++)
+            for (int i = 0; i < DIALOG_BOX_HEIGHT - 2 && remainingCharactersCount > 0; i++)
             {
                 Console.SetCursorPosition(Position[0] + 5 + CharacterTexture.Size[0], Position[1] + 2 + i);
                 charactersToDrawCount = Math.Min(remainingCharactersCount, writableAreaWidth);
-                Console.Write(Line.Substring(0, charactersToDrawCount)); // Should adjust for multiline dialog
+                Console.Write(Line.Substring(alreadyWrittenLinesCount * writableAreaWidth, charactersToDrawCount));
                 remainingCharactersCount -= charactersToDrawCount;
+                alreadyWrittenLinesCount += 1;
             }
 
             // Erase remaining characters from previous line
@@ -68,7 +66,6 @@ namespace BigSwordRPG.GameObjects
                     eraseLine += " ";
                 }
                 Console.Write(eraseLine);
-                int alreadyWrittenLinesCount = (Console.CursorTop + 1 - Position[1] - 2);
                 remainingCharactersCount = PreviousLineLength - alreadyWrittenLinesCount * writableAreaWidth;
                 for (int i = alreadyWrittenLinesCount; i < DIALOG_BOX_HEIGHT - 2 && remainingCharactersCount > 0; i++)
                 {

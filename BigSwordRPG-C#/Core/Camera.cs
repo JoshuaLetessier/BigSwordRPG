@@ -1,11 +1,5 @@
-﻿using BigSwordRPG.Assets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BigSwordRPG_C_.Utils
+﻿
+namespace BigSwordRPG.Core
 {
     public class Camera
     {
@@ -24,30 +18,30 @@ namespace BigSwordRPG_C_.Utils
         public void SetCameraPosition(int[] centerPosition)
         {
             // Should be adjusted based on Window size directly
-            if (centerPosition[0] + (Size[0] / 2) >= Console.BufferWidth)
+            if (centerPosition[0] + Size[0] / 2 >= Console.BufferWidth)
             {
                 Position[0] = Console.BufferWidth - Size[0];
             }
-            else if (centerPosition[0] - (Size[0] / 2) < 0)
+            else if (centerPosition[0] - Size[0] / 2 < 0)
             {
                 Position[0] = 0;
             }
             else
             {
-                Position[0] = centerPosition[0] - (Size[0] / 2);
+                Position[0] = centerPosition[0] - Size[0] / 2;
             }
 
-            if (centerPosition[1] + (Size[1] / 2) >= Console.BufferHeight)
+            if (centerPosition[1] + Size[1] / 2 >= Console.BufferHeight)
             {
                 Position[1] = Console.BufferHeight - Size[1];
             }
-            else if (centerPosition[1] - (Size[1] / 2) < 0)
+            else if (centerPosition[1] - Size[1] / 2 < 0)
             {
                 Position[1] = 0;
             }
             else
             {
-                Position[1] = centerPosition[1] - (Size[1] / 2);
+                Position[1] = centerPosition[1] - Size[1] / 2;
             }
             Console.SetWindowPosition(Position[0], Position[1]);
         }

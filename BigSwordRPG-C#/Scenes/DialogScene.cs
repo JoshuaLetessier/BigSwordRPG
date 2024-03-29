@@ -5,7 +5,9 @@ using System.Text;
 using BigSwordRPG.Utils;
 using BigSwordRPG.GameObjects;
 using BigSwordRPG.Utils.Graphics;
-using BigSwordRPG_C_;
+using BigSwordRPG;
+using BigSwordRPG.Core;
+
 
 namespace BigSwordRPG.Assets
 {

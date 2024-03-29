@@ -1,18 +1,14 @@
-﻿using BigSwordRPG.Assets;
-using BigSwordRPG.Utils.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
 
-namespace BigSwordRPG.Utils
+namespace BigSwordRPG.GameObjects
 {
     public abstract class GameObject
     {
         public GameObject() { }
         ~GameObject() { }
 
-             
+
 
         private int[] _position = { 0, 0 };
         private Texture _texture;
@@ -36,10 +32,10 @@ namespace BigSwordRPG.Utils
         public bool IsColliding(GameObject comparedGameObject)
         {
             if (
-                (comparedGameObject.Position[0] + comparedGameObject.Texture.Size[0] < Position[0]
+                comparedGameObject.Position[0] + comparedGameObject.Texture.Size[0] < Position[0]
                 || comparedGameObject.Position[0] > Position[0] + Texture.Size[0]
                 || comparedGameObject.Position[1] + comparedGameObject.Texture.Size[1] < Position[1]
-                || comparedGameObject.Position[1] > Position[1] + Texture.Size[1])
+                || comparedGameObject.Position[1] > Position[1] + Texture.Size[1]
             )
             {
                 return false;

@@ -1,9 +1,8 @@
 ﻿using BigSwordRPG.Assets;
-using BigSwordRPG.Utils;
-using BigSwordRPG_C_.Game;
+using BigSwordRPG.Core;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace BigSwordRPG_C_.Utils
+namespace BigSwordRPG.Utils
 {
     public class SelectMenu
     {

@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
-namespace BigSwordRPG_C_
+namespace BigSwordRPG
 {
     public enum actionType
     {

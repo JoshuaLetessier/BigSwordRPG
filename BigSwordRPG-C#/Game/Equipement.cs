@@ -1,6 +1,4 @@
-﻿using BigSwordRPG.Game;
-using System.Diagnostics;
-
+﻿
 public enum EquipementType
 {
     Plasma = 1,
@@ -9,7 +7,7 @@ public enum EquipementType
     Bioelectrique
 }
 
-namespace BigSwordRPG_C_.Game
+namespace BigSwordRPG.Game
 {
     public class Equipement : Item
     {

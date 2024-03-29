@@ -1,7 +1,4 @@
-﻿using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
 namespace BigSwordRPG.Game
 {

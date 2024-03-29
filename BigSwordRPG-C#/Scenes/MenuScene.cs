@@ -1,5 +1,4 @@
-﻿using BigSwordRPG_C_.Game;
-using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG.Game;
 using BigSwordRPG.Utils;
 using NAudio.Wave;
 using System;
@@ -9,6 +8,8 @@ using System.Reflection.Metadata;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using BigSwordRPG.Game;
+using BigSwordRPG.Core;
+
 
 namespace BigSwordRPG.Assets
 {
@@ -17,7 +18,6 @@ namespace BigSwordRPG.Assets
         private SelectMenu test;
         private OptionScene option;
         public List<SelectMenu> menu;
-        private Difficulty difficulty;
         private SaveManager _saveManager;
 
 #if DEBUG
@@ -42,7 +42,6 @@ namespace BigSwordRPG.Assets
 
         public override void Draw()
         {
-            difficulty = new Difficulty();
             Console.Clear();
             Console.SetCursorPosition(0, 0);
 
@@ -70,7 +69,7 @@ namespace BigSwordRPG.Assets
 
             menu = new List<SelectMenu>
             {
-                new SelectMenu { menuChoix = NouvellePartie, ToDo = difficulty.Draw },
+                new SelectMenu { menuChoix = NouvellePartie, ToDo = NouvelleGame },
                 new SelectMenu { menuChoix = ContinuerPartie, ToDo = ContinueGame},
                 new SelectMenu { menuChoix = Option, ToDo = OptionGame},
                 new SelectMenu { menuChoix = Quitter, ToDo = RetrunDesktop}
@@ -87,7 +86,7 @@ namespace BigSwordRPG.Assets
 
         public void NouvelleGame()
         {
-
+            GameManager.Instance.SwitchScene<Difficulty>();
         }
 
         public void RetrunDesktop()

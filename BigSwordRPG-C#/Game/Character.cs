@@ -1,6 +1,4 @@
-﻿using BigSwordRPG.Utils;
-using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
+﻿using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Game
 {
@@ -84,6 +82,10 @@ namespace BigSwordRPG.Game
         public void TakeDammage(int attackPoint)
         {
             Health -= attackPoint;
+            if(Health <= 0)
+            {
+                IsDead = true;
+            }
         }
 
         public void Heal(int healValue)

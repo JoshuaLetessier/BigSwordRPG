@@ -6,13 +6,13 @@ using System.Drawing;
 using System.IO;
 using System.Text.Json.Nodes;
 using System.Numerics;
-using BigSwordRPG_C_.Utils;
-using BigSwordRPG_C_;
+using BigSwordRPG.Utils;
 using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG.GameObjects;
-using BigSwordRPG_C_.Game;
+using BigSwordRPG.Game;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
 
 namespace BigSwordRPG.Assets
 {

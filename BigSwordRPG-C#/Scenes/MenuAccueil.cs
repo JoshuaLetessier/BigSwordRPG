@@ -1,7 +1,8 @@
 ﻿using BigSwordRPG.Assets;
 using BigSwordRPG.Game;
+using BigSwordRPG.Core;
+
 using BigSwordRPG.Utils;
-using BigSwordRPG_C_.Utils;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace BigSwordRPG.Assets

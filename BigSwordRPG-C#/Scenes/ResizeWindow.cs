@@ -1,6 +1,6 @@
 ﻿using BigSwordRPG.Game;
+using BigSwordRPG.Core;
 using BigSwordRPG.Utils;
-using BigSwordRPG_C_.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -52,7 +52,7 @@ namespace BigSwordRPG.Assets
             StreamReader srName = new StreamReader($"{TEXTURE_PATH}nameGame{TEXTURE_EXTENSION}");//Remettre le fichier dans Debug pour le déploiement
             string Name = srName.ReadToEnd();
 
-            StreamReader srFullscreen = new StreamReader($"{TEXTURE_PATH}nameGame{TEXTURE_EXTENSION}");
+            StreamReader srFullscreen = new StreamReader($"{TEXTURE_PATH}fullscreen{TEXTURE_EXTENSION}");
             string Fullscreen = srFullscreen.ReadToEnd();
 
             StreamReader srQuatreTier = new StreamReader($"{TEXTURE_PATH}4 tiers{TEXTURE_EXTENSION}");

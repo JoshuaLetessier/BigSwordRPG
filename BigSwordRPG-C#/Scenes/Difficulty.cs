@@ -1,5 +1,7 @@
-﻿using BigSwordRPG_C_;
-using BigSwordRPG_C_.Utils;
+﻿using BigSwordRPG;
+using BigSwordRPG.Core;
+
+using BigSwordRPG.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +96,7 @@ namespace BigSwordRPG.Assets
 
         public void ReturnMenu()
         {
-            testMenu.Draw();
+            GameManager.Instance.SwitchScene(PreviousScene);
         }
 
         public string ReturnSize()
@@ -108,7 +110,7 @@ namespace BigSwordRPG.Assets
 
         public override void Run()
         {
-            throw new NotImplementedException();
+            Draw();
         }
     }
 }

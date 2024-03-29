@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BigSwordRPG.Assets;
-using BigSwordRPG.Utils;
+﻿using BigSwordRPG.Assets;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
+
 
 namespace BigSwordRPG.GameObjects
 {

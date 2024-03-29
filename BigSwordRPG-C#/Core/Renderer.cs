@@ -1,47 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using BigSwordRPG.Utils;
+﻿using System.Runtime.InteropServices;
 using BigSwordRPG.Utils.Graphics;
-using BigSwordRPG_C_;
 using BigSwordRPG.GameObjects;
-using BigSwordRPG_C_.Utils;
 
-namespace BigSwordRPG.Assets
+namespace BigSwordRPG.Core
 {
     public class Renderer
     {
         [DllImport("kernel32")]
-        static extern IntPtr GetConsoleWindow();
+        static extern nint GetConsoleWindow();
 
         [DllImport("User32")]
-        static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
+        static extern void SetWindowPos(nint hWnd, nint hWndInsertAfter, int x, int y, int width, int height, uint flags);
 
         [DllImport("User32")]
-        static extern bool ShowScrollBar(IntPtr hWnd, int bar, bool show);
+        static extern bool ShowScrollBar(nint hWnd, int bar, bool show);
 
         [DllImport("User32")]
-        static extern bool SetWindowLongA(IntPtr hWnd, int longIndex, long newlong);
+        static extern bool SetWindowLongA(nint hWnd, int longIndex, long newlong);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr GetStdHandle(int nStdHandle);
+        static extern nint GetStdHandle(int nStdHandle);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+        public static extern bool SetConsoleMode(nint hConsoleHandle, uint dwMode);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        public static extern bool GetConsoleMode(nint hConsoleHandle, out uint lpMode);
 
-        private IntPtr _consoleHandle;
+        private nint _consoleHandle;
         private Camera _camera;
         private Background _background;
         public Camera Camera { get => _camera; set => _camera = value; }
         public Background Background { get => _background; set => _background = value; }
-        private IntPtr ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
+        private nint ConsoleHandle { get => _consoleHandle; set => _consoleHandle = value; }
 
         public Renderer() { }
 
@@ -53,7 +44,7 @@ namespace BigSwordRPG.Assets
             long style = 0x000000L | 0x10000000L | 0x01000000L;
             SetWindowLongA(ConsoleHandle, -16, style);
 
-            IntPtr hConsole = GetStdHandle(-11);
+            nint hConsole = GetStdHandle(-11);
             uint mode;
             GetConsoleMode(hConsole, out mode);
             const uint ENABLE_EXTENDED_FLAGS = 0x0080;
@@ -68,15 +59,7 @@ namespace BigSwordRPG.Assets
             return 0;
         }
 
-        public void ResizeWindow(int[] newResolution)
-        {
-            if (true)
-            {  //Should check that the resolution isn't too big otherwise Console.SetWindowPosition will crash
-                SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-                SetWindowPos(ConsoleHandle, 0, 0, 0, newResolution[0], newResolution[1], 0);
-                Camera.ResizeCamera();
-            }
-        }
+
 
         public void DrawTexture(int[] position, Texture texture)
         {
@@ -109,8 +92,8 @@ namespace BigSwordRPG.Assets
                 line = "";
                 for (int j = 0; j < textureRegion.sizeX; j++)
                 {
-                    foregroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + (j + textureRegion.offsetX)].foregroundColor;
-                    backgroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + (j + textureRegion.offsetX)].backgroundColor;
+                    foregroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + j + textureRegion.offsetX].foregroundColor;
+                    backgroundColor = texture.PixelsBuffer[(textureRegion.offsetY + i) * texture.Size[0] + j + textureRegion.offsetX].backgroundColor;
                     line += $"\x1b[38;5;{foregroundColor};48;5;{backgroundColor}m▄";
                 }
                 Console.SetCursorPosition(position[0], position[1] + i);
@@ -138,10 +121,24 @@ namespace BigSwordRPG.Assets
                 textureRegion.sizeY = offset & -offset;
             }
             int[] backgroundRegionPosition = new int[2] {
-                position[0] + ((offset < 0 ? texture.Size[0] : -offset)) * (int)(1-axis),
-                position[1] + ((offset < 0 ? texture.Size[1]: -offset)) * (int)axis
+                position[0] + (offset < 0 ? texture.Size[0] : -offset) * (int)(1-axis),
+                position[1] + (offset < 0 ? texture.Size[1]: -offset) * (int)axis
             };
             DrawTextureRegion(backgroundRegionPosition, Background.Texture, textureRegion); // DrawTextureRegion already calls Camera.ResetCursorPosition();
+        }
+
+        public void DrawText(string text, int[] position, int[] size)
+        {
+            int remainingCharactersCount = text.Length;
+            int charactersToDrawCount;
+            // Draw dialog line and take care of Dialog Box Size / Margins
+            for (int i = 0; i < size[1] && remainingCharactersCount > 0; i++)
+            {
+                Console.SetCursorPosition(position[0] + size[0], position[1] + 2 + i);
+                charactersToDrawCount = Math.Min(remainingCharactersCount, size[0]);
+                Console.Write(text.Substring(i * size[0], charactersToDrawCount));
+                remainingCharactersCount -= charactersToDrawCount;
+            }
         }
 
         public void HideGameObject(GameObject gameObjectToHide)
@@ -152,6 +149,21 @@ namespace BigSwordRPG.Assets
             textureRegion.sizeX = gameObjectToHide.Texture.Size[0];
             textureRegion.sizeY = gameObjectToHide.Texture.Size[1];
             DrawTextureRegion(new int[2] { gameObjectToHide.Position[0], gameObjectToHide.Position[1] }, GameManager.Instance.Renderer.Background.Texture, textureRegion);
+        }
+
+        public void ResizeWindow(int[] newResolution)
+        {
+            if (true)
+            {  //Should check that the resolution isn't too big otherwise Console.SetWindowPosition will crash
+                SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+                SetWindowPos(ConsoleHandle, 0, 0, 0, newResolution[0], newResolution[1], 0);
+                Camera.ResizeCamera();
+            }
+        }
+
+        public void ResetCursorPosition()
+        {
+            Camera.ResetCursorPosition();
         }
 
         public void ResetCursorColors()

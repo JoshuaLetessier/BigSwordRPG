@@ -1,13 +1,14 @@
 ﻿using BigSwordRPG.Game;
-using BigSwordRPG.Utils;
 using BigSwordRPG.Utils.Graphics;
+using BigSwordRPG.Core;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigSwordRPG_C_.Utils
+namespace BigSwordRPG.Utils
 {
     internal class SaveManager
     {     

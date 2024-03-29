@@ -1,4 +1,4 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

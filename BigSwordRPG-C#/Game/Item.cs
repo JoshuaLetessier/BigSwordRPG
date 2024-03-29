@@ -1,4 +1,4 @@
-﻿using BigSwordRPG.Utils;
+﻿using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Game
 {

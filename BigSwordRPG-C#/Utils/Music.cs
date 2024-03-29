@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigSwordRPG_C_.Game
+namespace BigSwordRPG.Utils
 {
     public class Music
     {
@@ -52,7 +52,7 @@ namespace BigSwordRPG_C_.Game
 
                     while (waveOut.PlaybackState == PlaybackState.Playing)
                     {
-                        System.Threading.Thread.Sleep(100);
+                        Thread.Sleep(100);
                     }
 
                 }

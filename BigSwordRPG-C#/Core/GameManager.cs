@@ -1,12 +1,8 @@
 ﻿using BigSwordRPG.Assets;
-using BigSwordRPG_C_;
-using BigSwordRPG_C_.Game;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BigSwordRPG.Utils;
+using BigSwordRPG.GameObjects;
 
-namespace BigSwordRPG.Utils
+namespace BigSwordRPG.Core
 {
     using Difficulty = Difficulties;
     public enum Difficulties
@@ -18,7 +14,7 @@ namespace BigSwordRPG.Utils
     }
     public class GameManager
     {
-        private Difficulties _difficulty;
+        private Difficulty _difficulty;
         private Renderer _renderer;
         private InputManager _inputManager;
         private Music _music;
@@ -28,7 +24,7 @@ namespace BigSwordRPG.Utils
         public Renderer Renderer { get => _renderer; private set => _renderer = value; }
         public InputManager InputManager { get => _inputManager; set => _inputManager = value; }
         public Music Music { get => _music; set => _music = value; }
-        public Difficulties Difficulty { get => _difficulty; set => _difficulty = value; }
+        public Difficulty Difficulty { get => _difficulty; set => _difficulty = value; }
         public Scene CurrentScene { get => _currentScene; set => _currentScene = value; }
         public Player Player { get => _player; set => _player = value; }
 
