@@ -1,11 +1,6 @@
 ﻿using BigSwordRPG.Utils;
 using BigSwordRPG_C_;
 using BigSwordRPG_C_.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BigSwordRPG.Assets
 {
@@ -16,7 +11,7 @@ namespace BigSwordRPG.Assets
         private MapScene testMap;
 
         private string difficultyChoose;
-        
+
         private string Easy;
         private string Middle;
         private string Hard;

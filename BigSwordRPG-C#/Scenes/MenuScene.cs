@@ -1,11 +1,5 @@
 ﻿using BigSwordRPG.Utils;
 using BigSwordRPG_C_.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BigSwordRPG.Assets
 {
@@ -16,10 +10,10 @@ namespace BigSwordRPG.Assets
         public List<SelectMenu> menu;
         private Difficulty difficulty;
 
-        public MenuScene() 
+        public MenuScene()
         {
             test = new SelectMenu();
-            
+
         }
 
 

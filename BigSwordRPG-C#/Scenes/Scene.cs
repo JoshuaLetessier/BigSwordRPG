@@ -58,4 +58,4 @@ namespace BigSwordRPG.Assets
             ActionsMap[consoleKey].Add(action);
         }
     }
-}   
+}

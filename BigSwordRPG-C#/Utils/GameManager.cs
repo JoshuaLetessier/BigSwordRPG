@@ -1,13 +1,7 @@
 using BigSwordRPG.Assets;
-using BigSwordRPG_C_;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BigSwordRPG.Utils
 {
-    using Difficulty = Difficulties;
     public enum Difficulties
     {
         EASY,

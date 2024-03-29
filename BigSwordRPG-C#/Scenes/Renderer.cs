@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using BigSwordRPG.Utils;
-using BigSwordRPG.Utils.Graphics;
+﻿using BigSwordRPG.Utils.Graphics;
 using BigSwordRPG_C_;
 using BigSwordRPG.GameObjects;
 using BigSwordRPG_C_.Utils;

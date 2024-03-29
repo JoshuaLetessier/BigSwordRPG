@@ -17,35 +17,35 @@
   <Class Name="BigSwordRPG.Game.Character" Collapsed="true">
     <Position X="14.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>YACAKAAAAAEgCgCBQAAYM4QBIAAIgAALFEQAAUAAAAA=</HashCode>
+      <HashCode>IACAKAAAAAEgCgCBQAAYM4QBIAAIgAALFEQAAUAAAAA=</HashCode>
       <FileName>Game\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Ennemy" Collapsed="true">
     <Position X="13.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQEAAAAQQABECAAAAAAAAAAAAAQABAAAAIAA=</HashCode>
+      <HashCode>AAgAAAAAQEAAACQQABECAAAAAAAAAAAAAQABAAAAoAA=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.CreateEnnemy" Collapsed="true">
     <Position X="33.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAIgAAQCAAAAAAAIAAAABEEBQAAAAAAAAAEAAk=</HashCode>
+      <HashCode>AAAAACAIgAAQCCAAAAAAIAAAABEEBQAAAAAAAAAEIAk=</HashCode>
       <FileName>Game\Ennemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Hero" Collapsed="true">
     <Position X="16" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAgACAAAAAAAARAAAQEBAAEAAAAIAAAAAAAABgA=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.CreateHero" Collapsed="true">
     <Position X="30" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAIgAAACAAAAAAgIAAAABEEAQAAEAAAAAAEAAk=</HashCode>
+      <HashCode>AAACACAIgAAACCAAAAAgIAEAABEEAQAAEAAAAAAEIAk=</HashCode>
       <FileName>Game\Hero.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,28 +59,28 @@
   <Class Name="BigSwordRPG.Game.Inventory" Collapsed="true">
     <Position X="33.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAgIAAAAAAAAAAAAAAAAACAAAAAAQAAAAA=</HashCode>
+      <HashCode>AgEAAAQAAAAgIAAAAAAAAAAAAAAAAACABAAAAQAAAAA=</HashCode>
       <FileName>Game\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG.Game.Item" Collapsed="true">
     <Position X="18.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAIAAAAAAAAgAAAAAAAAQAAAAEAAAIAAAgAAAAAAA=</HashCode>
+      <HashCode>ABEAIAAAAAAAAgAAAAAAAAQAAAAEAAAIAAAgAAAAIAA=</HashCode>
       <FileName>Game\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Game.Equipement" Collapsed="true">
-    <Position X="33.5" Y="2.25" Width="1.5" />
+    <Position X="20.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAABAAAAQQAAAAAAQAAAAAAAAQASQAAAAEAAA=</HashCode>
+      <HashCode>AAEAAAAAABAAAAQQAAAAAAAAAAAAAAAQASQAAAAEAEA=</HashCode>
       <FileName>Game\Equipement.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Game.CreateEquipement" Collapsed="true">
     <Position X="35.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAQQAAAAAAAAAAAAACAABAAAAACEAAA=</HashCode>
       <FileName>Game\Equipement.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -108,7 +108,7 @@
   <Class Name="BigSwordRPG.Assets.FightScene" Collapsed="true">
     <Position X="23" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAUEIAAAgABAAwAAggIACEAAAAAgAACBBAAAAAIAAAQ=</HashCode>
+      <HashCode>AAQEABgAAAAAAiAAwAIACAAAAAAgAACJBAAAAAIAAAQ=</HashCode>
       <FileName>Scenes\FightScene.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -176,7 +176,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Utils.SelectMenu" Collapsed="true">
-    <Position X="35.25" Y="4.25" Width="1.5" />
+    <Position X="33.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIEAQAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Utils\SelectMenu.cs</FileName>
@@ -206,14 +206,14 @@
   <Class Name="BigSwordRPG.Program" Collapsed="true">
     <Position X="30" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABBgAAACA=</HashCode>
+      <HashCode>AIAAAAABAAAAAAAAAAAAAAAAAAQEAAABAAABBgAAACA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BigSwordRPG_C_.Player" Collapsed="true">
     <Position X="20.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAIAAAAAAAIAAg=</HashCode>
+      <HashCode>AAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAIAAAAAAAIAAg=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
