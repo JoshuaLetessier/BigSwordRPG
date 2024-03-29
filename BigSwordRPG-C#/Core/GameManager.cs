@@ -4,6 +4,7 @@ using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Core
 {
+    using Difficulty = Difficulties;
     public enum Difficulties
     {
         EASY,

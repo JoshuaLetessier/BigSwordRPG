@@ -1,7 +1,5 @@
 ﻿using BigSwordRPG.Game;
 using BigSwordRPG.Core;
-
-using BigSwordRPG.Game;
 using BigSwordRPG.GameObjects;
 
 namespace BigSwordRPG.Assets

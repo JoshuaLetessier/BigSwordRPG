@@ -63,10 +63,5 @@ namespace BigSwordRPG.GameObjects
         {
             GameManager.Instance.SwitchScene(new NewSceneType());
         }
-
-        public override void Updtate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
